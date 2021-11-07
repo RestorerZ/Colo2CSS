@@ -1,0 +1,88 @@
+
++SpecialKey     guifg=Blue
+++EndOfBuffer    links to NonText
++NonText        gui=bold guifg=Blue
++Directory      guifg=Blue
++ErrorMsg       guifg=White guibg=Red
++IncSearch      gui=reverse
++Search         guibg=Yellow
++MoreMsg        gui=bold guifg=SeaGreen
++ModeMsg        gui=bold
++LineNr         guifg=Brown
++CursorLineNr   gui=bold guifg=Brown
++Question       gui=bold guifg=SeaGreen
++StatusLine     gui=bold,reverse
++StatusLineNC   gui=reverse
++VertSplit      gui=reverse
++Title          gui=bold guifg=Magenta
++Visual         guibg=LightGrey
++VisualNOS      gui=bold,underline
++WarningMsg     guifg=Red
++WildMenu       guifg=Black guibg=Yellow
++Folded         guifg=DarkBlue guibg=LightGrey
++FoldColumn     guifg=DarkBlue guibg=Grey
++DiffAdd        guibg=LightBlue
++DiffChange     guibg=LightMagenta
++DiffDelete     gui=bold guifg=Blue guibg=LightCyan
++DiffText       gui=bold guibg=Red
++SignColumn     guifg=DarkBlue guibg=Grey
++Conceal        guifg=LightGrey guibg=DarkGrey
++SpellBad       gui=undercurl guisp=Red
++SpellCap       gui=undercurl guisp=Blue
++SpellRare      gui=undercurl guisp=Magenta
++SpellLocal     gui=undercurl guisp=DarkCyan
++Pmenu          guibg=LightMagenta
++PmenuSel       guibg=Grey
++PmenuSbar      guibg=Grey
++PmenuThumb     guibg=Black
++TabLine        gui=underline guibg=LightGrey
++TabLineSel     gui=bold
++TabLineFill    gui=reverse
++CursorColumn   guibg=Grey90
++CursorLine     guibg=Grey90
++ColorColumn    guibg=LightRed
+++QuickFixLine   links to Search
++StatusLineTerm gui=bold guifg=bg guibg=DarkGreen
++StatusLineTermNC guifg=bg guibg=DarkGreen
++Cursor         guifg=bg guibg=fg
++lCursor        guifg=bg guibg=fg
++Normal         font=Consolas:h10:cRUSSIAN:qANTIALIASED
++MatchParen     guibg=Cyan
++ToolbarLine    guibg=LightGrey
++ToolbarButton  gui=bold guifg=White guibg=Grey40
++User1          gui=underline,reverse
++Comment        guifg=Blue
++Constant       guifg=Magenta
++Special        guifg=#6a5acd
++Identifier     guifg=DarkCyan
++Statement      gui=bold guifg=Brown
++PreProc        guifg=#6a0dad
++Type           gui=bold guifg=SeaGreen
++Underlined     gui=underline guifg=SlateBlue
++Ignore         guifg=bg
++Error          guifg=White guibg=Red
++Todo           guifg=Blue guibg=Yellow
+++String         links to Constant
+++Character      links to Constant
+++Number         links to Constant
+++Boolean        links to Constant
++++Float          links to Number
+++Function       links to Identifier
+++Conditional    links to Statement
+++Repeat         links to Statement
+++Label          links to Statement
+++Operator       links to Statement
+++Keyword        links to Statement
+++Exception      links to Statement
+++Include        links to PreProc
+++Define         links to PreProc
+++Macro          links to PreProc
+++PreCondit      links to PreProc
+++StorageClass   links to Type
+++Structure      links to Type
+++Typedef        links to Type
+++Tag            links to Special
+++SpecialChar    links to Special
+++Delimiter      links to Special
+++SpecialComment links to Special
+++Debug          links to Special

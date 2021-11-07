@@ -1,0 +1,184 @@
+/* Этот CSS файл создан в программе Vim версии 8.2 */
+/* из цветовой схемы elflord */
+/* Для этого использовался подключаемый модуль «colo2css.vim» */
+ 
+*, .Normal
+{font-family: "Natural Mono Alt", monospace;
+font-size: 10pt;
+background-color: #000000;
+color: #00ffff;}
+.ColorColumn
+{background-color: #cd0000;}
+.Conceal
+{color: #666666;}
+.Cursor, .lCursor
+{background-color: #00ffff;
+color: #000000;}
+.CursorColumn
+{background-color: #3a3a3a;}
+.CursorIM
+{background-color: #00ffff;}
+.CursorLine
+{background-color: #3a3a3a;}
+.CursorLineNr
+{font-weight: bold;
+color: #ffff00;}
+.DiffAdd
+{background-color: #005f00;}
+.DiffChange
+{background-color: #00005f;}
+.DiffDelete
+{background-color: #5f0000;
+color: #cdcd00;}
+.DiffText
+{background-color: #5c5cff;
+color: #00cdcd;}
+.Directory
+{background-color: #000000;
+color: #00ffff;}
+.EndOfBuffer
+{font-weight: bold;
+background-color: #000000;
+color: #0000ff;}
+.ErrorMsg
+{background-color: #cd0000;
+color: #ffffff;}
+.FoldColumn
+{color: #00ffff;}
+.Folded
+{background-color: #666666;
+color: #00ffff;}
+.IncSearch
+{background-color: #00ffff;
+color: #000000;}
+.LineNr, .LineNrAbove, .LineNrBelow
+{color: #ffff00;}
+.MatchParen
+{background-color: #008b8b;}
+.ModeMsg
+{font-weight: bold;}
+.MoreMsg
+{font-weight: bold;
+color: #2e8b57;}
+.NonText
+{font-weight: bold;
+color: #0000ff;}
+.Pmenu
+{background-color: #444444;
+color: #ffffff;}
+.PmenuSbar
+{background-color: #bebebe;}
+.PmenuSel, .PopupSelected
+{background-color: #00cdcd;
+color: #000000;}
+.PmenuThumb
+{background-color: #ffffff;}
+.Question
+{font-weight: bold;
+color: #00ff00;}
+.Search, .QuickFixLine
+{background-color: #ffff00;
+color: #000000;}
+.SignColumn
+{color: #00ffff;}
+.SpecialKey
+{color: #00ffff;}
+.SpellBad
+{background-color: #ff0000;
+text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #FF0000; -webkit-text-decoration-color: #FF0000; text-decoration-color: #FF0000;}
+.SpellCap
+{background-color: #0000ff;
+text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #0000FF; -webkit-text-decoration-color: #0000FF; text-decoration-color: #0000FF;}
+.SpellLocal
+{background-color: #00ffff;
+text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #00FFFF; -webkit-text-decoration-color: #00FFFF; text-decoration-color: #00FFFF;}
+.SpellRare
+{background-color: #ff00ff;
+text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #FF00FF; -webkit-text-decoration-color: #FF00FF; text-decoration-color: #FF00FF;}
+.StatusLine
+{font-weight: bold;
+background-color: #00ffff;
+color: #000000;}
+.StatusLineNC
+{background-color: #00ffff;
+color: #000000;}
+.StatusLineTerm
+{font-weight: bold;
+background-color: #90ee90;
+color: #000000;}
+.StatusLineTermNC
+{background-color: #90ee90;
+color: #000000;}
+.TabLine
+{background-color: #008b8b;
+color: #000000;}
+.TabLineFill
+{background-color: #00ffff;
+color: #000000;}
+.TabLineSel
+{font-weight: bold;
+background-color: #000000;}
+.Terminal
+{background-color: #000000;
+color: #00ffff;}
+.Title
+{font-weight: bold;
+color: #ff00ff;}
+.VertSplit
+{background-color: #00ffff;
+color: #000000;}
+.Visual
+{background-color: #a9a9a9;
+color: #000000;}
+.VisualNOS
+{font-weight: bold;
+background-color: #000000;
+text-decoration: underline;}
+.WarningMsg
+{color: #ff0000;}
+.WildMenu
+{background-color: #ffff00;
+color: #000000;}
+.ToolbarLine
+.ToolbarButton
+{font-weight: bold;
+background-color: #e5e5e5;
+color: #000000;}
+.Comment
+{color: #80a0ff;}
+.Constant, .String, .Character, .Number, .Float, .Boolean
+{color: #ff00ff;}
+.Special, .Tag, .SpecialChar, .Delimiter, .SpecialComment, .Debug
+{color: #ff0000;}
+.Identifier
+{color: #40ffff;}
+.Statement, .Label, .Keyword, .Exception
+{font-weight: bold;
+color: #aa4444;}
+.PreProc, .Include, .Define, .Macro, .PreCondit
+{color: #ff80ff;}
+.Type, .StorageClass, .Structure, .Typedef
+{font-weight: bold;
+color: #60ff60;}
+.Underlined
+{color: #80a0ff;
+text-decoration: underline;}
+.Ignore
+{background-color: #000000;
+color: #000000;}
+.Error
+{background-color: #ff0000;
+color: #ffffff;}
+.Todo
+{background-color: #ffff00;
+color: #0000ff;}
+.Function
+{color: #ffffff;}
+.Repeat, .Conditional
+{color: #ffffff;}
+.Operator
+{color: #ff0000;}

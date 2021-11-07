@@ -1,0 +1,571 @@
+/* Этот CSS файл создан в программе Vim версии 8.2 */
+/* из цветовой схемы NeoSolarized */
+/* Для этого использовался подключаемый модуль «colo2css.vim» */
+ 
+*, .Normal, .vimSet, .vimSetEqual
+{font-family: "Natural Mono Alt", monospace;
+font-size: 10pt;
+background-color: #fdf6e3;
+color: #657b83;}
+.ColorColumn
+{background-color: #eee8d5;}
+.Conceal
+{color: #268bd2;}
+.Cursor
+{background-color: #657b83;
+color: #fdf6e3;}
+.CursorColumn
+{background-color: #eee8d5;}
+.CursorLine
+{background-color: #eee8d5;
+-moz-text-decoration-color: #586e75; -webkit-text-decoration-color: #586e75; text-decoration-color: #586e75;}
+.CursorLineNr
+{background-color: #eee8d5;
+-moz-text-decoration-color: #586e75; -webkit-text-decoration-color: #586e75; text-decoration-color: #586e75;}
+.DiffAdd
+{font-weight: bold;
+background-color: #eee8d5;
+color: #719e07;
+-moz-text-decoration-color: #719e07; -webkit-text-decoration-color: #719e07; text-decoration-color: #719e07;}
+.DiffChange
+{font-weight: bold;
+background-color: #eee8d5;
+color: #b58900;
+-moz-text-decoration-color: #b58900; -webkit-text-decoration-color: #b58900; text-decoration-color: #b58900;}
+.DiffDelete
+{font-weight: bold;
+background-color: #eee8d5;
+color: #dc322f;}
+.DiffText
+{font-weight: bold;
+background-color: #eee8d5;
+color: #268bd2;
+-moz-text-decoration-color: #268bd2; -webkit-text-decoration-color: #268bd2; text-decoration-color: #268bd2;}
+.Directory
+{color: #268bd2;}
+.ErrorMsg
+{color: #fdf6e3;
+background-color: #dc322f;}
+.FoldColumn
+{background-color: #eee8d5;
+color: #657b83;}
+.Folded
+{font-weight: bold;
+background-color: #eee8d5;
+color: #657b83;
+-moz-text-decoration-color: #fdf6e3; -webkit-text-decoration-color: #fdf6e3; text-decoration-color: #fdf6e3;}
+.IncSearch
+{color: #cb4b16;}
+.LineNr
+{background-color: #eee8d5;
+color: #93a1a1;}
+.MatchParen
+{font-weight: bold;
+background-color: #93a1a1;
+color: #dc322f;}
+.ModeMsg
+{color: #268bd2;}
+.MoreMsg
+{color: #268bd2;}
+.NonText, .EndOfBuffer
+{font-weight: bold;
+color: #839496;}
+.Pmenu
+{background-color: #657b83;
+color: #eee8d5;}
+.PmenuSbar
+{background-color: #073642;
+color: #657b83;}
+.PmenuSel
+{background-color: #93a1a1;
+color: #073642;}
+.PmenuThumb
+{background-color: #657b83;
+color: #fdf6e3;}
+.Question
+{font-weight: bold;
+color: #2aa198;}
+.Search, .QuickFixLine
+{color: #fdf6e3;
+background-color: #b58900;}
+.SignColumn
+{color: #657b83;}
+.SpecialKey
+{font-weight: bold;
+background-color: #eee8d5;
+color: #839496;}
+.SpellBad
+{text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #dc322f; -webkit-text-decoration-color: #dc322f; text-decoration-color: #dc322f;}
+.SpellCap
+{text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #6c71c4; -webkit-text-decoration-color: #6c71c4; text-decoration-color: #6c71c4;}
+.SpellLocal
+{text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #b58900; -webkit-text-decoration-color: #b58900; text-decoration-color: #b58900;}
+.SpellRare
+{text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #2aa198; -webkit-text-decoration-color: #2aa198; text-decoration-color: #2aa198;}
+.StatusLine
+{background-color: #586e75;
+color: #eee8d5;}
+.StatusLineNC
+{background-color: #839496;
+color: #eee8d5;}
+.StatusLineTerm
+{font-weight: bold;
+background-color: #006400;
+color: #fdf6e3;}
+.StatusLineTermNC
+{background-color: #006400;
+color: #fdf6e3;}
+.TabLine
+{background-color: #eee8d5;
+color: #657b83;
+-moz-text-decoration-color: #657b83; -webkit-text-decoration-color: #657b83; text-decoration-color: #657b83;}
+.TabLineFill
+{background-color: #eee8d5;
+color: #657b83;
+-moz-text-decoration-color: #657b83; -webkit-text-decoration-color: #657b83; text-decoration-color: #657b83;}
+.TabLineSel
+{background-color: #93a1a1;
+color: #073642;
+-moz-text-decoration-color: #657b83; -webkit-text-decoration-color: #657b83; text-decoration-color: #657b83;}
+.Title
+{font-weight: bold;
+color: #cb4b16;}
+.VertSplit
+{color: #839496;}
+.Visual
+{background-color: #93a1a1;
+color: #fdf6e3;}
+.VisualNOS
+{background-color: #657b83;
+color: #eee8d5;}
+.WarningMsg
+{font-weight: bold;
+color: #dc322f;}
+.WildMenu
+{background-color: #073642;
+color: #eee8d5;}
+.lCursor
+{background-color: #073642;
+color: #dc322f;}
+.ToolbarLine
+{background-color: #D3D3D3;}
+.ToolbarButton
+{font-weight: bold;
+background-color: #666666;
+color: #FFFFFF;}
+.Comment
+{color: #93a1a1;}
+.Constant, .String, .NERDTreeOpenable, .NERDTreeCloseable, .NERDTreeCWD, .NERDTreePart, .Character, .Number, .Float, .Boolean
+{color: #2aa198;}
+.Special, .Tag, .SpecialChar, .Delimiter, .hsImportParams, .hsDelimTypeExport, .SpecialComment, .Debug, .helpSpecial
+{color: #dc322f;}
+.Identifier, .Function, .vimFunc, .vimUserFunc, .diffLine, .vimVar
+{color: #268bd2;}
+.Statement, .Conditional, .Repeat, .Label, .Operator, .Keyword, .Exception, .diffAdded
+{color: #719e07;}
+.PreProc, .Include, .Define, .Macro, .PreCondit
+{color: #cb4b16;}
+.Type, .StorageClass, .Structure, .Typedef
+{color: #b58900;}
+.Underlined
+{color: #6c71c4;}
+.Error
+{font-weight: bold;
+color: #dc322f;}
+.Todo
+{font-weight: bold;
+color: #d33682;}
+.ALEErrorSign
+{color: #cb4b16;}
+.ALEWarningSign
+{color: #b58900;}
+.gitcommitSelectedFile, .gitcommitSelectedArrow
+{font-weight: bold;
+color: #719e07;}
+.gitcommitDiscardedFile, .gitcommitDiscardedArrow
+{font-weight: bold;
+color: #dc322f;}
+.GitGutterAdd
+{color: #719e07;}
+.GitGutterChange
+{color: #b58900;}
+.GitGutterDelete
+{color: #dc322f;}
+.GitGutterChangeDelete
+{color: #dc322f;}
+.SignifySignAdd
+{color: #719e07;}
+.SignifySignChange
+{color: #b58900;}
+.SignifySignDelete
+{color: #dc322f;}
+.htmlTag
+{color: #93a1a1;}
+.htmlEndTag
+{color: #93a1a1;}
+.htmlTagName
+{font-weight: bold;
+color: #268bd2;}
+.htmlArg
+{color: #839496;}
+.htmlTagN
+{font-weight: bold;
+color: #586e75;}
+.htmlSpecialTagName
+{color: #268bd2;}
+.vimCommentString
+{color: #6c71c4;}
+.vimCommand
+{color: #b58900;}
+.vimCmdSep
+{font-weight: bold;
+color: #268bd2;}
+.helpExample
+{color: #586e75;}
+.helpOption
+{color: #2aa198;}
+.helpNote
+{color: #d33682;}
+.helpVim
+{color: #d33682;}
+.helpHyperTextJump
+{color: #268bd2;
+text-decoration: underline;}
+.helpHyperTextEntry
+{color: #719e07;}
+.vimIsCommand
+{color: #839496;}
+.vimSynMtchOpt
+{color: #b58900;}
+.vimSynType
+{color: #2aa198;}
+.vimHiLink
+{color: #268bd2;}
+.vimHiGroup
+{color: #268bd2;}
+.vimGroup
+{font-weight: bold;
+color: #268bd2;
+text-decoration: underline;}
+.gitcommitComment, .gitcommitUntracked, .gitcommitDiscarded, .gitcommitSelected
+{color: #93a1a1;}
+.gitcommitUnmerged
+{font-weight: bold;
+color: #719e07;}
+.gitcommitOnBranch
+{font-weight: bold;
+color: #93a1a1;}
+.gitcommitBranch, .gitcommitNoBranch
+{font-weight: bold;
+color: #d33682;}
+.gitcommitDiscardedType
+{color: #dc322f;}
+.gitcommitSelectedType
+{color: #719e07;}
+.gitcommitHeader
+{color: #93a1a1;}
+.gitcommitUntrackedFile
+{font-weight: bold;
+color: #2aa198;}
+.gitcommitUnmergedFile, .gitcommitUnmergedArrow
+{font-weight: bold;
+color: #b58900;}
+.gitcommitFile
+{font-weight: bold;
+color: #657b83;}
+.javaScript
+{color: #b58900;}
+.perlHereDoc
+{background-color: #fdf6e3;
+color: #586e75;}
+.perlVarPlain
+{background-color: #fdf6e3;
+color: #b58900;}
+.perlStatementFileDesc
+{background-color: #fdf6e3;
+color: #2aa198;}
+.texStatement
+{background-color: #fdf6e3;
+color: #2aa198;}
+.texMathZoneX
+{background-color: #fdf6e3;
+color: #b58900;}
+.texMathMatcher
+{background-color: #fdf6e3;
+color: #b58900;}
+.texRefLabel
+{background-color: #fdf6e3;
+color: #b58900;}
+.rubyDefine
+{font-weight: bold;
+background-color: #fdf6e3;
+color: #586e75;}
+.cPreCondit
+{color: #cb4b16;}
+.VarId
+{color: #268bd2;}
+.ConId
+{color: #b58900;}
+.hsImport
+{color: #d33682;}
+.hsString
+{color: #839496;}
+.hsStructure, .hsModuleStartLabel, .hsModuleWhereLabel
+{color: #2aa198;}
+.hs_hlFunctionName
+{color: #268bd2;}
+.hsStatement
+{color: #2aa198;}
+.hsImportLabel
+{color: #2aa198;}
+.hs_OpFunctionName
+{color: #b58900;}
+.hs_DeclareFunction
+{color: #cb4b16;}
+.hsVarSym
+{color: #2aa198;}
+.hsType
+{color: #b58900;}
+.hsTypedef
+{color: #2aa198;}
+.hsModuleName
+{color: #719e07;
+text-decoration: underline;}
+.hsNiceOperator
+{color: #2aa198;}
+.pandocTitleBlock
+{color: #268bd2;}
+.pandocTitleBlockTitle
+{font-weight: bold;
+color: #268bd2;}
+.pandocTitleComment
+{font-weight: bold;
+color: #268bd2;}
+.pandocComment
+{color: #93a1a1;}
+.pandocVerbatimBlock, .pandocVerbatimBlockDeep, .pandocCodeBlock, .pandocCodeBlockDelim
+{color: #b58900;}
+.pandocBlockQuote
+{color: #268bd2;}
+.pandocBlockQuoteLeader1
+{color: #268bd2;}
+.pandocBlockQuoteLeader2
+{color: #2aa198;}
+.pandocBlockQuoteLeader3
+{color: #b58900;}
+.pandocBlockQuoteLeader4
+{color: #dc322f;}
+.pandocBlockQuoteLeader5
+{color: #657b83;}
+.pandocBlockQuoteLeader6
+{color: #93a1a1;}
+.pandocListMarker
+{color: #d33682;}
+.pandocListReference
+{color: #d33682;
+text-decoration: underline;}
+.pandocDefinitionBlock
+{color: #6c71c4;}
+.pandocDefinitionTerm
+{color: #6c71c4;}
+.pandocDefinitionIndctr
+{font-weight: bold;
+color: #6c71c4;}
+.pandocEmphasisDefinition
+{color: #6c71c4;}
+.pandocEmphasisNestedDefinition
+{font-weight: bold;
+color: #6c71c4;}
+.pandocStrongEmphasisDefinition
+{font-weight: bold;
+color: #6c71c4;}
+.pandocStrongEmphasisNestedDefinition
+{font-weight: bold;
+color: #6c71c4;}
+.pandocStrongEmphasisEmphasisDefinition
+{font-weight: bold;
+color: #6c71c4;}
+.pandocStrikeoutDefinition
+{color: #fdf6e3;
+background-color: #6c71c4;}
+.pandocVerbatimInlineDefinition
+{color: #6c71c4;}
+.pandocSuperscriptDefinition
+{color: #6c71c4;}
+.pandocSubscriptDefinition
+{color: #6c71c4;}
+.pandocTable
+{color: #268bd2;}
+.pandocTableStructure
+{color: #268bd2;}
+.pandocTableZebraLight
+{background-color: #fdf6e3;
+color: #268bd2;}
+.pandocTableZebraDark
+{background-color: #eee8d5;
+color: #268bd2;}
+.pandocEmphasisTable
+{color: #268bd2;}
+.pandocEmphasisNestedTable
+{font-weight: bold;
+color: #268bd2;}
+.pandocStrongEmphasisTable
+{font-weight: bold;
+color: #268bd2;}
+.pandocStrongEmphasisNestedTable
+{font-weight: bold;
+color: #268bd2;}
+.pandocStrongEmphasisEmphasisTable
+{font-weight: bold;
+color: #268bd2;}
+.pandocStrikeoutTable
+{color: #fdf6e3;
+background-color: #268bd2;}
+.pandocVerbatimInlineTable
+{color: #268bd2;}
+.pandocSuperscriptTable
+{color: #268bd2;}
+.pandocSubscriptTable
+{color: #268bd2;}
+.pandocHeading
+{font-weight: bold;
+color: #cb4b16;}
+.pandocHeadingMarker
+{font-weight: bold;
+color: #b58900;}
+.pandocEmphasisHeading
+{font-weight: bold;
+color: #cb4b16;}
+.pandocEmphasisNestedHeading
+{font-weight: bold;
+color: #cb4b16;}
+.pandocStrongEmphasisHeading
+{font-weight: bold;
+color: #cb4b16;}
+.pandocStrongEmphasisNestedHeading
+{font-weight: bold;
+color: #cb4b16;}
+.pandocStrongEmphasisEmphasisHeading
+{font-weight: bold;
+color: #cb4b16;}
+.pandocStrikeoutHeading
+{color: #fdf6e3;
+background-color: #cb4b16;}
+.pandocVerbatimInlineHeading
+{font-weight: bold;
+color: #cb4b16;}
+.pandocSuperscriptHeading
+{font-weight: bold;
+color: #cb4b16;}
+.pandocSubscriptHeading
+{font-weight: bold;
+color: #cb4b16;}
+.pandocLinkDelim
+{color: #93a1a1;}
+.pandocLinkLabel
+{color: #268bd2;
+text-decoration: underline;}
+.pandocLinkText
+{font-weight: bold;
+color: #268bd2;
+text-decoration: underline;}
+.pandocLinkURL
+{color: #839496;
+text-decoration: underline;}
+.pandocLinkTitle
+{color: #839496;
+text-decoration: underline;}
+.pandocLinkTitleDelim
+{color: #93a1a1;
+text-decoration: underline;
+-moz-text-decoration-color: #839496; -webkit-text-decoration-color: #839496; text-decoration-color: #839496;}
+.pandocLinkDefinition
+{color: #2aa198;
+text-decoration: underline;
+-moz-text-decoration-color: #839496; -webkit-text-decoration-color: #839496; text-decoration-color: #839496;}
+.pandocLinkDefinitionID
+{font-weight: bold;
+color: #268bd2;}
+.pandocImageCaption
+{font-weight: bold;
+color: #6c71c4;
+text-decoration: underline;}
+.pandocFootnoteLink
+{color: #719e07;
+text-decoration: underline;}
+.pandocFootnoteDefLink
+{font-weight: bold;
+color: #719e07;}
+.pandocFootnoteInline
+{font-weight: bold;
+color: #719e07;
+text-decoration: underline;}
+.pandocFootnote
+{color: #719e07;}
+.pandocCitationDelim
+{color: #d33682;}
+.pandocCitation
+{color: #d33682;}
+.pandocCitationID
+{color: #d33682;
+text-decoration: underline;}
+.pandocCitationRef
+{color: #d33682;}
+.pandocStyleDelim
+{color: #93a1a1;}
+.pandocEmphasis
+{color: #657b83;}
+.pandocEmphasisNested
+{font-weight: bold;
+color: #657b83;}
+.pandocStrongEmphasis
+{font-weight: bold;
+color: #657b83;}
+.pandocStrongEmphasisNested
+{font-weight: bold;
+color: #657b83;}
+.pandocStrongEmphasisEmphasis
+{font-weight: bold;
+color: #657b83;}
+.pandocStrikeout
+{color: #fdf6e3;
+background-color: #93a1a1;}
+.pandocVerbatimInline
+{color: #b58900;}
+.pandocSuperscript
+{color: #6c71c4;}
+.pandocSubscript
+{color: #6c71c4;}
+.pandocRule
+{font-weight: bold;
+color: #268bd2;}
+.pandocRuleLine
+{font-weight: bold;
+color: #268bd2;}
+.pandocEscapePair, .pandocEscapedCharacter, .pandocLineBreak
+{font-weight: bold;
+color: #dc322f;}
+.pandocNonBreakingSpace
+{color: #fdf6e3;
+background-color: #dc322f;}
+.pandocMetadataDelim
+{color: #93a1a1;}
+.pandocMetadata, .pandocMetadataTitle
+{font-weight: bold;
+color: #268bd2;}
+.pandocMetadataKey
+{color: #268bd2;}
+.NeomakeErrorSign
+{color: #cb4b16;}
+.NeomakeWarningSign
+{color: #b58900;}
+.NeomakeMessageSign
+{color: #2aa198;}
+.NeomakeNeomakeInfoSign
+{color: #719e07;}
+.SignifySignChangeDelete
+{color: #dc322f;}

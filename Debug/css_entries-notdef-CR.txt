@@ -1,0 +1,12 @@
+[['.ToolbarLine', '{background-color: #D3D3D3;}'],
+ ['.ToolbarButton', '{font-weight: bold;', 'background-color: #666666;', 'color: #FFFFFF;}'],
+ ['.Comment', '{color: #0000FF;}'],
+ ['.Constant, .String, .Character, .Number, .Float, .Boolean,', '{color: #FF00FF;}'],
+ ['.Special, .Tag, .SpecialChar, .Delimiter, .SpecialComment, .Debug,', '{color: #6a5acd;}'],
+ ['.Identifier, .Function,', '{color: #008B8B;}'],
+ ['.Statement, .Conditional, .Repeat, .Label, .Operator, .Keyword, .Exception,', '{font-weight: bold;', 'color: #A52A2A;}'],
+ ['.PreProc, .Include, .Define, .Macro, .PreCondit,', '{color: #6a0dad;}'],
+ ['.Type, .StorageClass, .Structure, .Typedef,', '{font-weight: bold;', 'color: #2E8B57;}'],
+ ['.Underlined', '{color: #6A5ACD;', 'text-decoration: underline;}'],
+ ['.Error', '{background-color: #FF0000;', 'color: #FFFFFF;}'],
+ ['.Todo', '{background-color: #FFFF00;', 'color: #0000FF;}']]

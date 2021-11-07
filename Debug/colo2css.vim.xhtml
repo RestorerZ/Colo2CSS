@@ -1,0 +1,986 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>D:\Project\vim\my_plugins\colo2css\colo2css.vim.xhtml</title>
+<meta name="Generator" content="Vim/8.2" />
+<meta name="plugin-version" content="vim8.1_v2" />
+<meta name="syntax" content="vim" />
+<meta name="settings" content="ignore_folding,use_xhtml,use_css,pre_wrap,no_foldcolumn,prevent_copy=,use_input_for_pc=fallback" />
+<meta name="colorscheme" content="gruvbox8" />
+<link href="gruvbox8.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<pre id='vimCodeElement0'>
+<span class="Comment">&quot; colo2css.vim</span>
+<span class="Comment">&quot;</span> <span class="vimCommentTitle">Maintainer:</span><span class="Comment">	Restorer</span>
+<span class="Comment">&quot; Last change:	05 Nov 21</span>
+<span class="Comment">&quot;</span> <span class="vimCommentTitle">Version:</span><span class="Comment">	0.8.17</span>
+<span class="Comment">&quot;</span> <span class="vimCommentTitle">Description:</span><span class="Comment">	преобразование файла цветовой схемы в файл CSS</span>
+<span class="Comment">&quot;		converting colorscheme file to CSS file</span>
+
+
+
+<span class="Statement">if</span> <span class="Function">has</span><span class="Delimiter">(</span><span class="String">'user_commands'</span><span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Function">exists</span><span class="Delimiter">(</span><span class="String">':TOCss'</span><span class="Delimiter">)</span>
+    <span class="Statement">command</span> TOCss <span class="Function">call</span> <span class="Normal">s:MainColo2Css</span>()
+<span class="Statement">endif</span>
+
+<span class="Statement">let</span> <span class="Identifier">s:head</span> <span class="Operator">=</span> []
+<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>s:head, <span class="String">'/* Этот CSS файл создан в программе Vim версии '</span> <span class="Operator">..</span> v:version/<span class="Number">100</span> <span class="Operator">..</span> <span class="String">'.'</span> <span class="Operator">..</span> v:version%<span class="Number">100</span> <span class="Operator">..</span> <span class="String">' */'</span><span class="Delimiter">)</span>
+<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>s:head, <span class="String">'/* из цветовой схемы '</span> <span class="Operator">..</span> <span class="Function">trim</span><span class="Delimiter">(</span><span class="Function">execute</span><span class="Delimiter">(</span><span class="String">'colorscheme'</span><span class="Delimiter">))</span> <span class="Operator">..</span> <span class="String">' через модуль «colo2css.vim» */'</span><span class="Delimiter">)</span>
+<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>s:head, <span class="String">' '</span><span class="Delimiter">)</span>
+
+<span class="Comment">&quot; Цвета, которые отсутствуют в файле rgb.txt. Взято из файла src\term.c </span>
+<span class="Statement">let</span> <span class="Identifier">s:notrgb</span> <span class="Operator">=</span>
+<span class="vimContinue">    \</span> [[<span class="String">'darkyellow'</span>,<span class="Number">'8</span>B8B<span class="Number">00</span><span class="String">'], ['</span>lightmagenta',<span class="Number">'F</span>F8BFF'], [<span class="String">'</span>lightred',<span class="Number">'F</span>F8B8B']]
+
+<span class="Comment">&quot; *win32-colors*</span>
+<span class="Comment">&quot; <a href="https://russianblogs.com/article/8427240475/">https://russianblogs.com/article/8427240475/</a></span>
+<span class="Comment">&quot; <a href="http://rusproject.narod.ru/winapi/g/getsyscolor.html">http://rusproject.narod.ru/winapi/g/getsyscolor.html</a></span>
+<span class="Comment">&quot; <a href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsyscolor">https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsyscolor</a></span>
+<span class="Statement">let</span> <span class="Identifier">s:winsys_colo</span> <span class="Operator">=</span> <span class="vimSep">{</span><span class="String">'SYS_3DDKSHADOW'</span>:[<span class="String">'ButtonDkShadow'</span>, <span class="String">'COLOR_3DDKSHADOW'</span>, <span class="Number">21</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_3DHILIGHT'</span>:[<span class="String">'ButtonHighlight'</span>, <span class="String">'COLOR_3DHILIGHT'</span>, <span class="Number">20</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_3DHIGHLIGHT'</span>:[<span class="String">'ButtonHighlight'</span>, <span class="String">'COLOR_3DHIGHLIGHT'</span>, <span class="Number">20</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_BTNHILIGHT'</span>:[<span class="String">'ButtonHighlight'</span>, <span class="String">'COLOR_BTNHILIGHT'</span>, <span class="Number">20</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_BTNHIGHLIGHT'</span>:[<span class="String">'ButtonHighlight'</span>, <span class="String">'COLOR_BTNHIGHLIGHT'</span>, <span class="Number">20</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_3DLIGHT'</span>:[<span class="String">'ButtonLight'</span>, <span class="String">'COLOR_3DLIGHT'</span>, <span class="Number">22</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_3DSHADOW'</span>:[<span class="String">'ButtonShadow'</span>, <span class="String">'COLOR_3DSHADOW'</span>, <span class="Number">16</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_DESKTOP'</span>:[<span class="String">'Background'</span>, <span class="String">'COLOR_DESKTOP'</span>, <span class="Number">1</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_INFOBK'</span>:[<span class="String">'InfoWindow'</span>, <span class="String">'COLOR_INFOBK'</span>, <span class="Number">24</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_INFOTEXT'</span>:[<span class="String">'InfoText'</span>, <span class="String">'COLOR_INFOTEXT'</span>, <span class="Number">23</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_3DFACE'</span>:[<span class="String">'ButtonFace'</span>, <span class="String">'COLOR_3DFACE'</span>, <span class="Number">15</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_BTNFACE'</span>:[<span class="String">'ButtonFace'</span>, <span class="String">'COLOR_BTNFACE'</span>, <span class="Number">15</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_BTNSHADOW'</span>:[<span class="String">'ButtonShadow'</span>, <span class="String">'COLOR_BTNSHADOW'</span>, <span class="Number">16</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_ACTIVEBORDER'</span>:[<span class="String">'ActiveBorder'</span>, <span class="String">'COLOR_ACTIVEBORDER'</span>, <span class="Number">10</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_ACTIVECAPTION'</span>:[<span class="String">'ActiveTitle'</span>, <span class="String">'COLOR_ACTIVECAPTION'</span>, <span class="Number">2</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_APPWORKSPACE'</span>:[<span class="String">'AppWorkspace'</span>, <span class="String">'COLOR_APPWORKSPACE'</span>, <span class="Number">12</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_BACKGROUND'</span>:[<span class="String">'Background'</span>, <span class="String">'COLOR_BACKGROUND'</span>, <span class="Number">1</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_BTNTEXT'</span>:[<span class="String">'ButtonText'</span>, <span class="String">'COLOR_BTNTEXT'</span>, <span class="Number">18</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_CAPTIONTEXT'</span>:[<span class="String">'TitleText'</span>, <span class="String">'COLOR_CAPTIONTEXT'</span>, <span class="Number">9</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_GRAYTEXT'</span>:[<span class="String">'GrayText'</span>, <span class="String">'COLOR_GRAYTEXT'</span>, <span class="Number">17</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_HIGHLIGHT'</span>:[<span class="String">'Hilight'</span>, <span class="String">'COLOR_HIGHLIGHT'</span>, <span class="Number">13</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_HIGHLIGHTTEXT'</span>:[<span class="String">'HilightText'</span>, <span class="String">'COLOR_HIGHLIGHTTEXT'</span>, <span class="Number">14</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_INACTIVEBORDER'</span>:[<span class="String">'InactiveBorder'</span>, <span class="String">'COLOR_INACTIVEBORDER'</span>, <span class="Number">11</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_INACTIVECAPTION'</span>:[<span class="String">'InactiveTitle'</span>, <span class="String">'COLOR_INACTIVECAPTION'</span>, <span class="Number">3</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_INACTIVECAPTIONTEXT'</span>:[<span class="String">'InactiveTitleText'</span>, <span class="String">'COLOR_INACTIVECAPTIONTEXT'</span>, <span class="Number">19</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_MENU'</span>:[<span class="String">'Menu'</span>, <span class="String">'COLOR_MENU'</span>, <span class="Number">4</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_MENUTEXT'</span>:[<span class="String">'MenuText'</span>, <span class="String">'COLOR_MENUTEXT'</span>, <span class="Number">7</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_SCROLLBAR'</span>:[<span class="String">'Scrollbar'</span>, <span class="String">'COLOR_SCROLLBAR'</span>, <span class="Number">0</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_WINDOW'</span>:[<span class="String">'Window'</span>, <span class="String">'COLOR_WINDOW'</span>, <span class="Number">5</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_WINDOWFRAME'</span>:[<span class="String">'WindowFrame'</span>, <span class="String">'COLOR_WINDOWFRAME'</span>, <span class="Number">6</span>],
+<span class="vimContinue">    \</span> <span class="String">'SYS_WINDOWTEXT'</span>:[<span class="String">'WindowText'</span>, <span class="String">'COLOR_WINDOWTEXT'</span>, <span class="Number">8</span>]
+<span class="vimContinue">    \</span> <span class="vimSep">}</span>
+
+<span class="Statement">let</span> <span class="Identifier">s:fnt_size</span> <span class="Operator">=</span> [<span class="String">'h'</span>, <span class="String">'w'</span>, <span class="String">'W'</span>]
+
+<span class="Statement">let</span> <span class="Identifier">s:spec_attr</span> <span class="Operator">=</span> [[<span class="String">'bold'</span>, <span class="String">'wght'</span>], [<span class="String">'italic'</span>, <span class="String">'itlc'</span>],
+<span class="vimContinue">    \</span> [<span class="String">'underline'</span>, <span class="String">'undlne'</span>], [<span class="String">'undercurl'</span>, <span class="String">'undcrl'</span>],
+<span class="vimContinue">    \</span> [<span class="String">'reverse'</span>, <span class="String">'rvrs'</span>], [<span class="String">'inverse'</span>, <span class="String">'rvrs'</span>],
+<span class="vimContinue">    \</span> [<span class="String">'strikethrough'</span>, <span class="String">'skthro'</span>], [<span class="String">'NONE'</span>, <span class="String">'rset'</span>],
+<span class="vimContinue">    \</span> [<span class="String">'standout'</span>, <span class="String">'lum'</span>], [<span class="String">'nocombine'</span>, <span class="String">'ncomb'</span>]]
+
+<span class="Statement">let</span> <span class="Identifier">s:hi_args</span> <span class="Operator">=</span> [<span class="String">'gui'</span>, <span class="String">'guifg'</span>, <span class="String">'guibg'</span>, <span class="String">'guisp'</span>, <span class="String">'font'</span>]
+
+<span class="Comment">&quot; Группы подсветки, используемые по умолчанию. Взято из *highlight-default*</span>
+<span class="Comment">&quot; Группа «Normal» должна быть первой, т. к. это будут начальные настройки CSS</span>
+<span class="Statement">let</span> <span class="Identifier">s:init_grp</span> <span class="Operator">=</span> [<span class="String">'Normal'</span>, <span class="String">'ColorColumn'</span>, <span class="String">'Conceal'</span>, <span class="String">'Cursor'</span>, <span class="String">'CursorColumn'</span>,
+<span class="vimContinue">    \</span> <span class="String">'CursorIM'</span>, <span class="String">'CursorLine'</span>, <span class="String">'CursorLineNr'</span>, <span class="String">'DiffAdd'</span>, <span class="String">'DiffChange'</span>,
+<span class="vimContinue">    \</span> <span class="String">'DiffDelete'</span>, <span class="String">'DiffText'</span>, <span class="String">'Directory'</span>, <span class="String">'EndOfBuffer'</span>, <span class="String">'ErrorMsg'</span>,
+<span class="vimContinue">    \</span> <span class="String">'FoldColumn'</span>, <span class="String">'Folded'</span>, <span class="String">'IncSearch'</span>, <span class="String">'LineNr'</span>, <span class="String">'LineNrAbove'</span>,
+<span class="vimContinue">    \</span> <span class="String">'LineNrBelow'</span>, <span class="String">'MatchParen'</span>, <span class="String">'ModeMsg'</span>, <span class="String">'MoreMsg'</span>, <span class="String">'NonText'</span>, <span class="String">'Pmenu'</span>,
+<span class="vimContinue">    \</span> <span class="String">'PmenuSbar'</span>, <span class="String">'PmenuSel'</span>, <span class="String">'PmenuThumb'</span>, <span class="String">'Question'</span>, <span class="String">'QuickFixLine'</span>,
+<span class="vimContinue">    \</span> <span class="String">'Search'</span>, <span class="String">'SignColumn'</span>, <span class="String">'SpecialKey'</span>, <span class="String">'SpellBad'</span>, <span class="String">'SpellCap'</span>, <span class="String">'SpellLocal'</span>,
+<span class="vimContinue">    \</span> <span class="String">'SpellRare'</span>, <span class="String">'StatusLine'</span>, <span class="String">'StatusLineNC'</span>, <span class="String">'StatusLineTerm'</span>,
+<span class="vimContinue">    \</span> <span class="String">'StatusLineTermNC'</span>, <span class="String">'TabLine'</span>, <span class="String">'TabLineFill'</span>, <span class="String">'TabLineSel'</span>, <span class="String">'Terminal'</span>,
+<span class="vimContinue">    \</span> <span class="String">'Title'</span>, <span class="String">'VertSplit'</span>, <span class="String">'Visual'</span>, <span class="String">'VisualNOS'</span>, <span class="String">'WarningMsg'</span>, <span class="String">'WildMenu'</span>,
+<span class="vimContinue">    \</span> <span class="String">'lCursor'</span>]
+
+
+<span class="Comment">&quot;let s:init_grp = ['Normal', 'EndOfBuffer', 'NonText', 'QuickFixLine', 'Search']</span>
+
+<span class="Comment">&quot; Общие переменные</span>
+<span class="Statement">let</span> <span class="Identifier">s:nmtmpbuf</span> <span class="Operator">=</span> <span class="String">'Tmp_Colo2CSS'</span>
+<span class="Statement">let</span> <span class="Identifier">s:is_norm</span> <span class="Operator">=</span> <span class="String">''</span>
+<span class="Statement">let</span> <span class="Identifier">s:bg_norm</span> <span class="Operator">=</span> <span class="String">''</span>
+<span class="Statement">let</span> <span class="Identifier">s:fg_norm</span> <span class="Operator">=</span> <span class="String">''</span>
+<span class="Statement">let</span> <span class="Identifier">s:cmmngrp</span> <span class="Operator">=</span> <span class="String">''</span>
+
+<span class="Comment">&quot; Честно подсмотрено в hitest.vim</span>
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>HiGroups2Buf<span class="Delimiter">()</span>
+<span class="Comment">&quot; Задаём необходимые нам значения параметров</span>
+    <span class="Statement">set</span> <span class="PreProc">hidden</span> <span class="PreProc">lazyredraw</span> <span class="PreProc">nomore</span> <span class="PreProc">report</span>=99999 <span class="PreProc">shortmess</span>=aAoOsStTW <span class="PreProc">nowrapscan</span>
+    <span class="Statement">set</span> <span class="PreProc">nospell</span> <span class="PreProc">whichwrap</span><span class="PreProc">&amp;</span>
+
+<span class="Comment">&quot; Считываем в регистр &quot;h вывод команды `highlight`</span>
+    <span class="Statement">redir</span> <span class="SpecialChar">@h</span>
+    <span class="Statement">silent</span> <span class="Statement">highlight</span>
+    <span class="Statement">redir</span> END
+
+<span class="Comment">&quot; Создаём новое окно если текущее окно содержит какой‐нибудь текст</span>
+<span class="Comment">&quot; НАДО: в окончательном варианте надо это удалить, т. к. не потребуется и</span>
+<span class="Comment">&quot;    сделано здесь для целей тестирования</span>
+<span class="Comment">&quot;   if line(&quot;$&quot;) != 1 || getline(1) != </span><span class="String">&quot;&quot;</span>
+<span class="Comment">&quot;	new</span>
+<span class="Comment">&quot;    endif</span>
+
+<span class="Comment">&quot; Создаём временный буфер</span>
+    <span class="Statement">execute</span> <span class="String">'edit '</span> <span class="Operator">..</span> <span class="Identifier">s:nmtmpbuf</span>
+
+<span class="Comment">&quot; И устанавливаем для него необходимые локальные параметры textwidth=0 </span>
+    <span class="Statement">setlocal</span> <span class="PreProc">noautoindent</span> <span class="PreProc">noexpandtab</span> <span class="PreProc">formatoptions</span>=<span class="String">&quot;&quot;</span>
+    <span class="Statement">setlocal</span> <span class="PreProc">noswapfile</span>
+    <span class="Statement">setlocal</span> <span class="PreProc">buftype</span>=
+    <span class="Statement">let</span> <span class="Identifier">&amp;textwidth</span><span class="Operator">=</span>&amp;columns
+
+<span class="Comment">&quot; Помещаем в созданный буфер содержимое регистра &quot;h</span>
+    <span class="Statement">put</span> <span class="Statement">h</span>
+
+<span class="Comment">&quot; Удалим те группы, которые не заданы в этой цветовой схеме</span>
+    <span class="Statement">silent</span><span class="Operator">!</span> <span class="Statement">global/</span> cleared$<span class="Statement">/</span><span class="Statement">delete</span>
+
+<span class="Comment">&quot; Также удаляем символы «xxx » в выводе команды `:highlight`</span>
+    <span class="Number">%</span><span class="Statement">substitute</span><span class="Delimiter">/</span>xxx <span class="Delimiter">//</span><span class="Special">e</span>
+
+<span class="Comment">&quot; Объединяем строки с наименованием группы и ссылкой на группу, если есть перенос</span>
+    <span class="Statement">silent</span><span class="Operator">!</span> <span class="Statement">global/</span>^\s*links to \w\+<span class="Statement">/</span><span class="Operator">.-</span>1join
+
+<span class="Comment">&quot; Для ускорения поиска удаляем пустые строки</span>
+    <span class="Statement">silent</span><span class="Operator">!</span> <span class="Statement">global/</span>^\s*$<span class="Statement">/</span><span class="Statement">delete</span>
+
+<span class="Comment">&quot; Обрабатывать будем только атрибуты для gui. Чтобы не мешались под рукой</span>
+<span class="Comment">&quot;    silent! %substitute/\&lt;term=\w\+\s//e</span>
+<span class="Comment">&quot;    silent! %substitute/\&lt;term=\w\+,\w\+\s//e</span>
+<span class="Comment">&quot;    silent! %substitute/\&lt;start=\w\+\s//e </span>
+<span class="Comment">&quot;    silent! %substitute/\&lt;stop=\w\+\s//e </span>
+<span class="Comment">&quot;    silent! %substitute/\&lt;cterm=\w\+\s//e</span>
+<span class="Comment">&quot;    silent! %substitute/\&lt;cterm=\w\+,\w\+\s//e</span>
+<span class="Comment">&quot;    silent! %substitute/\&lt;ctermfg=\w\+\s//e </span>
+<span class="Comment">&quot;    silent! %substitute/\&lt;ctermbg=\w\+\s//e </span>
+<span class="Comment">&quot;    silent! %substitute/\&lt;ctermul=\w\+\s//e </span>
+<span class="Statement">endfunction</span>
+
+
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>GetEntry<span class="Delimiter">(</span>bnr, lnr, colnr, offset, motion<span class="Delimiter">)</span>
+    <span class="Statement">let</span> @<span class="Statement">e</span> <span class="Operator">=</span> <span class="String">''</span>
+    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">setpos</span><span class="Delimiter">(</span><span class="String">'.'</span>, [<span class="Identifier">a:bnr</span>, <span class="Identifier">a:lnr</span>, <span class="Identifier">a:colnr</span>, <span class="Identifier">a:offset</span>]<span class="Delimiter">)</span>
+	<span class="Statement">execute</span> <span class="String">'normal &quot;ey'</span> <span class="Operator">..</span> <span class="Identifier">a:motion</span>
+    <span class="Statement">endif</span>
+    <span class="Statement">return</span> <span class="Function">getreg</span><span class="Delimiter">(</span><span class="String">'e'</span><span class="Delimiter">)</span>
+<span class="Statement">endfunction</span>
+
+
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>GetLnkGrp<span class="Delimiter">(</span>grpname<span class="Delimiter">)</span>
+    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span><span class="Identifier">a:grpname</span><span class="Delimiter">)</span>
+	<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">cursor</span><span class="Delimiter">(</span><span class="Number">1</span>,<span class="Number">1</span><span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:srchpat</span> <span class="Operator">=</span> <span class="String">'links to\s\+'</span> <span class="Operator">..</span> <span class="Identifier">a:grpname</span> <span class="Operator">..</span> <span class="String">'$'</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:srchflgs</span> <span class="Operator">=</span> <span class="String">'cW'</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:lnkgrpnm</span> <span class="Operator">=</span> <span class="String">''</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:lnr</span> <span class="Operator">=</span> <span class="Number">1</span>
+	    <span class="Statement">while</span> <span class="Identifier">l:lnr</span>
+		<span class="Statement">let</span> <span class="Identifier">l:fndlnr</span> <span class="Operator">=</span> <span class="Function">search</span><span class="Delimiter">(</span>l:srchpat, l:srchflgs, <span class="Function">line</span><span class="Delimiter">(</span><span class="String">'$'</span><span class="Delimiter">))</span>
+		<span class="Statement">if</span> <span class="Identifier">l:fndlnr</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:lnkgrpnm</span> <span class="Operator">=</span> <span class="Normal">s:GetEntry</span><span class="Delimiter">(</span><span class="Number">0</span>, l:fndlnr, <span class="Number">1</span>, <span class="Number">0</span>, <span class="String">'iw'</span><span class="Delimiter">)</span>
+		    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:lnkgrpnm<span class="Delimiter">)</span>
+			<span class="Statement">let</span> @L <span class="Operator">=</span> <span class="String">' '</span> <span class="Operator">..</span> <span class="Identifier">l:lnkgrpnm</span>
+		    <span class="Statement">endif</span>
+		    <span class="Statement">execute</span> <span class="Identifier">l:fndlnr</span>'<span class="Identifier">delete</span>'
+<span class="Comment">&quot; Могут быть группы, которые ссылаются на эту группу, которая ссылается на</span>
+<span class="Comment">&quot; на начальную группу</span>
+		    <span class="Statement">call</span> <span class="Normal">s:GetLnkGrp</span><span class="Delimiter">(</span>l:lnkgrpnm<span class="Delimiter">)</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:lnr</span> <span class="Operator">=</span> <span class="Identifier">l:fndlnr</span>
+	    <span class="Statement">endwhile</span>
+	<span class="Statement">return</span> @L
+	<span class="Statement">endif</span>
+    <span class="Statement">endif</span>
+    <span class="Statement">return</span> <span class="Operator">-</span>1
+<span class="Statement">endfunction</span>
+
+
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>Dec2Hex<span class="Delimiter">(</span>str<span class="Delimiter">)</span>
+<span class="Comment">&quot; Так, конечно, делать не надо. Такие читы до добра не доводят!</span>
+<span class="Comment">&quot;   let l:hex=printf(&quot;%X&quot;, a:str)</span>
+<span class="Comment">&quot;   return l:hex</span>
+    <span class="Statement">let</span> <span class="Identifier">l:hexdig</span><span class="Operator">=</span>[<span class="Number">0</span>,<span class="Number">1</span>,<span class="Number">2</span>,<span class="Number">3</span>,<span class="Number">4</span>,<span class="Number">5</span>,<span class="Number">6</span>,<span class="Number">7</span>,<span class="Number">8</span>,<span class="Number">9</span>,<span class="Number">'A</span>',<span class="Number">'B</span>',<span class="Number">'C</span>',<span class="Number">'D</span>',<span class="Number">'E</span>',<span class="Number">'F</span>']
+    <span class="Statement">let</span> <span class="Identifier">l:hex</span> <span class="Operator">=</span> <span class="String">''</span>
+    <span class="Statement">let</span> <span class="Identifier">l:num</span><span class="Operator">=</span><span class="Function">str2nr</span><span class="Delimiter">(</span><span class="Identifier">a:str</span>, <span class="Number">10</span><span class="Delimiter">)</span>
+    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">==</span> <span class="Identifier">l:num</span>
+	<span class="Statement">return</span> <span class="Number">0</span> <span class="Operator">..</span> <span class="Identifier">l:num</span>
+    <span class="Statement">else</span>
+	<span class="Statement">while</span> <span class="Identifier">l:num</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:hex</span><span class="Operator">=</span><span class="Identifier">l:hexdig</span>[<span class="Identifier">l:num</span>%<span class="Number">16</span>] <span class="Operator">..</span> <span class="Identifier">l:hex</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:num</span>/<span class="Operator">=</span><span class="Number">16</span>
+	<span class="Statement">endwhile</span>
+    <span class="Statement">endif</span>
+    <span class="Statement">return</span> <span class="Identifier">l:hex</span>
+<span class="Statement">endfunction</span>
+
+
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>ColoStr2ColoNum<span class="Delimiter">(</span>colostr<span class="Delimiter">)</span>
+    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span><span class="Identifier">a:colostr</span><span class="Delimiter">)</span>
+	<span class="Statement">if</span> <span class="Function">filereadable</span><span class="Delimiter">(</span><span class="PreProc">$VIMRUNTIME</span> <span class="Operator">..</span> <span class="String">'/rgb.txt'</span><span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:rgbcolo</span> <span class="Operator">=</span> <span class="String">&quot;</span><span class="String">&quot;</span>
+	    <span class="Statement">if</span> <span class="Function">has</span><span class="Delimiter">(</span><span class="String">'win32'</span><span class="Delimiter">)</span>
+		<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Function">stridx</span><span class="Delimiter">(</span><span class="Function">toupper</span><span class="Delimiter">(</span><span class="Identifier">a:colostr</span><span class="Delimiter">)</span>, <span class="String">'SYS_'</span>, <span class="Number">0</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; Гулять, так гулять... Будь внимателен с кавычками, наклонной чертой и проч. </span>
+<span class="Comment">&quot; спецсимволами, экранируй их правильно.</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:rgbcolo</span> <span class="Operator">=</span>
+<span class="vimContinue">			\</span> <span class="Function">system</span><span class="Delimiter">(</span><span class="String">&quot;powershell Get-ItemProperty -Path 'Registry::HKCU</span><span class="String">\\</span><span class="String">Control Panel</span><span class="String">\\</span><span class="String">Colors' -Name </span><span class="String">&quot;</span>
+<span class="vimContinue">			\</span> <span class="Operator">..</span> s:winsys_colo[<span class="Function">toupper</span><span class="Delimiter">(</span><span class="Identifier">a:colostr</span><span class="Delimiter">)</span>][<span class="Number">0</span>]
+<span class="vimContinue">			\</span> <span class="Operator">..</span> <span class="String">&quot; ^| Select-Object -ExpandProperty </span><span class="String">&quot;</span>
+<span class="vimContinue">			\</span> <span class="Operator">..</span> s:winsys_colo[<span class="Function">toupper</span><span class="Delimiter">(</span><span class="Identifier">a:colostr</span><span class="Delimiter">)</span>][<span class="Number">0</span>]<span class="Delimiter">)</span>
+		<span class="Statement">else</span>
+<span class="Comment">&quot; Не очень просто получается с findstr. Пробуем ещё одну штуковину. Весь это</span>
+<span class="Comment">&quot; powershell надо, конечно, тестировать и тестировать. ХЗ, как будет на других</span>
+<span class="Comment">&quot; машинах. Надо поднимать ВМ...</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:rgbcolo</span> <span class="Operator">=</span>
+<span class="vimContinue">			\</span> <span class="Function">system</span><span class="Delimiter">(</span><span class="String">&quot;powershell Select-String -Path </span><span class="String">&quot;</span>
+<span class="vimContinue">			\</span> <span class="Operator">..</span> <span class="PreProc">$VIMRUNTIME</span> <span class="Operator">..</span> <span class="String">&quot;</span><span class="String">\\</span><span class="String">rgb.txt -Pattern </span><span class="String">&quot;</span> <span class="Operator">..</span> <span class="String">&quot;'</span><span class="String">\\</span><span class="String">t</span><span class="String">&quot;</span>
+<span class="vimContinue">			\</span> <span class="Operator">..</span> <span class="Identifier">a:colostr</span> <span class="Operator">..</span> <span class="String">&quot;$'</span><span class="String">&quot;</span> <span class="Operator">..</span> <span class="String">&quot; ^| </span><span class="String">&quot;</span>
+<span class="vimContinue">			\</span> <span class="Operator">..</span> <span class="String">&quot;Select-Object -ExpandProperty Line</span><span class="String">&quot;</span><span class="Delimiter">)</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">elseif</span> <span class="Function">has</span><span class="Delimiter">(</span><span class="String">'unix'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; Буду в виртуалках Windows поднимать, надо что‐нибудь и UNIX-подобное поднять.  </span>
+		<span class="Statement">let</span> <span class="Identifier">l:rgbcolo</span> <span class="Operator">=</span>
+<span class="vimContinue">		    \</span> <span class="Function">system</span><span class="Delimiter">(</span><span class="String">'grep -i -h -w -e &quot;[[:space:]]'</span> <span class="Operator">..</span> <span class="Identifier">a:colostr</span> <span class="Operator">..</span> <span class="String">'$&quot; '</span>
+<span class="vimContinue">		    \</span> <span class="Operator">..</span><span class="PreProc">$VIMRUNTIME</span> <span class="Operator">..</span> <span class="String">'/rgb.txt'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Function">empty</span><span class="Delimiter">(</span>l:rgbcolo<span class="Delimiter">)</span>
+		<span class="Statement">for</span> <span class="Identifier">l:nrgb</span> <span class="Statement">in</span> <span class="Identifier">s:notrgb</span>
+		    <span class="Statement">if</span> <span class="Identifier">a:colostr</span> <span class="Operator">==?</span> <span class="Identifier">l:nrgb</span>[<span class="Number">0</span>]
+			<span class="Statement">return</span> <span class="Identifier">l:nrgb</span>[<span class="Number">1</span>]
+		    <span class="Statement">endif</span>
+		<span class="Statement">endfor</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">let</span> <span class="Identifier">l:hexcolo</span> <span class="Operator">=</span> <span class="String">''</span>
+		<span class="Statement">let</span> <span class="Identifier">l:rgbcolo</span> <span class="Operator">=</span>
+<span class="vimContinue">		    \</span> <span class="Function">matchstr</span><span class="Delimiter">(</span>l:rgbcolo, <span class="String">'\d\{1,3}\s\+\d\{1,3}\s\+\d\{1,3}'</span><span class="Delimiter">)</span>
+		<span class="Statement">while</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:rgbcolo<span class="Delimiter">)</span>
+		    <span class="Statement">let</span> @<span class="Statement">d</span> <span class="Operator">=</span> <span class="String">''</span>
+		    <span class="Statement">let</span> @<span class="Statement">d</span> <span class="Operator">=</span> <span class="Function">matchstr</span><span class="Delimiter">(</span>l:rgbcolo, <span class="String">'\_^\d\{1,3}'</span><span class="Delimiter">)</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:rgbcolo</span> <span class="Operator">=</span> <span class="Function">substitute</span><span class="Delimiter">(</span>l:rgbcolo, @d <span class="Operator">..</span> <span class="String">'\s*'</span>, <span class="String">''</span>, <span class="String">''</span><span class="Delimiter">)</span>
+		    <span class="Statement">let</span> @<span class="Statement">d</span> <span class="Operator">=</span> <span class="Normal">s:Dec2Hex</span><span class="Delimiter">(</span>@d<span class="Delimiter">)</span>
+		    <span class="Statement">if</span> <span class="Number">0xff</span> <span class="Operator">&lt;</span> <span class="Function">str2nr</span><span class="Delimiter">(</span>@d, <span class="Number">16</span><span class="Delimiter">)</span>
+			<span class="Statement">return</span> <span class="Operator">-</span>1
+		    <span class="Statement">endif</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:hexcolo</span> <span class="Operator">=</span> <span class="Identifier">l:hexcolo</span> <span class="Operator">..</span> <span class="SpecialChar">@d</span>
+		<span class="Statement">endwhile</span>
+		<span class="Statement">return</span> <span class="Identifier">l:hexcolo</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+    <span class="Statement">endif</span>
+    <span class="Statement">return</span> <span class="Operator">-</span>1
+<span class="Statement">endfunction</span>
+
+
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>GetColor<span class="Delimiter">(</span>colo<span class="Delimiter">)</span>
+    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span><span class="Identifier">a:colo</span><span class="Delimiter">)</span>
+	<span class="Statement">if</span> <span class="String">'#'</span> <span class="Operator">==</span> <span class="Identifier">a:colo</span>[<span class="Number">0</span>:<span class="Number">0</span>]
+	    <span class="Statement">return</span> <span class="Identifier">a:colo</span>
+	<span class="Statement">elseif</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Function">stridx</span><span class="Delimiter">(</span><span class="Function">tolower</span><span class="Delimiter">(</span><span class="Identifier">a:colo</span><span class="Delimiter">)</span>, <span class="String">'bg'</span><span class="Delimiter">)</span> <span class="Operator">||</span>
+<span class="vimContinue">		    \</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Function">stridx</span><span class="Delimiter">(</span><span class="Function">tolower</span><span class="Delimiter">(</span><span class="Identifier">a:colo</span><span class="Delimiter">)</span>, <span class="String">'background'</span><span class="Delimiter">)</span>
+	    <span class="Statement">return</span> <span class="String">'bg'</span>
+	<span class="Statement">elseif</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Function">stridx</span><span class="Delimiter">(</span><span class="Function">tolower</span><span class="Delimiter">(</span><span class="Identifier">a:colo</span><span class="Delimiter">)</span>, <span class="String">'fg'</span><span class="Delimiter">)</span> <span class="Operator">||</span>
+<span class="vimContinue">		    \</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Function">stridx</span><span class="Delimiter">(</span><span class="Function">tolower</span><span class="Delimiter">(</span><span class="Identifier">a:colo</span><span class="Delimiter">)</span>, <span class="String">'foreground'</span><span class="Delimiter">)</span>
+	    <span class="Statement">return</span> <span class="String">'fg'</span>
+	<span class="Statement">elseif</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Function">stridx</span><span class="Delimiter">(</span><span class="Function">toupper</span><span class="Delimiter">(</span><span class="Identifier">a:colo</span><span class="Delimiter">)</span>, <span class="String">'NONE'</span><span class="Delimiter">)</span>
+	    <span class="Statement">return</span> <span class="String">'NONE'</span>
+	<span class="Statement">elseif</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Type">match</span><span class="Delimiter">(</span><span class="Identifier">a:colo</span>, <span class="String">'\w\+'</span><span class="Delimiter">)</span>
+	    <span class="Statement">let</span> @<span class="Statement">c</span> <span class="Operator">=</span> <span class="String">&quot;</span><span class="String">&quot;</span>
+	    <span class="Statement">let</span> @<span class="Statement">c</span> <span class="Operator">=</span> <span class="Normal">s:ColoStr2ColoNum</span><span class="Delimiter">(</span><span class="Identifier">a:colo</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>@c<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> @<span class="Statement">c</span>
+		<span class="Statement">return</span> <span class="String">'#'</span> <span class="Operator">..</span> <span class="SpecialChar">@c</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+    <span class="Statement">endif</span>
+    <span class="Statement">return</span> <span class="Operator">-</span>1
+<span class="Statement">endfunction</span>
+
+
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>GetInitFont<span class="Delimiter">()</span>
+    <span class="Statement">let</span> @<span class="Statement">t</span> <span class="Operator">=</span> <span class="String">''</span>
+    <span class="Statement">let</span> @<span class="Statement">t</span> <span class="Operator">=</span> <span class="Function">getfontname</span><span class="Delimiter">()</span>
+    <span class="Statement">if</span> <span class="Function">empty</span><span class="Delimiter">(</span>@t<span class="Delimiter">)</span>
+	<span class="Statement">let</span> @<span class="Statement">t</span> <span class="Operator">=</span> &amp;guifont
+	<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>@t<span class="Delimiter">)</span>
+<span class="Comment">&quot; Шаблон поиска не очень хороший</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:com</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>@t, <span class="String">'\w,'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;</span> <span class="Identifier">l:com</span>
+		<span class="Statement">let</span> @<span class="Statement">t</span> <span class="Operator">=</span> <span class="Function">strpart</span><span class="Delimiter">(</span>@t, <span class="Number">0</span>, l:com<span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+    <span class="Statement">endif</span>
+    <span class="Statement">return</span> <span class="Function">getreg</span><span class="Delimiter">(</span><span class="String">'t'</span><span class="Delimiter">)</span>
+<span class="Statement">endfunction</span>
+
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>ParseFont<span class="Delimiter">(</span>fntval<span class="Delimiter">)</span>
+    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span><span class="Identifier">a:fntval</span><span class="Delimiter">)</span>
+	<span class="Statement">let</span> <span class="Identifier">l:fnt</span> <span class="Operator">=</span> <span class="vimSep">{}</span>
+	<span class="Statement">if</span> <span class="String">'NONE'</span> <span class="Operator">==?</span> <span class="Identifier">a:fntval</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:hifnt</span> <span class="Operator">=</span> <span class="Normal">s:GetInitFont</span><span class="Delimiter">()</span>
+	<span class="Statement">else</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:hifnt</span> <span class="Operator">=</span> <span class="Identifier">a:fntval</span>
+	<span class="Statement">endif</span>
+<span class="Comment">&quot; *gui-font* *setting-guifont*</span>
+	<span class="Statement">if</span> <span class="Function">has</span> <span class="Delimiter">(</span><span class="String">'gui_win32'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; На всякий случай. Вдруг кто будет экранировать пробелы в наименовании шрифта</span>
+<span class="Comment">&quot; обратной наклонной чертой</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:hifnt</span> <span class="Operator">=</span> <span class="Function">substitute</span><span class="Delimiter">(</span>l:hifnt, <span class="String">'\'</span>, <span class="String">''</span>, <span class="String">'g'</span><span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:cln</span> <span class="Operator">=</span> <span class="Function">stridx</span><span class="Delimiter">(</span>l:hifnt, <span class="String">':'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;</span> <span class="Identifier">l:cln</span>
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntname'</span>] <span class="Operator">=</span> <span class="Function">tr</span><span class="Delimiter">(</span>l:hifnt[<span class="Number">0</span>:l:cln<span class="Operator">-</span>1], <span class="String">'_'</span>, <span class="String">' '</span><span class="Delimiter">)</span>
+	    <span class="Statement">elseif</span> <span class="Number">0</span> <span class="Operator">&gt;</span> <span class="Identifier">l:cln</span>
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntname'</span>] <span class="Operator">=</span> <span class="Function">tr</span><span class="Delimiter">(</span>l:hifnt, <span class="String">'_'</span>, <span class="String">' '</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">for</span> <span class="Identifier">l:fntsze</span> <span class="Statement">in</span> <span class="Identifier">s:fnt_size</span>
+		<span class="Statement">let</span> <span class="Identifier">l:sze</span> <span class="Operator">=</span>
+<span class="vimContinue">		    \</span> <span class="Function">matchlist</span><span class="Delimiter">(</span>
+<span class="vimContinue">		    \</span> l:hifnt, <span class="String">'\C\(:'</span><span class="Operator">..</span>l:fntsze<span class="Operator">..</span><span class="String">'\)\(\d\{1,}\.\{,1}\d\{}\)'</span><span class="Delimiter">)</span>
+		<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:sze<span class="Delimiter">)</span>
+		    <span class="Statement">if</span> <span class="String">'h'</span> <span class="Operator">==</span> <span class="Identifier">l:fntsze</span>
+			<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fnthght'</span>] <span class="Operator">=</span> <span class="Identifier">l:sze</span>[<span class="Number">2</span>]
+	    <span class="Statement">continue</span>
+		    <span class="Statement">elseif</span> <span class="String">'w'</span> <span class="Operator">==#</span> <span class="Identifier">l:fntsze</span>
+			<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntwdth'</span>] <span class="Operator">=</span> <span class="Identifier">l:sze</span>[<span class="Number">2</span>]
+	    <span class="Statement">continue</span>
+		    <span class="Statement">elseif</span> <span class="String">'W'</span> <span class="Operator">==#</span> <span class="Identifier">l:fntsze</span>
+			<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntwght'</span>] <span class="Operator">=</span> <span class="Identifier">l:sze</span>[<span class="Number">2</span>]
+		    <span class="Statement">endif</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">endfor</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;</span> <span class="Function">stridx</span><span class="Delimiter">(</span>l:hifnt, <span class="String">':b'</span><span class="Delimiter">)</span>
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntbold'</span>] <span class="Operator">=</span> <span class="Number">1</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;</span> <span class="Function">stridx</span><span class="Delimiter">(</span>l:hifnt, <span class="String">':i'</span><span class="Delimiter">)</span>
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntitlc'</span>] <span class="Operator">=</span> <span class="Number">1</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;</span> <span class="Function">stridx</span><span class="Delimiter">(</span>l:hifnt, <span class="String">':u'</span><span class="Delimiter">)</span>
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntundr'</span>] <span class="Operator">=</span> <span class="Number">1</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;</span> <span class="Function">stridx</span><span class="Delimiter">(</span>l:hifnt, <span class="String">':s'</span><span class="Delimiter">)</span>
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntsout'</span>] <span class="Operator">=</span> <span class="Number">1</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">return</span> <span class="Identifier">l:fnt</span>
+<span class="Comment">&quot; *gui-font* *setting-guifont*</span>
+	<span class="Statement">elseif</span> <span class="Function">has</span> <span class="Delimiter">(</span><span class="String">'gui_gtk2'</span><span class="Delimiter">)</span> <span class="Operator">||</span> <span class="Function">has</span> <span class="Delimiter">(</span><span class="String">'gui_gtk3'</span><span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:hifnt</span> <span class="Operator">=</span> <span class="Function">substitute</span><span class="Delimiter">(</span>l:hifnt, <span class="String">'\'</span>, <span class="String">''</span>, <span class="String">'g'</span><span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntname'</span>] <span class="Operator">=</span> <span class="Function">substitute</span><span class="Delimiter">(</span>l:hifnt, <span class="String">'\s\+\d\+$'</span>, <span class="String">''</span>, <span class="String">''</span><span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fnthght'</span>] <span class="Operator">=</span> <span class="Function">trim</span><span class="Delimiter">(</span><span class="Function">matchstr</span><span class="Delimiter">(</span>l:hifnt, <span class="String">'\s\d\+$'</span><span class="Delimiter">)</span>, <span class="String">' '</span>, <span class="Number">1</span><span class="Delimiter">)</span>
+	    <span class="Statement">return</span> <span class="Identifier">l:fnt</span>
+<span class="Comment">&quot; *gui-font* *setting-guifont* *fontset* *xfontset*</span>
+	<span class="Statement">elseif</span> <span class="Function">has</span> <span class="Delimiter">(</span><span class="String">'X11'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; *XLFD*</span>
+<span class="Comment">&quot; <a href="https://www.x.org/releases/X11R7.6/doc/xorg-docs/specs/XLFD/xlfd.html">https://www.x.org/releases/X11R7.6/doc/xorg-docs/specs/XLFD/xlfd.html</a></span>
+<span class="Comment">&quot; <a href="http://www.x.org/archive/X11R7.6/doc/xorg-docs/specs/XLFD/xlfd.pdf">http://www.x.org/archive/X11R7.6/doc/xorg-docs/specs/XLFD/xlfd.pdf</a></span>
+<span class="Comment">&quot; <a href="https://dev.abcdef.wiki/wiki/X_logical_font_description">https://dev.abcdef.wiki/wiki/X_logical_font_description</a></span>
+	    <span class="Statement">let</span> <span class="Identifier">l:hifnt</span> <span class="Operator">=</span> <span class="Function">split</span><span class="Delimiter">(</span>l:hifnt, <span class="String">'-'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:hifnt[<span class="Number">1</span>]<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="String">'*'</span> <span class="Operator">!=</span> <span class="Identifier">l:hifnt</span>[<span class="Number">1</span>]
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntname'</span>] <span class="Operator">=</span> <span class="Identifier">l:hifnt</span>[<span class="Number">1</span>]
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="String">'bold'</span> <span class="Operator">==?</span> <span class="Identifier">l:hifnt</span>[<span class="Number">2</span>]
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntbold'</span>] <span class="Operator">=</span> <span class="Number">1</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="String">'i'</span> <span class="Operator">==?</span> <span class="Identifier">l:hifnt</span>[<span class="Number">3</span>] <span class="Operator">||</span> <span class="String">'o'</span> <span class="Operator">==?</span> <span class="Identifier">l:hifnt</span>[<span class="Number">3</span>]
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntitlc'</span>] <span class="Operator">=</span> <span class="Number">1</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:hifnt[<span class="Number">4</span>]<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="String">'0'</span> <span class="Operator">!=</span> <span class="Identifier">l:hifnt</span>[<span class="Number">4</span>] <span class="Operator">&amp;&amp;</span> <span class="String">'*'</span> <span class="Operator">!=</span> <span class="Identifier">l:hifnt</span>[<span class="Number">4</span>]
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntwdth'</span>] <span class="Operator">=</span> <span class="Identifier">l:hifnt</span>[<span class="Number">4</span>]
+	    <span class="Statement">endif</span>
+<span class="Comment">&quot; Матрицу значений (записывается в квадратных скобках) не обрабатываем</span>
+	    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:hifnt[<span class="Number">7</span>]<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="String">'['</span> <span class="Operator">!=</span> <span class="Identifier">l:hifnt</span>[<span class="Number">7</span>][<span class="Number">0</span>:<span class="Number">0</span>] <span class="Operator">&amp;&amp;</span> <span class="String">'*'</span> <span class="Operator">!=</span> <span class="Identifier">l:hifnt</span>[<span class="Number">7</span>]
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fnthght'</span>] <span class="Operator">=</span> <span class="Identifier">l:hifnt</span>[<span class="Number">7</span>]
+	    <span class="Statement">endif</span>
+	    <span class="Statement">return</span> <span class="Identifier">l:fnt</span>
+<span class="Comment">&quot; *gui-font*</span>
+	<span class="Statement">elseif</span> <span class="Function">has</span> <span class="Delimiter">(</span><span class="String">'gui_mac'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; ХЗ, как экранируются пробелы в наименовании шрифта на MacOS. Поэтом пробуем</span>
+<span class="Comment">&quot; оба метода: убрать нижнее подчёркивание, как в Win32 и убрать обратную</span>
+<span class="Comment">&quot; наклонную черту, как в GTK</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:hifnt</span> <span class="Operator">=</span> <span class="Function">tr</span><span class="Delimiter">(</span>l:hifnt, <span class="String">'_'</span>, <span class="String">' '</span><span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:hifnt</span> <span class="Operator">=</span> <span class="Function">substitute</span><span class="Delimiter">(</span>l:hifnt, <span class="String">'\'</span>, <span class="String">''</span>, <span class="String">'g'</span><span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:cln</span> <span class="Operator">=</span> <span class="Function">stridx</span><span class="Delimiter">(</span>l:hifnt, <span class="String">':'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;</span> <span class="Identifier">l:cln</span>
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntname'</span>] <span class="Operator">=</span> <span class="Identifier">l:hifnt</span>[<span class="Number">0</span>:<span class="Statement">l</span>:cln<span class="Operator">-</span>1]
+	    <span class="Statement">elseif</span> <span class="Number">0</span> <span class="Operator">&gt;</span> <span class="Identifier">l:cln</span>
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fntname'</span>] <span class="Operator">=</span> <span class="Identifier">l:hifnt</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:sze</span> <span class="Operator">=</span>
+<span class="vimContinue">		\</span> <span class="Function">matchlist</span><span class="Delimiter">(</span>l:fnt, <span class="String">'\C\(:'</span> <span class="Operator">..</span>s:fnt_size[<span class="Number">0</span>]<span class="Operator">..</span><span class="String">'\)\(\d\{1,}\)'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:sze<span class="Delimiter">)</span>
+		<span class="Statement">let</span> <span class="Identifier">l:fnt</span>[<span class="String">'fnthght'</span>] <span class="Operator">=</span> <span class="Identifier">l:sze</span>[<span class="Number">2</span>]
+	    <span class="Statement">endif</span>
+	    <span class="Statement">return</span> <span class="Identifier">l:fnt</span>
+	<span class="Statement">endif</span>
+    <span class="Statement">endif</span>
+    <span class="Statement">return</span> <span class="Operator">-</span>1
+<span class="Statement">endfunction</span>
+
+
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>ParseHiArgs<span class="Delimiter">(</span>grpname<span class="Delimiter">)</span>
+    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span><span class="Identifier">a:grpname</span><span class="Delimiter">)</span>
+	<span class="Statement">let</span> <span class="Identifier">l:hiattr</span> <span class="Operator">=</span> <span class="vimSep">{}</span>
+	<span class="Statement">let</span> <span class="Identifier">l:fndlnr</span> <span class="Operator">=</span> <span class="String">''</span>
+	<span class="Statement">call</span> <span class="Function">setpos</span><span class="Delimiter">(</span><span class="String">'.'</span>, [<span class="Number">0</span>,<span class="Number">1</span>,<span class="Number">1</span>,<span class="Number">0</span>]<span class="Delimiter">)</span>
+	<span class="Statement">let</span> <span class="Identifier">l:fndlnr</span> <span class="Operator">=</span> <span class="Function">search</span><span class="Delimiter">(</span><span class="String">'^\&lt;'</span> <span class="Operator">..</span> <span class="Identifier">a:grpname</span> <span class="Operator">..</span> <span class="String">'\&gt;'</span>, <span class="String">'cW'</span>, <span class="Function">line</span><span class="Delimiter">(</span><span class="String">'$'</span><span class="Delimiter">))</span>
+	<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;</span> <span class="Identifier">l:fndlnr</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:str</span> <span class="Operator">=</span> <span class="Function">getline</span><span class="Delimiter">(</span>l:fndlnr<span class="Delimiter">)</span>
+	    <span class="Statement">for</span> <span class="Identifier">l:hiarg</span> <span class="Statement">in</span> <span class="Identifier">s:hi_args</span>
+		<span class="Statement">let</span> <span class="Statement">@s</span> <span class="Operator">=</span> <span class="String">''</span>
+		<span class="Statement">if</span> <span class="String">'gui'</span> <span class="Operator">==</span> <span class="Identifier">l:hiarg</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:pos</span> <span class="Operator">=</span> <span class="Function">matchend</span><span class="Delimiter">(</span>l:str, l:hiarg <span class="Operator">..</span> <span class="String">'='</span><span class="Delimiter">)</span>
+		    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:pos</span>
+<span class="Comment">&quot; Если присутствует в строке, копируем значение как СЛОВО до пробельного символа</span>
+			<span class="Statement">let</span> <span class="Statement">@s</span> <span class="Operator">=</span> <span class="Normal">s:GetEntry</span><span class="Delimiter">(</span><span class="Number">0</span>, l:fndlnr, l:pos<span class="Operator">+</span><span class="Number">1</span>, <span class="Number">0</span>, <span class="String">'E'</span><span class="Delimiter">)</span>
+			<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>@s<span class="Delimiter">)</span>
+<span class="Comment">&quot; Если в строке будут символы запятой, заменим их на пробел</span>
+			    <span class="Statement">let</span> <span class="Statement">@s</span> <span class="Operator">=</span> <span class="Function">tr</span><span class="Delimiter">(</span>@s, <span class="String">','</span>, <span class="String">' '</span><span class="Delimiter">)</span>
+			    <span class="Statement">for</span> attr <span class="Statement">in</span> <span class="Identifier">s:spec_attr</span>
+				<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Delimiter">(</span><span class="Function">stridx</span><span class="Delimiter">(</span>@s, attr[<span class="Number">0</span>]<span class="Delimiter">))</span>
+<span class="Comment">&quot; При наличии наименования атрибута из массива, присваиваем значение</span>
+<span class="Comment">&quot; соответствующему наименованию ключа словаря</span>
+				    <span class="Statement">let</span> <span class="Identifier">l:hiattr</span>[attr[<span class="Number">1</span>]] <span class="Operator">=</span> <span class="Number">1</span>
+<span class="Comment">&quot; и удаляем из строки наименование атрибута</span>
+				    <span class="Statement">let</span> <span class="Statement">@s</span> <span class="Operator">=</span>
+<span class="vimContinue">					\</span><span class="Statement"> substitute</span><span class="Delimiter">(</span>@s, <span class="String">'\c'</span><span class="Operator">..</span>attr[<span class="Number">0</span>]<span class="Operator">..</span><span class="String">'\s\='</span>, <span class="String">''</span>, <span class="String">''</span><span class="Delimiter">)</span>
+				    <span class="Statement">if</span> <span class="Function">empty</span><span class="Delimiter">(</span>@s<span class="Delimiter">)</span>
+<span class="Comment">&quot; Завершаем цикл проверки наименований атрибутов, т. к. строка уже пустая</span>
+					<span class="Statement">break</span>
+				    <span class="Statement">endif</span>
+				<span class="Statement">endif</span>
+			    <span class="Statement">endfor</span>
+			<span class="Statement">endif</span>
+		    <span class="Statement">endif</span>
+<span class="Comment">&quot; Запускаем новый шаг цикла поиска аргумента группы подсветки</span>
+	    <span class="Statement">continue</span>
+		<span class="Statement">elseif</span> <span class="String">'guifg'</span> <span class="Operator">==</span> <span class="Identifier">l:hiarg</span> <span class="Operator">||</span> <span class="String">'guibg'</span> <span class="Operator">==</span> <span class="Identifier">l:hiarg</span> <span class="Operator">||</span> <span class="String">'guisp'</span> <span class="Operator">==</span> <span class="Identifier">l:hiarg</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:pos</span> <span class="Operator">=</span> <span class="Function">matchend</span><span class="Delimiter">(</span>l:str, l:hiarg <span class="Operator">..</span> <span class="String">'='</span><span class="Delimiter">)</span>
+		    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:pos</span>
+<span class="Comment">&quot; НАДО: сделать копирование подстроки, включая пробелы</span>
+			<span class="Statement">let</span> <span class="Statement">@s</span> <span class="Operator">=</span> <span class="Normal">s:GetEntry</span><span class="Delimiter">(</span><span class="Number">0</span>, l:fndlnr, l:pos<span class="Operator">+</span><span class="Number">1</span>, <span class="Number">0</span>, <span class="String">'E'</span><span class="Delimiter">)</span>
+			<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>@s<span class="Delimiter">)</span>
+			    <span class="Statement">let</span> <span class="Statement">@s</span> <span class="Operator">=</span> <span class="Normal">s:GetColor</span><span class="Delimiter">(</span>@s<span class="Delimiter">)</span>
+			    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>@s<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="SpecialChar">@s</span>
+				<span class="Statement">if</span> <span class="String">'guifg'</span> <span class="Operator">==</span> <span class="Identifier">l:hiarg</span>
+				    <span class="Statement">let</span> <span class="Identifier">l:hiattr</span>[<span class="String">'fgco'</span>] <span class="Operator">=</span> <span class="Function">getreg</span><span class="Delimiter">(</span><span class="String">'s'</span><span class="Delimiter">)</span>
+				<span class="Statement">elseif</span> <span class="String">'guibg'</span> <span class="Operator">==</span> <span class="Identifier">l:hiarg</span>
+				    <span class="Statement">let</span> <span class="Identifier">l:hiattr</span>[<span class="String">'bgco'</span>] <span class="Operator">=</span> <span class="Function">getreg</span><span class="Delimiter">(</span><span class="String">'s'</span><span class="Delimiter">)</span>
+				<span class="Statement">elseif</span> <span class="String">'guisp'</span> <span class="Operator">==</span> <span class="Identifier">l:hiarg</span>
+				    <span class="Statement">let</span> <span class="Identifier">l:hiattr</span>[<span class="String">'spco'</span>] <span class="Operator">=</span> <span class="Function">getreg</span><span class="Delimiter">(</span><span class="String">'s'</span><span class="Delimiter">)</span>
+				<span class="Statement">endif</span>
+			    <span class="Statement">endif</span>
+			<span class="Statement">endif</span>
+		    <span class="Statement">endif</span>
+<span class="Comment">&quot; Запускаем новый шаг цикла поиска аргумента группы подсветки</span>
+	    <span class="Statement">continue</span>
+		<span class="Statement">elseif</span> <span class="String">'font'</span> <span class="Operator">==</span> <span class="Identifier">l:hiarg</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:pos</span> <span class="Operator">=</span> <span class="Function">matchend</span><span class="Delimiter">(</span>l:str, l:hiarg <span class="Operator">..</span> <span class="String">'='</span><span class="Delimiter">)</span>
+		    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:pos</span>
+<span class="Comment">&quot; Копируем до конца строки, т. к. я надеюсь, что аргумент font будет всегда</span>
+<span class="Comment">&quot; последним в строке свойств группы</span>
+			<span class="Statement">let</span> <span class="Statement">@s</span> <span class="Operator">=</span> <span class="Normal">s:GetEntry</span><span class="Delimiter">(</span><span class="Number">0</span>, l:fndlnr, l:pos<span class="Operator">+</span><span class="Number">1</span>, <span class="Number">0</span>, <span class="String">'g_'</span><span class="Delimiter">)</span>
+		    <span class="Statement">elseif</span> <span class="Identifier">s:is_norm</span>
+			<span class="Statement">let</span> <span class="Statement">@s</span> <span class="Operator">=</span> <span class="Normal">s:GetInitFont</span><span class="Delimiter">()</span>
+		    <span class="Statement">endif</span>
+		    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>@s<span class="Delimiter">)</span>
+			<span class="Statement">let</span> <span class="Identifier">l:fnt</span> <span class="Operator">=</span> <span class="Normal">s:ParseFont</span><span class="Delimiter">(</span>@s<span class="Delimiter">)</span>
+			<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:fnt<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Function">type</span><span class="Delimiter">(</span><span class="Number">0</span><span class="Delimiter">)</span> <span class="Operator">!=</span> <span class="Function">type</span><span class="Delimiter">(</span>l:fnt<span class="Delimiter">)</span>
+			    <span class="Statement">let</span> <span class="Identifier">l:hiattr</span>[<span class="String">'font'</span>] <span class="Operator">=</span> <span class="Identifier">l:fnt</span>
+			<span class="Statement">endif</span>
+		    <span class="Statement">endif</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">endfor</span>
+<span class="Comment">&quot; Обрабатываем ситуацию когда в цветовой схеме не задана группа «Normal».</span>
+<span class="Comment">&quot; Корневой и универсальный селекторы нужны</span>
+<span class="Comment">&quot; Это поломало много. Надо переписывать код.</span>
+	<span class="Statement">elseif</span> <span class="Identifier">s:is_norm</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:hiattr</span>[<span class="String">'norm'</span>] <span class="Operator">=</span> <span class="Number">0</span>
+	<span class="Statement">endif</span>
+<span class="Comment">&quot; Всё одно удаляем строку с этой группой, даже если мы не смогли получить её</span>
+<span class="Comment">&quot; свойства, но только если она не ссылается на другие группы</span>
+	<span class="Statement">call</span> <span class="Function">deletebufline</span><span class="Delimiter">(</span>s:nmtmpbuf, l:fndlnr<span class="Delimiter">)</span>
+	<span class="Statement">return</span> <span class="Identifier">l:hiattr</span>
+    <span class="Statement">endif</span>
+    <span class="Statement">return</span> <span class="Operator">-</span>1
+<span class="Statement">endfunction</span>
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>HiAttr2CssDecl<span class="Delimiter">(</span>hiattr<span class="Delimiter">)</span>
+    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span><span class="Delimiter">)</span>
+	<span class="Statement">let</span> <span class="Identifier">l:cssdecl</span> <span class="Operator">=</span> []
+	<span class="Statement">let</span> <span class="Identifier">l:fnt</span> <span class="Operator">=</span> <span class="vimSep">{}</span>
+	<span class="Statement">if</span> <span class="Function">has_key</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'font'</span><span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:fnt</span> <span class="Operator">=</span> <span class="Identifier">a:hiattr</span>[<span class="String">'font'</span>]
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:fnt<span class="Delimiter">)</span>
+<span class="Comment">&quot; Формируем объявление (декларацию) для шрифта</span>
+	    <span class="Statement">if</span> <span class="Function">has_key</span><span class="Delimiter">(</span>l:fnt, <span class="String">'fntname'</span><span class="Delimiter">)</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-family: &quot;'</span> <span class="Operator">..</span> l:fnt[<span class="String">'fntname'</span>]
+<span class="vimContinue">		    \</span> <span class="Operator">..</span> <span class="String">'&quot;, monospace;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Function">has_key</span><span class="Delimiter">(</span>l:fnt, <span class="String">'fnthght'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; Для X11 делим на десять. Единицы измерения устанавливаем в пункты (points),</span>
+<span class="Comment">&quot; как указано для шрифта в справке Vim</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-size: '</span> <span class="Operator">..</span> <span class="Delimiter">(</span><span class="Function">has</span><span class="Delimiter">(</span><span class="String">'X11'</span><span class="Delimiter">)</span> ?
+<span class="vimContinue">		    \</span> l:fnt[<span class="String">'fnthght'</span>]/<span class="Number">10</span> : l:fnt[<span class="String">'fnthght'</span>]<span class="Delimiter">)</span> <span class="Operator">..</span> <span class="String">'pt;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Function">has_key</span><span class="Delimiter">(</span>l:fnt, <span class="String">'fntwdt'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; НАДО: составить какую‐то таблиц соответствий для свойств, определённых для X11</span>
+<span class="Comment">&quot; и ключевых слов, определённых в CSS. Не все свойства X11 совпадают с CSS</span>
+<span class="Comment">&quot; НАДО: посмотреть, как Windows высчитывает ширину символов и как это</span>
+<span class="Comment">&quot; соотносится с CSS</span>
+		<span class="Statement">if</span> <span class="Function">has</span><span class="Delimiter">(</span><span class="String">'X11'</span><span class="Delimiter">)</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-stretch: '</span>
+<span class="vimContinue">			\</span> <span class="Operator">..</span> <span class="Delimiter">(</span><span class="Function">tr</span><span class="Delimiter">(</span>l:fnt[<span class="String">'fntwdt'</span>], <span class="String">' '</span>, <span class="String">'-'</span><span class="Delimiter">))</span> <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Function">has_key</span><span class="Delimiter">(</span>l:fnt, <span class="String">'fntwght'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; Старые «Иа» не очень поддерживали числовые значения для насыщенности (жирности)</span>
+<span class="Comment">&quot; шрифтов, но, всё же, оставим это</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-weight: '</span> <span class="Operator">..</span> l:fnt[<span class="String">'fntwght'</span>] <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span>l:fnt, <span class="String">'fntbold'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; На всякий случай. Пересекаться не должны, но...</span>
+		<span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-weight'</span><span class="Delimiter">)</span>
+		<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Identifier">l:idx</span>] <span class="Operator">=</span> <span class="String">'font-weight: bold;'</span>
+		<span class="Statement">else</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-weight: bold;'</span><span class="Delimiter">)</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span>l:fnt, <span class="String">'fntitlc'</span><span class="Delimiter">)</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-style: italic;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">elseif</span> <span class="Identifier">s:is_norm</span>
+	    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-family: monospace;'</span><span class="Delimiter">)</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'wght'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; Хотя... если в Windows задать это свойство обеими способами, то возвращает</span>
+<span class="Comment">&quot; только одно из них</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-weight'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+		<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&gt;</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl[l:idx], <span class="String">'bold'</span><span class="Delimiter">)</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Identifier">l:idx</span>] <span class="Operator">=</span> <span class="String">'font-weight: bold;'</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-weight: bold;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'itlc'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; Аналогично предыдущему с насыщенностью, но лучше пока оставим. Чревато</span>
+<span class="Comment">&quot; потерей производительности</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-style:'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+		<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&gt;</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl[l:idx], <span class="String">'italic'</span><span class="Delimiter">)</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Identifier">l:idx</span>] <span class="Operator">=</span> <span class="String">'font-style: italic;'</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-style: italic;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+
+<span class="Comment">&quot; Формируем объявление (декларацию) для цвета заднего и переднего плана</span>
+	<span class="Statement">if</span> <span class="Function">has_key</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'bgco'</span><span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:bgc</span> <span class="Operator">=</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'bgco'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="String">'NONE'</span> <span class="Operator">==?</span> <span class="Identifier">l:bgc</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'background-color: transparent;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">elseif</span> <span class="String">'bg'</span> <span class="Operator">==?</span> <span class="Identifier">l:bgc</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+		<span class="Statement">if</span> <span class="String">''</span> <span class="Operator">!=</span> <span class="Identifier">s:bg_norm</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'background-color: '</span> <span class="Operator">..</span> s:bg_norm <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+		<span class="Statement">else</span>
+		    <span class="Statement">return</span> <span class="Operator">-</span>1
+		<span class="Statement">endif</span>
+	    <span class="Statement">elseif</span> <span class="String">'fg'</span> <span class="Operator">==?</span> <span class="Identifier">l:bgc</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+		<span class="Statement">if</span> <span class="String">''</span> <span class="Operator">!=</span> <span class="Identifier">s:fg_norm</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'background-color: '</span> <span class="Operator">..</span> s:fg_norm <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+		<span class="Statement">else</span>
+		    <span class="Statement">return</span> <span class="Operator">-</span>1
+		<span class="Statement">endif</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'background-color: '</span> <span class="Operator">..</span> l:bgc <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; Так называемый «побочный эффект» этой функции, т. к. она изменяет состояние</span>
+<span class="Comment">&quot; глобальной по отношению к ней переменной, но так проще, поэтому оставлю</span>
+<span class="Comment">&quot; Это как‐то неуклюже получилось, но что‐то другое в одну строку не придумал</span>
+		<span class="Statement">let</span> <span class="Identifier">s:bg_norm</span> <span class="Operator">=</span> <span class="Identifier">s:is_norm</span> ? <span class="Identifier">l:bgc</span> : <span class="Identifier">s:bg_norm</span>
+	    <span class="Statement">endif</span>
+<span class="Comment">&quot; На случай, если для группы «Normal» не определены эти значения</span>
+	<span class="Statement">elseif</span> <span class="Identifier">s:is_norm</span>
+	    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'background-color: transparent;'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; НАДО: посмотреть, как в Vim это реализовано. Прикинуть, как вытаскивать</span>
+<span class="Comment">&quot; системные значения. Для Windows я примерно представляю, а вот в других не очень</span>
+	    <span class="Statement">let</span> <span class="Identifier">s:bg_norm</span> <span class="Operator">=</span> <span class="String">'#FFFFFF'</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Function">has_key</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'fgco'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; Чтобы каждый раз не дёргать эту функцию</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:fgc</span> <span class="Operator">=</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'fgco'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="String">'NONE'</span> <span class="Operator">==?</span> <span class="Identifier">l:fgc</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'color: inherit;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">elseif</span> <span class="String">'bg'</span> <span class="Operator">==?</span> <span class="Identifier">l:fgc</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+		<span class="Statement">if</span> <span class="String">''</span> <span class="Operator">!=</span> <span class="Identifier">s:bg_norm</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'color: '</span> <span class="Operator">..</span> s:bg_norm <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+		<span class="Statement">else</span>
+		    <span class="Statement">return</span> <span class="Operator">-</span>1
+		<span class="Statement">endif</span>
+	    <span class="Statement">elseif</span> <span class="String">'fg'</span> <span class="Operator">==?</span> <span class="Identifier">l:fgc</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+		<span class="Statement">if</span> <span class="String">''</span> <span class="Operator">!=</span> <span class="Identifier">s:fg_norm</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'color: '</span> <span class="Operator">..</span> s:fg_norm <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+		<span class="Statement">else</span>
+		    <span class="Statement">return</span> <span class="Operator">-</span>1
+		<span class="Statement">endif</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'color: '</span> <span class="Operator">..</span> l:fgc <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; Так называемый «побочный эффект» этой функции, т. к. она изменяет состояние</span>
+<span class="Comment">&quot; глобальной по отношению к ней переменной, но так проще, поэтому оставлю</span>
+<span class="Comment">&quot; Это как‐то неуклюже получилось, но что‐то другое в одну строку не придумал</span>
+		<span class="Statement">let</span> <span class="Identifier">s:fg_norm</span> <span class="Operator">=</span> <span class="Identifier">s:is_norm</span> ? <span class="Identifier">l:fgc</span> : <span class="Identifier">s:fg_norm</span>
+	    <span class="Statement">endif</span>
+<span class="Comment">&quot; На случай, если для группы «Normal» не определены эти значения</span>
+	<span class="Statement">elseif</span> <span class="Identifier">s:is_norm</span>
+	    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'color: inherit;'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; НАДО: посмотреть, как в Vim это реализовано. Прикинуть, как вытаскивать</span>
+<span class="Comment">&quot; системные значения. Для Windows я примерно представляю, а вот в других не очень</span>
+	    <span class="Statement">let</span> <span class="Identifier">s:fg_norm</span> <span class="Operator">=</span> <span class="String">'#000000'</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:fnt<span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span>l:fnt, <span class="String">'fntundr'</span><span class="Delimiter">)</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'text-decoration: underline;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span>l:fnt, <span class="String">'fntsout'</span><span class="Delimiter">)</span>
+		<span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'text-decoration'</span><span class="Delimiter">)</span>
+		<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Identifier">l:idx</span>] <span class="Operator">=</span>
+<span class="vimContinue">			\</span> <span class="Function">trim</span><span class="Delimiter">(</span>l:cssdecl[l:idx], <span class="String">';'</span>, <span class="Number">2</span><span class="Delimiter">)</span> <span class="Operator">..</span> <span class="String">' line-throught;'</span>
+		<span class="Statement">else</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'text-decoration: line-throught;'</span><span class="Delimiter">)</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'undlne'</span><span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+<span class="Comment">&quot; Тоже, что и раньше. В Windows, как правило, только одно свойство возвращается</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'text-decoration'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+		<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&gt;</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl[l:idx], <span class="String">'underline'</span><span class="Delimiter">)</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Identifier">l:idx</span>] <span class="Operator">=</span>
+<span class="vimContinue">			\</span> <span class="Function">trim</span><span class="Delimiter">(</span>l:cssdecl[l:idx], <span class="String">';'</span>, <span class="Number">2</span><span class="Delimiter">)</span> <span class="Operator">..</span> <span class="String">' underline;'</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'text-decoration: underline;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'skthro'</span><span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+<span class="Comment">&quot; Аналогично</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'text-decoration'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+		<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&gt;</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl[l:idx], <span class="String">'line-throught'</span><span class="Delimiter">)</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Identifier">l:idx</span>] <span class="Operator">=</span>
+<span class="vimContinue">			\</span> <span class="Function">trim</span><span class="Delimiter">(</span>l:cssdecl[l:idx], <span class="String">';'</span>, <span class="Number">2</span><span class="Delimiter">)</span> <span class="Operator">..</span> <span class="String">' line-throught;'</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'text-decoration: line-throught;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'undcrl'</span><span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+<span class="Comment">&quot; Эта декларация старыми «осликами» и проч. не поддерживается, как я помню.</span>
+<span class="Comment">&quot; Поэтому первой записью будет просто text-decoration</span>
+	    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl,
+<span class="vimContinue">		\</span> <span class="String">'text-decoration: underline;'</span>
+<span class="vimContinue">		\</span> <span class="Operator">..</span> <span class="String">'-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy;'</span>
+<span class="vimContinue">		\</span> <span class="Operator">..</span> <span class="String">' -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy;'</span>
+<span class="vimContinue">		\</span> <span class="Operator">..</span> <span class="String">' text-decoration-line: underline; text-decoration-style: wavy;'</span><span class="Delimiter">)</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Function">has_key</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'spco'</span><span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:tdc</span> <span class="Operator">=</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'spco'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; Тоже и с этим объявлением и поддержкой ранними обозревателями страниц Интернета</span>
+	    <span class="Statement">if</span> <span class="String">'NONE'</span> <span class="Operator">==?</span> <span class="Identifier">l:tdc</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl,
+<span class="vimContinue">		    \</span> <span class="String">'-moz-text-decoration-color: currentColor;'</span>
+<span class="vimContinue">		    \</span> <span class="Operator">..</span> <span class="String">' -webkit-text-decoration-color: currentColor;'</span>
+<span class="vimContinue">		    \</span> <span class="Operator">..</span> <span class="String">' text-decoration-color: currentColor;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">elseif</span> <span class="String">'bg'</span> <span class="Operator">==?</span> <span class="Identifier">l:tdc</span>
+		<span class="Statement">if</span> <span class="String">''</span> <span class="Operator">!=</span> <span class="Identifier">s:bg_norm</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl,
+<span class="vimContinue">			\</span> <span class="String">'-moz-text-decoration-color: '</span> <span class="Operator">..</span> s:bg_norm <span class="Operator">..</span> <span class="String">';'</span>
+<span class="vimContinue">			\</span> <span class="Operator">..</span> <span class="String">' -webkit-text-decoration-color: '</span> <span class="Operator">..</span> s:bg_norm <span class="Operator">..</span> <span class="String">';'</span>
+<span class="vimContinue">			\</span> <span class="Operator">..</span> <span class="String">' text-decoration-color: '</span> <span class="Operator">..</span> s:bg_norm <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+		<span class="Statement">else</span>
+		    <span class="Statement">return</span> <span class="Operator">-</span>1
+		<span class="Statement">endif</span>
+	    <span class="Statement">elseif</span> <span class="String">'fg'</span> <span class="Operator">==?</span> <span class="Identifier">l:tdc</span>
+		<span class="Statement">if</span> <span class="String">''</span> <span class="Operator">!=</span> <span class="Identifier">s:fg_norm</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl,
+<span class="vimContinue">			\</span> <span class="String">'-moz-text-decoration-color: '</span> <span class="Operator">..</span> s:fg_norm <span class="Operator">..</span> <span class="String">';'</span>
+<span class="vimContinue">			\</span> <span class="Operator">..</span> <span class="String">' -webkit-text-decoration-color: '</span> <span class="Operator">..</span> s:fg_norm <span class="Operator">..</span> <span class="String">';'</span>
+<span class="vimContinue">			\</span> <span class="Operator">..</span> <span class="String">' text-decoration-color: '</span> <span class="Operator">..</span> s:fg_norm <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+		<span class="Statement">else</span>
+		    <span class="Statement">return</span> <span class="Operator">-</span>1
+		<span class="Statement">endif</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl,
+<span class="vimContinue">		    \</span> <span class="String">'-moz-text-decoration-color: '</span> <span class="Operator">..</span> l:tdc <span class="Operator">..</span> <span class="String">';'</span>
+<span class="vimContinue">		    \</span> <span class="Operator">..</span> <span class="String">' -webkit-text-decoration-color: '</span> <span class="Operator">..</span> l:tdc <span class="Operator">..</span> <span class="String">';'</span>
+<span class="vimContinue">		    \</span> <span class="Operator">..</span> <span class="String">' text-decoration-color: '</span> <span class="Operator">..</span> l:tdc <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'rvrs'</span><span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+	    <span class="Statement">if</span> <span class="String">''</span> <span class="Operator">!=</span> <span class="Identifier">s:fg_norm</span> <span class="Operator">&amp;&amp;</span> <span class="String">''</span> <span class="Operator">!=</span> <span class="Identifier">s:bg_norm</span>
+		<span class="Statement">let</span> @<span class="Statement">i</span> <span class="Operator">=</span> <span class="String">''</span>
+		<span class="Statement">let</span> @<span class="Statement">f</span> <span class="Operator">=</span> <span class="String">''</span>
+		<span class="Statement">let</span> @<span class="Statement">x</span> <span class="Operator">=</span> <span class="String">''</span>
+		<span class="Statement">let</span> @<span class="Statement">b</span> <span class="Operator">=</span> <span class="String">''</span>
+		<span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'\&lt;color'</span><span class="Delimiter">)</span>
+		<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+<span class="Comment">&quot; Если цвет переднего плана определён ранее, то сохраняем индекс его объявления</span>
+<span class="Comment">&quot; и значение</span>
+		    <span class="Statement">let</span> @<span class="Statement">i</span> <span class="Operator">=</span> <span class="Identifier">l:idx</span>
+		    <span class="Statement">let</span> @<span class="Statement">f</span> <span class="Operator">=</span> <span class="Function">matchstr</span><span class="Delimiter">(</span>l:cssdecl[l:idx], <span class="String">'#\w\+'</span><span class="Delimiter">)</span>
+		<span class="Statement">endif</span>
+		<span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'background-color'</span><span class="Delimiter">)</span>
+		<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+<span class="Comment">&quot; И для цвета заднего плана</span>
+		    <span class="Statement">let</span> @<span class="Statement">x</span> <span class="Operator">=</span> <span class="Identifier">l:idx</span>
+		    <span class="Statement">let</span> @<span class="Statement">b</span> <span class="Operator">=</span> <span class="Function">matchstr</span><span class="Delimiter">(</span>l:cssdecl[l:idx], <span class="String">'#\w\+'</span><span class="Delimiter">)</span>
+		<span class="Statement">endif</span>
+		<span class="Statement">if</span> <span class="String">''</span> <span class="Operator">!=</span> @<span class="Statement">i</span> <span class="Operator">&amp;&amp;</span> <span class="String">''</span> <span class="Operator">!=</span> <span class="SpecialChar">@x</span>
+<span class="Comment">&quot; Если и то, и то задано, то тупо меняем их местами</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[@<span class="Statement">i</span>] <span class="Operator">=</span> <span class="String">'color: '</span> <span class="Operator">..</span> @<span class="Statement">b</span> <span class="Operator">..</span> <span class="String">';'</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[@<span class="Statement">x</span>] <span class="Operator">=</span> <span class="String">'background-color: '</span> <span class="Operator">..</span> @<span class="Statement">f</span> <span class="Operator">..</span> <span class="String">';'</span>
+		<span class="Statement">elseif</span> <span class="String">''</span> <span class="Operator">!=</span> @<span class="Statement">i</span> <span class="Operator">&amp;&amp;</span> <span class="String">''</span> <span class="Operator">==</span> <span class="SpecialChar">@x</span>
+<span class="Comment">&quot; Задан только цвет переднего плана. Присвоим ему значение цвета общего заднего</span>
+<span class="Comment">&quot; плана, а цвет заднего плана для элемента — заданное значение</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[@<span class="Statement">i</span>] <span class="Operator">=</span> <span class="String">'color: '</span> <span class="Operator">..</span> <span class="Identifier">s:bg_norm</span> <span class="Operator">..</span> <span class="String">';'</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'background-color: '</span> <span class="Operator">..</span> @f <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+		<span class="Statement">elseif</span> <span class="String">''</span> <span class="Operator">==</span> @<span class="Statement">i</span> <span class="Operator">&amp;&amp;</span> <span class="String">''</span> <span class="Operator">!=</span> <span class="SpecialChar">@x</span>
+<span class="Comment">&quot; Здесь же наоборот, присвоено значение только для заднего плана</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'color: '</span> <span class="Operator">..</span> @b <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[@<span class="Statement">x</span>] <span class="Operator">=</span> <span class="String">'background-color: '</span> <span class="Operator">..</span> <span class="Identifier">s:fg_norm</span> <span class="Operator">..</span> <span class="String">';'</span>
+		<span class="Statement">elseif</span> <span class="String">''</span> <span class="Operator">==</span> @<span class="Statement">i</span> <span class="Operator">&amp;&amp;</span> <span class="String">''</span> <span class="Operator">==</span> <span class="SpecialChar">@x</span>
+<span class="Comment">&quot; Есть реверс, но нет заданных значений. Используем общее значение</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'color: '</span> <span class="Operator">..</span> s:bg_norm <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+		    <span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'background-color: '</span> <span class="Operator">..</span> s:fg_norm <span class="Operator">..</span> <span class="String">';'</span><span class="Delimiter">)</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">return</span> <span class="Operator">-</span>1
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'rset'</span><span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Operator">!</span><span class="Identifier">s:is_norm</span>
+<span class="Comment">&quot; Сбросим всё к чертям, даже если и не задано</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-weight'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+		<span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Identifier">l:idx</span>] <span class="Operator">=</span> <span class="String">'font-weight: normal;'</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-weight: normal;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-style'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+		<span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Identifier">l:idx</span>] <span class="Operator">=</span> <span class="String">'font-style: normal;'</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'font-style: normal;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'text-decoration'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+		<span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Identifier">l:idx</span>] <span class="Operator">=</span> <span class="String">'text-decoration: none;'</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'text-decoration: none;'</span><span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:idx</span> <span class="Operator">=</span> <span class="Type">match</span><span class="Delimiter">(</span>l:cssdecl, <span class="String">'text-decoration-color'</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;=</span> <span class="Identifier">l:idx</span>
+		<span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Identifier">l:idx</span>] <span class="Operator">=</span>
+<span class="vimContinue">		    \</span> <span class="String">'-moz-text-decoration-color: currentColor;'</span>
+<span class="vimContinue">		    \</span> <span class="Operator">..</span> <span class="String">' -webkit-text-decoration-color: currentColor;'</span>
+<span class="vimContinue">		    \</span> <span class="Operator">..</span> <span class="String">' text-decoration-color: currentColor;'</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'lum'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; что‐то делаем</span>
+	<span class="Statement">endif</span>
+
+	<span class="Statement">if</span> <span class="Function">get</span><span class="Delimiter">(</span><span class="Identifier">a:hiattr</span>, <span class="String">'ncomb'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot; что‐то делаем</span>
+	<span class="Statement">endif</span>
+	<span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Number">0</span>] <span class="Operator">=</span> <span class="String">'{'</span> <span class="Operator">..</span> <span class="Identifier">l:cssdecl</span>[<span class="Number">0</span>]
+	<span class="Statement">let</span> <span class="Identifier">l:cssdecl</span>[<span class="Operator">-</span>1] <span class="Operator">=</span> <span class="Identifier">l:cssdecl</span>[<span class="Operator">-</span>1] <span class="Operator">..</span> <span class="String">'}'</span>
+	<span class="Statement">return</span> <span class="Identifier">l:cssdecl</span>
+    <span class="Statement">endif</span>
+    <span class="Statement">return</span> <span class="Operator">-</span>1
+<span class="Statement">endfunction</span>
+
+
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>HiGrpNm2CssSel<span class="Delimiter">(</span>grpname<span class="Delimiter">)</span>
+    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span><span class="Identifier">a:grpname</span><span class="Delimiter">)</span>
+	<span class="Statement">let</span> <span class="Identifier">l:csssel</span> <span class="Operator">=</span> <span class="String">''</span>
+	<span class="Statement">let</span> <span class="Identifier">l:lnkgrp</span> <span class="Operator">=</span> <span class="String">''</span>
+	<span class="Statement">let</span> <span class="Identifier">l:fndlnr</span> <span class="Operator">=</span> <span class="String">''</span>
+<span class="Comment">&quot; Т. к. функция GetLnkGrp работает с регистром &quot;l, то предварительно</span>
+<span class="Comment">&quot; подготавливаем его. Как в вызываемую функцию передавать наименование регистра и</span>
+<span class="Comment">&quot; чтобы она с ним работала именно как с регистром, я так и не победил. Бля, тупею.</span>
+	<span class="Statement">let</span> @<span class="Statement">l</span> <span class="Operator">=</span> <span class="String">''</span>
+	<span class="Statement">let</span> <span class="Identifier">l:lnkgrp</span> <span class="Operator">=</span> <span class="Normal">s:GetLnkGrp</span><span class="Delimiter">(</span><span class="Identifier">a:grpname</span><span class="Delimiter">)</span>
+	<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:lnkgrp<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Function">type</span><span class="Delimiter">(</span><span class="Number">0</span><span class="Delimiter">)</span> <span class="Operator">!=</span> <span class="Function">type</span><span class="Delimiter">(</span>l:lnkgrp<span class="Delimiter">)</span>
+<span class="Comment">&quot; По‐хорошему, при группировании селекторов, у последнего члена нежелательна</span>
+<span class="Comment">&quot; запятая. Поэтому, чтобы не городить проверки, далее делаем финт ушами</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:lnkgrp</span> <span class="Operator">=</span> <span class="Function">substitute</span><span class="Delimiter">(</span>l:lnkgrp, <span class="String">'\(\w\+\)'</span>, <span class="String">'.\1,'</span>, <span class="String">'g'</span><span class="Delimiter">)</span>
+	<span class="Statement">endif</span>
+	<span class="Statement">call</span> <span class="Function">setpos</span><span class="Delimiter">(</span><span class="String">'.'</span>, [<span class="Number">0</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>]<span class="Delimiter">)</span>
+	<span class="Statement">let</span> <span class="Identifier">l:fndlnr</span> <span class="Operator">=</span> <span class="Function">search</span><span class="Delimiter">(</span><span class="String">'^\&lt;'</span> <span class="Operator">..</span> <span class="Identifier">a:grpname</span> <span class="Operator">..</span> <span class="String">'\&gt;'</span>, <span class="String">'cW'</span>, <span class="Function">line</span><span class="Delimiter">(</span><span class="String">'$'</span><span class="Delimiter">))</span>
+	<span class="Statement">if</span> <span class="Number">0</span> <span class="Operator">&lt;</span> <span class="Identifier">l:fndlnr</span>
+<span class="Comment">&quot; Смотрим, что группа не ссылается на другую группу, которую мы ещё не обработали</span>
+<span class="Comment">&quot; Тут вылезла забавная коллизия. Если эта запись не наименование группы из</span>
+<span class="Comment">&quot; массива, т. е. другого наименования группы на следующем шаге не будет, то</span>
+<span class="Comment">&quot; получим вечный цикл. Решение см. ниже</span>
+	    <span class="Statement">if</span> <span class="Function">search</span><span class="Delimiter">(</span><span class="String">'links to '</span>, <span class="String">'cnW'</span>, l:fndlnr<span class="Delimiter">)</span> <span class="Operator">!=</span> <span class="Identifier">l:fndlnr</span>
+		<span class="Statement">if</span> <span class="Function">empty</span><span class="Delimiter">(</span>l:lnkgrp<span class="Delimiter">)</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:csssel</span> <span class="Operator">=</span> <span class="String">'.'</span> <span class="Operator">..</span> <span class="Normal">s:GetEntry</span><span class="Delimiter">(</span><span class="Number">0</span>, l:fndlnr, <span class="Number">1</span>, <span class="Number">0</span>, <span class="String">'iw'</span><span class="Delimiter">)</span>
+		<span class="Statement">elseif</span> <span class="Function">type</span><span class="Delimiter">(</span><span class="Number">0</span><span class="Delimiter">)</span> <span class="Operator">!=</span> <span class="Function">type</span><span class="Delimiter">(</span>l:lnkgrp<span class="Delimiter">)</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:csssel</span> <span class="Operator">=</span>
+<span class="vimContinue">			\</span> <span class="String">'.'</span> <span class="Operator">..</span> <span class="Normal">s:GetEntry</span><span class="Delimiter">(</span><span class="Number">0</span>, l:fndlnr, <span class="Number">1</span>, <span class="Number">0</span>, <span class="String">'iw'</span><span class="Delimiter">)</span>
+<span class="vimContinue">			\</span> <span class="Operator">..</span> <span class="String">','</span> <span class="Operator">..</span> <span class="Identifier">l:lnkgrp</span>
+		<span class="Statement">endif</span>
+<span class="Comment">&quot; Нда, вначале добавляем запятые, а потом удаляем... Но так быстрее. В смысле</span>
+<span class="Comment">&quot; проще. Заодно и для группы «Normal» добавим универсальный селектор</span>
+		<span class="Statement">let</span> <span class="Identifier">l:csssel</span> <span class="Operator">=</span>
+<span class="vimContinue">		    \</span> <span class="Identifier">s:is_norm</span> ? <span class="Function">trim</span><span class="Delimiter">(</span><span class="String">'*, '</span> <span class="Operator">..</span> l:csssel, <span class="String">','</span>, <span class="Number">2</span><span class="Delimiter">)</span>
+<span class="vimContinue">		    \</span> : <span class="Function">trim</span><span class="Delimiter">(</span>l:csssel, <span class="String">','</span>, <span class="Number">2</span><span class="Delimiter">)</span>
+		<span class="Statement">return</span> <span class="Identifier">l:csssel</span>
+	    <span class="Statement">else</span>
+<span class="Comment">&quot; Не нравится мне это решение. Помимо того, что вводится общая переменная, так</span>
+<span class="Comment">&quot; ещё и изменяется ход выполнения. Да, это обрабатывает следующие ситуации:</span>
+<span class="Comment">&quot; разбор групп, ссылающиеся на группы, которые не обрабатывали (ниже в строке)</span>
+<span class="Comment">&quot; разбор групп, которые ссылаются на несуществующие группы (встретилось в</span>
+<span class="Comment">&quot; Jellibeans и NeoSolarized)</span>
+<span class="Comment">&quot; Но, по‐хорошему, надо менять логику (и так неважную) работы программы</span>
+		<span class="Statement">let</span> <span class="Identifier">s:cmmngrp</span> <span class="Operator">=</span>
+<span class="vimContinue">		    \</span> <span class="Delimiter">(</span><span class="Function">matchlist</span><span class="Delimiter">(</span><span class="Function">getline</span><span class="Delimiter">(</span>l:fndlnr<span class="Delimiter">)</span>, <span class="String">'\(links to \)\(\w\+\)'</span><span class="Delimiter">))</span>[<span class="Number">2</span>]
+	    <span class="Statement">endif</span>
+<span class="Comment">&quot; Обрабатываем ситуацию когда в цветовой схеме не задана группа «Normal».</span>
+<span class="Comment">&quot; Корневой и универсальный селекторы нужны</span>
+<span class="Comment">&quot; Это поломало много. Надо переписывать код.</span>
+	<span class="Statement">elseif</span> <span class="Identifier">s:is_norm</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:csssel</span> <span class="Operator">=</span> <span class="String">'*, .Normal'</span>
+	    <span class="Statement">return</span> <span class="Identifier">l:csssel</span>
+	<span class="Statement">endif</span>
+    <span class="Statement">endif</span>
+	<span class="Statement">return</span> <span class="Operator">-</span>1
+<span class="Statement">endfunction</span>
+
+
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>Hi2Css<span class="Delimiter">(</span>grpname<span class="Delimiter">)</span>
+    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span><span class="Identifier">a:grpname</span><span class="Delimiter">)</span>
+	<span class="Statement">let</span> <span class="Identifier">l:cssrule</span> <span class="Operator">=</span> []
+	<span class="Statement">let</span> <span class="Identifier">l:csssel</span> <span class="Operator">=</span> <span class="Normal">s:HiGrpNm2CssSel</span><span class="Delimiter">(</span><span class="Identifier">a:grpname</span><span class="Delimiter">)</span>
+	<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:csssel<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Function">type</span><span class="Delimiter">(</span><span class="Number">0</span><span class="Delimiter">)</span> <span class="Operator">!=</span> <span class="Function">type</span><span class="Delimiter">(</span>l:csssel<span class="Delimiter">)</span>
+	    <span class="Statement">call</span> <span class="Function">insert</span><span class="Delimiter">(</span>l:cssrule, l:csssel<span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:hiattr</span> <span class="Operator">=</span> <span class="Normal">s:ParseHiArgs</span><span class="Delimiter">(</span><span class="Identifier">a:grpname</span><span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:hiattr<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Function">type</span><span class="Delimiter">(</span><span class="Number">0</span><span class="Delimiter">)</span> <span class="Operator">!=</span> <span class="Function">type</span><span class="Delimiter">(</span>l:hiattr<span class="Delimiter">)</span>
+		<span class="Statement">let</span> <span class="Identifier">l:cssdecl</span> <span class="Operator">=</span> <span class="Normal">s:HiAttr2CssDecl</span><span class="Delimiter">(</span>l:hiattr<span class="Delimiter">)</span>
+		<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:cssdecl<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Function">type</span><span class="Delimiter">(</span><span class="Number">0</span><span class="Delimiter">)</span> <span class="Operator">!=</span> <span class="Function">type</span><span class="Delimiter">(</span>l:cssdecl<span class="Delimiter">)</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssrule</span> <span class="Operator">+=</span> <span class="Identifier">l:cssdecl</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endif</span>
+	<span class="Statement">return</span> <span class="Identifier">l:cssrule</span>
+    <span class="Statement">endif</span>
+    <span class="Statement">return</span> <span class="Operator">-</span>1
+<span class="Statement">endfunction</span>
+
+
+
+<span class="Statement">function</span> <span class="vimFuncSID">s:</span>MainColo2Css<span class="Delimiter">()</span>
+    <span class="Statement">call</span> <span class="Normal">s:HiGroups2Buf</span><span class="Delimiter">()</span>
+    <span class="Statement">if</span> <span class="Function">bufexists</span><span class="Delimiter">(</span>s:nmtmpbuf<span class="Delimiter">)</span>
+<span class="Comment">&quot; При первом проходе цикла должны быть определены глобальные переменные</span>
+<span class="Comment">&quot; значениями из группы «Normal». Также эта группа имеет некоторые отличия от</span>
+<span class="Comment">&quot; других групп, которые надо учитывать</span>
+<span class="Statement">set</span> <span class="PreProc">more</span>
+	<span class="Statement">let</span> <span class="Identifier">l:cssentries</span> <span class="Operator">=</span> []
+	<span class="Statement">let</span> <span class="Identifier">s:is_norm</span> <span class="Operator">=</span> <span class="Number">1</span>
+	<span class="Statement">for</span> <span class="Identifier">l:grpname</span> <span class="Statement">in</span> <span class="Identifier">s:init_grp</span>
+<span class="Comment">&quot; Ещё одна лишняя проверка. Когда есть ссылка на группу, которая ниже. См. далее</span>
+	    <span class="Statement">if</span> <span class="Identifier">l:grpname</span> <span class="Operator">==?</span> <span class="Identifier">s:cmmngrp</span>
+		<span class="Statement">let</span> <span class="Identifier">s:cmmngrp</span> <span class="Operator">=</span> <span class="String">''</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:cssrule</span> <span class="Operator">=</span> <span class="Normal">s:Hi2Css</span><span class="Delimiter">(</span>l:grpname<span class="Delimiter">)</span>
+	    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:cssrule<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Function">type</span><span class="Delimiter">(</span><span class="Number">0</span><span class="Delimiter">)</span> <span class="Operator">!=</span> <span class="Function">type</span><span class="Delimiter">(</span>l:cssrule<span class="Delimiter">)</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssentries, l:cssrule<span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+<span class="Comment">&quot; Группа «Normal» может быть только одна, обнулим этот признак после первого (и</span>
+<span class="Comment">&quot; всех последующих) проходов цикла</span>
+	<span class="Statement">let</span> <span class="Identifier">s:is_norm</span> <span class="Operator">=</span> <span class="Number">0</span>
+	<span class="Statement">endfor</span>
+	<span class="Statement">while</span> <span class="Function">getline</span><span class="Delimiter">(</span><span class="Number">1</span><span class="Delimiter">)</span> <span class="Operator">!=</span> <span class="String">&quot;</span><span class="String">&quot;</span>
+<span class="Comment">&quot; Это не очень красивый трюк. Сделано на случай, если текущая группа ссылается</span>
+<span class="Comment">&quot; на другую группу, которая ещё не обработана. Или если группа ссылается на</span>
+<span class="Comment">&quot; несуществующую группу. См. функцию s:HiNm2CssSel. А вообще</span>
+<span class="Comment">&quot; НАДО: сделать нормальную обработку кодов ошибок.</span>
+	    <span class="Statement">if</span> <span class="String">''</span> <span class="Operator">!=</span> <span class="Identifier">s:cmmngrp</span>
+		<span class="Statement">let</span> <span class="Identifier">l:cssrule</span> <span class="Operator">=</span> <span class="Normal">s:Hi2Css</span><span class="Delimiter">(</span>s:cmmngrp<span class="Delimiter">)</span>
+		<span class="Statement">let</span> <span class="Identifier">s:cmmngrp</span> <span class="Operator">=</span> <span class="String">''</span>
+	    <span class="Statement">else</span>
+		<span class="Statement">let</span> <span class="Identifier">l:grpname</span> <span class="Operator">=</span> <span class="Normal">s:GetEntry</span><span class="Delimiter">(</span><span class="Number">0</span>, <span class="Function">line</span><span class="Delimiter">(</span><span class="String">'.'</span><span class="Delimiter">)</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="String">'iw'</span><span class="Delimiter">)</span>
+		<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:grpname<span class="Delimiter">)</span>
+		    <span class="Statement">let</span> <span class="Identifier">l:cssrule</span> <span class="Operator">=</span> <span class="Normal">s:Hi2Css</span><span class="Delimiter">(</span>l:grpname<span class="Delimiter">)</span>
+		<span class="Statement">endif</span>
+	    <span class="Statement">endif</span>
+	    <span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:cssrule<span class="Delimiter">)</span> <span class="Operator">&amp;&amp;</span> <span class="Function">type</span><span class="Delimiter">(</span><span class="Number">0</span><span class="Delimiter">)</span> <span class="Operator">!=</span> <span class="Function">type</span><span class="Delimiter">(</span>l:cssrule<span class="Delimiter">)</span>
+		<span class="Statement">call</span> <span class="Function">add</span><span class="Delimiter">(</span>l:cssentries, l:cssrule<span class="Delimiter">)</span>
+	    <span class="Statement">endif</span>
+	<span class="Statement">endwhile</span>
+	<span class="Statement">if</span> <span class="Operator">!</span><span class="Function">empty</span><span class="Delimiter">(</span>l:cssentries<span class="Delimiter">)</span>
+	    <span class="Statement">let</span> <span class="Identifier">l:flnm</span> <span class="Operator">=</span> <span class="Function">trim</span><span class="Delimiter">(</span><span class="Function">execute</span><span class="Delimiter">(</span><span class="String">'colorscheme'</span><span class="Delimiter">)</span> <span class="Operator">..</span> <span class="String">'.css'</span><span class="Delimiter">)</span>
+	    <span class="Statement">call</span> <span class="Function">writefile</span><span class="Delimiter">(</span><span class="Function">map</span><span class="Delimiter">(</span>s:head, <span class="String">'v:val .. &quot;^M&quot;'</span><span class="Delimiter">)</span>, l:flnm<span class="Delimiter">)</span>
+	    <span class="Statement">for</span> <span class="Identifier">l:cssln</span> <span class="Statement">in</span> <span class="Identifier">l:cssentries</span>
+		<span class="Statement">call</span> <span class="Function">writefile</span><span class="Delimiter">(</span><span class="Function">map</span><span class="Delimiter">(</span>l:cssln, <span class="String">'v:val .. &quot;^M&quot;'</span><span class="Delimiter">)</span>, l:flnm, <span class="String">'a'</span><span class="Delimiter">)</span>
+<span class="Comment">&quot;		call append('$', l:cssln)</span>
+	    <span class="Statement">endfor</span>
+<span class="Comment">&quot;	    execute 'saveas ++ff=dos ++enc=utf-8 ' | colorscheme .. '.css'</span>
+<span class="Comment">&quot;	    echo l:flnm</span>
+<span class="Comment">&quot;	    saveas ++ff=dos ++enc=utf-8  | execute 'colorscheme' | .. '.css'</span>
+<span class="Comment">&quot;	    call execute('saveas ++ff=dos ++enc=utf-8' .. l:flnm)</span>
+<span class="Comment">&quot;	    execute </span><span class="String">&quot;saveas  .. l:flnm&quot;</span>
+	    <span class="Statement">bw</span><span class="Operator">!</span>
+	<span class="Statement">endif</span>
+    <span class="Statement">else</span>
+	<span class="Statement">return</span> <span class="Operator">-</span>1
+    <span class="Statement">endif</span>
+<span class="Statement">endfunction</span>
+
+<span class="Statement">call</span> <span class="Normal">s:MainColo2Css</span><span class="Delimiter">()</span>
+
+<span class="Statement">unlet</span> <span class="Identifier">s:notrgb</span> <span class="Identifier">s:winsys_colo</span> <span class="Identifier">s:fnt_size</span> <span class="Identifier">s:spec_attr</span> <span class="Identifier">s:hi_args</span> <span class="Identifier">s:init_grp</span>
+<span class="Statement">unlet</span> <span class="Identifier">s:nmtmpbuf</span> <span class="Identifier">s:is_norm</span> <span class="Identifier">s:bg_norm</span> <span class="Identifier">s:fg_norm</span> <span class="Identifier">s:cmmngrp</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:HiGroups2Buf</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:GetEntry</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:GetLnkGrp</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:Dec2Hex</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:ColoStr2ColoNum</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:GetColor</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:GetInitFont</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:ParseFont</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:ParseHiArgs</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:HiAttr2CssDecl</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:HiGrpNm2CssSel</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:Hi2Css</span>
+<span class="Statement">delfunction</span> <span class="Identifier">s:MainColo2Css</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

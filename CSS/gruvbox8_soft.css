@@ -1,0 +1,1205 @@
+/* Этот CSS файл создан в программе Vim версии 8.2 */
+/* из цветовой схемы gruvbox8_soft */
+/* Для этого использовался подключаемый модуль «colo2css.vim» */
+ 
+*, .Normal
+{font-family: "Natural Mono Alt", monospace;
+font-size: 10pt;
+background-color: #32302f;
+color: #ebdbb2;}
+.ColorColumn
+{background-color: #3c3836;}
+.Conceal
+{color: #83a598;}
+.Cursor, .lCursor, .iCursor, .vCursor
+{color: #32302f;
+background-color: #ebdbb2;}
+.CursorIM
+{color: #32302f;
+background-color: #ebdbb2;}
+.CursorLine, .CursorColumn
+{background-color: #3c3836;}
+.CursorLineNr
+{background-color: #3c3836;
+color: #fabd2f;}
+.DiffAdd
+{background-color: #b8bb26;
+color: #32302f;}
+.DiffChange
+{background-color: #8ec07c;
+color: #32302f;}
+.DiffDelete
+{background-color: #fb4934;
+color: #32302f;}
+.DiffText
+{background-color: #fabd2f;
+color: #32302f;}
+.Directory
+{font-weight: bold;
+color: #b8bb26;}
+.EndOfBuffer
+{color: #32302f;}
+.ErrorMsg
+{font-weight: bold;
+background-color: #fb4934;
+color: #32302f;}
+.FoldColumn
+{background-color: #3c3836;
+color: #928374;}
+.Folded
+{background-color: #3c3836;
+color: #928374;}
+.IncSearch
+{background-color: #fe8019;
+color: #32302f;}
+.LineNr
+{color: #7c6f64;}
+.MatchParen
+{font-weight: bold;
+background-color: #504945;
+text-decoration: underline;}
+.ModeMsg
+{font-weight: bold;
+color: #fabd2f;}
+.MoreMsg
+{font-weight: bold;
+color: #fabd2f;}
+.NonText
+{color: #504945;}
+.Pmenu
+{background-color: #504945;
+color: #ebdbb2;}
+.PmenuSbar
+{background-color: #504945;}
+.PmenuSel
+{font-weight: bold;
+background-color: #83a598;
+color: #504945;}
+.PmenuThumb
+{background-color: #7c6f64;}
+.Question
+{font-weight: bold;
+color: #fe8019;}
+.Search, .QuickFixLine, .EasyMotionTarget
+{background-color: #fabd2f;
+color: #32302f;}
+.SignColumn
+{background-color: #3c3836;
+color: #ebdbb2;}
+.SpecialKey
+{color: #928374;}
+.SpellBad
+{color: #fb4934;
+text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #fb4934; -webkit-text-decoration-color: #fb4934; text-decoration-color: #fb4934;}
+.SpellCap
+{color: #83a598;
+text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #83a598; -webkit-text-decoration-color: #83a598; text-decoration-color: #83a598;}
+.SpellLocal
+{color: #8ec07c;
+text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #8ec07c; -webkit-text-decoration-color: #8ec07c; text-decoration-color: #8ec07c;}
+.SpellRare
+{color: #d3869b;
+text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #d3869b; -webkit-text-decoration-color: #d3869b; text-decoration-color: #d3869b;}
+.StatusLine, .StatusLineTerm
+{background-color: #504945;
+color: #ebdbb2;}
+.StatusLineNC, .StatusLineTermNC
+{background-color: #3c3836;
+color: #a89984;}
+.TabLine
+{background-color: #3c3836;
+color: #7c6f64;}
+.TabLineFill
+{background-color: #3c3836;
+color: #7c6f64;}
+.TabLineSel
+{background-color: #3c3836;
+color: #b8bb26;}
+.Title
+{font-weight: bold;
+color: #b8bb26;}
+.VertSplit
+{background-color: #32302f;
+color: #665c54;}
+.Visual, .VisualNOS
+{background-color: #665c54;}
+.WarningMsg
+{font-weight: bold;
+color: #fb4934;}
+.WildMenu
+{font-weight: bold;
+background-color: #504945;
+color: #83a598;}
+.ToolbarLine
+{background-color: #665c54;}
+.ToolbarButton
+{font-weight: bold;
+background-color: #665c54;
+color: #fbf1c7;}
+.Comment, .EasyMotionShade, .typeScriptDocSeeTag, .typeScriptDocParam, .elixirDocString
+{color: #928374;}
+.Constant
+{color: #d3869b;}
+.Special, .Tag
+{color: #fe8019;}
+.Identifier
+{color: #83a598;}
+.Statement
+{color: #fb4934;}
+.PreProc
+{color: #8ec07c;}
+.Type
+{color: #fabd2f;}
+.Underlined
+{color: #83a598;
+text-decoration: underline;
+-moz-text-decoration-color: #83a598; -webkit-text-decoration-color: #83a598; text-decoration-color: #83a598;}
+.Ignore
+{color: #ebdbb2;}
+.Error
+{font-weight: bold;
+background-color: #fb4934;
+color: #32302f;}
+.Todo
+{font-weight: bold;
+background-color: #32302f;
+color: #ebdbb2;}
+.String
+{color: #b8bb26;}
+.Character
+{color: #d3869b;}
+.Number
+{color: #d3869b;}
+.Boolean
+{color: #d3869b;}
+.Float
+{color: #d3869b;}
+.Function
+{font-weight: bold;
+color: #b8bb26;}
+.Conditional
+{color: #fb4934;}
+.Repeat
+{color: #fb4934;}
+.Label
+{color: #fb4934;}
+.Operator
+{color: #8ec07c;}
+.Keyword
+{color: #fb4934;}
+.Exception
+{color: #fb4934;}
+.Include
+{color: #8ec07c;}
+.Define
+{color: #8ec07c;}
+.Macro
+{color: #8ec07c;}
+.PreCondit
+{color: #8ec07c;}
+.StorageClass
+{color: #fe8019;}
+.Structure
+{color: #8ec07c;}
+.Typedef
+{color: #fabd2f;}
+.SpecialChar
+{color: #fb4934;}
+.Delimiter
+{color: #fe8019;}
+.SpecialComment
+{color: #fb4934;}
+.Debug
+{color: #fb4934;}
+.NormalMode
+{background-color: #a89984;
+color: #32302f;}
+.InsertMode
+{background-color: #83a598;
+color: #32302f;}
+.ReplaceMode
+{background-color: #8ec07c;
+color: #32302f;}
+.VisualMode
+{background-color: #fe8019;
+color: #32302f;}
+.CommandMode
+{background-color: #d3869b;
+color: #32302f;}
+.Warnings
+{background-color: #fe8019;
+color: #32302f;}
+.ALEError
+{text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #fb4934; -webkit-text-decoration-color: #fb4934; text-decoration-color: #fb4934;}
+.ALEWarning
+{text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #fb4934; -webkit-text-decoration-color: #fb4934; text-decoration-color: #fb4934;}
+.ALEInfo
+{text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #83a598; -webkit-text-decoration-color: #83a598; text-decoration-color: #83a598;}
+.ALEErrorSign
+{background-color: #3c3836;
+color: #fb4934;}
+.ALEWarningSign
+{background-color: #3c3836;
+color: #fabd2f;}
+.ALEInfoSign
+{background-color: #3c3836;
+color: #83a598;}
+.BufTabLineCurrent
+{background-color: #a89984;
+color: #32302f;}
+.BufTabLineActive
+{background-color: #504945;
+color: #a89984;}
+.BufTabLineHidden
+{background-color: #3c3836;
+color: #7c6f64;}
+.BufTabLineFill
+{background-color: #32302f;
+color: #32302f;}
+.CocErrorSign
+{background-color: #3c3836;
+color: #fb4934;}
+.CocWarningSign
+{background-color: #3c3836;
+color: #fe8019;}
+.CocInfoSign
+{background-color: #3c3836;
+color: #fabd2f;}
+.CocHintSign
+{background-color: #3c3836;
+color: #83a598;}
+.CocErrorFloat
+{color: #fb4934;}
+.CocWarningFloat
+{color: #fe8019;}
+.CocInfoFloat
+{color: #fabd2f;}
+.CocHintFloat
+{color: #83a598;}
+.CtrlPMatch
+{color: #fabd2f;}
+.CtrlPNoEntries
+{color: #fb4934;}
+.CtrlPPrtBase
+{color: #504945;}
+.CtrlPPrtCursor
+{color: #83a598;}
+.CtrlPLinePre
+{color: #504945;}
+.CtrlPMode1
+{font-weight: bold;
+background-color: #504945;
+color: #83a598;}
+.CtrlPMode2
+{font-weight: bold;
+background-color: #83a598;
+color: #32302f;}
+.CtrlPStats
+{font-weight: bold;
+background-color: #504945;
+color: #a89984;}
+.DirvishPathTail
+{color: #8ec07c;}
+.DirvishArg
+{color: #fabd2f;}
+.gitcommitSelectedFile
+{color: #b8bb26;}
+.gitcommitDiscardedFile
+{color: #fb4934;}
+.GitGutterAdd
+{color: #b8bb26;}
+.GitGutterChange
+{color: #8ec07c;}
+.GitGutterDelete
+{color: #fb4934;}
+.GitGutterChangeDelete
+{color: #8ec07c;}
+.LspDiagnosticsDefaultError
+{color: #fb4934;}
+.LspDiagnosticsSignError
+{background-color: #3c3836;
+color: #fb4934;}
+.LspDiagnosticsDefaultWarning
+{color: #fe8019;}
+.LspDiagnosticsSignWarning
+{background-color: #3c3836;
+color: #fe8019;}
+.LspDiagnosticsDefaultInformation
+{color: #fabd2f;}
+.LspDiagnosticsSignInformation
+{background-color: #3c3836;
+color: #fabd2f;}
+.LspDiagnosticsDefaultHint
+{color: #83a598;}
+.LspDiagnosticsSignHint
+{background-color: #3c3836;
+color: #83a598;}
+.LanguageClientError
+{color: #fb4934;}
+.LanguageClientErrorSign
+{background-color: #32302f;
+color: #fb4934;}
+.LanguageClientWarning
+{color: #fabd2f;}
+.LanguageClientWarningSign
+{background-color: #3c3836;
+color: #fabd2f;}
+.LangaugeClientInfo
+{color: #83a598;}
+.LanguageClientInfoSign
+{background-color: #3c3836;
+color: #83a598;}
+.LanguageClientCodeLens
+{color: #83a598;}
+.NERDTreeDir
+{color: #8ec07c;}
+.NERDTreeDirSlash
+{color: #8ec07c;}
+.NERDTreeOpenable
+{color: #fe8019;}
+.NERDTreeClosable
+{color: #fe8019;}
+.NERDTreeFile
+{color: #ebdbb2;}
+.NERDTreeExecFile
+{color: #fabd2f;}
+.NERDTreeUp
+{color: #928374;}
+.NERDTreeCWD
+{color: #b8bb26;}
+.NERDTreeHelp
+{color: #ebdbb2;}
+.NERDTreeToggleOn
+{color: #b8bb26;}
+.NERDTreeToggleOff
+{color: #fb4934;}
+.netrwDir
+{color: #8ec07c;}
+.netrwClassify
+{color: #8ec07c;}
+.netrwLink
+{color: #928374;}
+.netrwSymLink
+{color: #ebdbb2;}
+.netrwExe
+{color: #fabd2f;}
+.netrwComment
+{color: #928374;}
+.netrwList
+{color: #83a598;}
+.netrwHelpCmd
+{color: #8ec07c;}
+.netrwCmdSep
+{color: #bdae93;}
+.netrwVersion
+{color: #b8bb26;}
+.ShowMarksHLl
+{background-color: #3c3836;
+color: #83a598;}
+.ShowMarksHLu
+{background-color: #3c3836;
+color: #83a598;}
+.ShowMarksHLo
+{background-color: #3c3836;
+color: #83a598;}
+.ShowMarksHLm
+{background-color: #3c3836;
+color: #83a598;}
+.SignifySignAdd
+{background-color: #3c3836;
+color: #b8bb26;}
+.SignifySignChange
+{background-color: #3c3836;
+color: #8ec07c;}
+.SignifySignDelete
+{background-color: #3c3836;
+color: #fb4934;}
+.SignatureMarkText
+{background-color: #3c3836;
+color: #83a598;}
+.SignatureMarkerText
+{background-color: #3c3836;
+color: #d3869b;}
+.StartifyBracket
+{color: #bdae93;}
+.StartifyFile
+{color: #ebdbb2;}
+.StartifyNumber
+{color: #83a598;}
+.StartifyPath
+{color: #928374;}
+.StartifySlash
+{color: #928374;}
+.StartifySection
+{color: #fabd2f;}
+.StartifySpecial
+{color: #504945;}
+.StartifyHeader
+{color: #fe8019;}
+.StartifyFooter
+{color: #504945;}
+.SyntasticError
+{text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #fb4934; -webkit-text-decoration-color: #fb4934; text-decoration-color: #fb4934;}
+.SyntasticWarning
+{text-decoration: underline;-moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #fabd2f; -webkit-text-decoration-color: #fabd2f; text-decoration-color: #fabd2f;}
+.SyntasticErrorSign
+{background-color: #3c3836;
+color: #fb4934;}
+.SyntasticWarningSign
+{background-color: #3c3836;
+color: #fabd2f;}
+.multiple_cursors_cursor
+{color: #32302f;
+background-color: #ebdbb2;}
+.multiple_cursors_visual
+{background-color: #504945;}
+.diffAdded
+{color: #b8bb26;}
+.diffRemoved
+{color: #fb4934;}
+.diffChanged
+{color: #8ec07c;}
+.diffFile
+{color: #fe8019;}
+.diffNewFile
+{color: #fabd2f;}
+.diffLine
+{color: #83a598;}
+.htmlTag
+{color: #83a598;}
+.htmlEndTag
+{color: #83a598;}
+.htmlTagName
+{font-weight: bold;
+color: #8ec07c;}
+.htmlArg
+{color: #8ec07c;}
+.htmlScriptTag
+{color: #d3869b;}
+.htmlTagN
+{color: #ebdbb2;}
+.htmlSpecialTagName
+{font-weight: bold;
+color: #8ec07c;}
+.htmlLink
+{color: #a89984;
+text-decoration: underline;}
+.htmlSpecialChar
+{color: #fe8019;}
+.htmlBold
+{font-weight: bold;
+background-color: #32302f;
+color: #ebdbb2;}
+.htmlBoldUnderline
+{font-weight: bold;
+background-color: #32302f;
+color: #ebdbb2;
+text-decoration: underline;}
+.htmlBoldItalic
+{font-weight: bold;
+background-color: #32302f;
+color: #ebdbb2;}
+.htmlBoldUnderlineItalic
+{font-weight: bold;
+background-color: #32302f;
+color: #ebdbb2;
+text-decoration: underline;}
+.htmlUnderline
+{background-color: #32302f;
+color: #ebdbb2;
+text-decoration: underline;}
+.htmlUnderlineItalic
+{background-color: #32302f;
+color: #ebdbb2;
+text-decoration: underline;}
+.htmlItalic
+{background-color: #32302f;
+color: #ebdbb2;}
+.xmlTag
+{color: #83a598;}
+.xmlEndTag
+{color: #83a598;}
+.xmlTagName
+{color: #83a598;}
+.xmlEqual
+{color: #83a598;}
+.docbkKeyword
+{font-weight: bold;
+color: #8ec07c;}
+.xmlDocTypeDecl
+{color: #928374;}
+.xmlDocTypeKeyword
+{color: #d3869b;}
+.xmlCdataStart
+{color: #928374;}
+.xmlCdataCdata
+{color: #d3869b;}
+.dtdFunction
+{color: #928374;}
+.dtdTagName
+{color: #d3869b;}
+.xmlAttrib
+{color: #8ec07c;}
+.xmlProcessingDelim
+{color: #928374;}
+.dtdParamEntityPunct
+{color: #928374;}
+.dtdParamEntityDPunct
+{color: #928374;}
+.xmlAttribPunct
+{color: #928374;}
+.xmlEntity
+{color: #fe8019;}
+.xmlEntityPunct
+{color: #fe8019;}
+.vimCommentTitle, .typeScriptDocTags, .javaCommentTitle
+{font-weight: bold;
+color: #a89984;}
+.vimNotation
+{color: #fe8019;}
+.vimBracket
+{color: #fe8019;}
+.vimMapModKey
+{color: #fe8019;}
+.vimFuncSID
+{color: #bdae93;}
+.vimSetSep
+{color: #bdae93;}
+.vimSep
+{color: #bdae93;}
+.vimContinue
+{color: #bdae93;}
+.clojureKeyword
+{color: #83a598;}
+.clojureCond
+{color: #fe8019;}
+.clojureSpecial
+{color: #fe8019;}
+.clojureDefine
+{color: #fe8019;}
+.clojureFunc
+{color: #fabd2f;}
+.clojureRepeat
+{color: #fabd2f;}
+.clojureCharacter
+{color: #8ec07c;}
+.clojureStringEscape
+{color: #8ec07c;}
+.clojureException
+{color: #fb4934;}
+.clojureRegexp
+{color: #8ec07c;}
+.clojureRegexpEscape
+{color: #8ec07c;}
+.clojureRegexpCharClass, .clojureRegexpMod, .clojureRegexpQuantifier
+{font-weight: bold;
+color: #bdae93;}
+.clojureParen
+{color: #bdae93;}
+.clojureAnonArg
+{color: #fabd2f;}
+.clojureVariable
+{color: #83a598;}
+.clojureMacro
+{color: #fe8019;}
+.clojureMeta
+{color: #fabd2f;}
+.clojureDeref
+{color: #fabd2f;}
+.clojureQuote
+{color: #fabd2f;}
+.clojureUnquote
+{color: #fabd2f;}
+.cOperator
+{color: #d3869b;}
+.cStructure
+{color: #fe8019;}
+.pythonBuiltin
+{color: #fe8019;}
+.pythonBuiltinObj
+{color: #fe8019;}
+.pythonBuiltinFunc
+{color: #fe8019;}
+.pythonFunction
+{color: #8ec07c;}
+.pythonDecorator
+{color: #fb4934;}
+.pythonInclude
+{color: #83a598;}
+.pythonImport
+{color: #83a598;}
+.pythonRun
+{color: #83a598;}
+.pythonCoding
+{color: #83a598;}
+.pythonOperator
+{color: #fb4934;}
+.pythonException
+{color: #fb4934;}
+.pythonExceptions
+{color: #d3869b;}
+.pythonBoolean
+{color: #d3869b;}
+.pythonDot
+{color: #bdae93;}
+.pythonConditional
+{color: #fb4934;}
+.pythonRepeat
+{color: #fb4934;}
+.pythonDottedName
+{font-weight: bold;
+color: #b8bb26;}
+.cssBraces
+{color: #83a598;}
+.cssFunctionName
+{color: #fabd2f;}
+.cssIdentifier
+{color: #fe8019;}
+.cssClassName
+{color: #b8bb26;}
+.cssColor
+{color: #83a598;}
+.cssSelectorOp
+{color: #83a598;}
+.cssSelectorOp2
+{color: #83a598;}
+.cssImportant
+{color: #b8bb26;}
+.cssVendor
+{color: #ebdbb2;}
+.cssTextProp
+{color: #8ec07c;}
+.cssAnimationProp
+{color: #8ec07c;}
+.cssUIProp
+{color: #fabd2f;}
+.cssTransformProp
+{color: #8ec07c;}
+.cssTransitionProp
+{color: #8ec07c;}
+.cssPrintProp
+{color: #8ec07c;}
+.cssPositioningProp
+{color: #fabd2f;}
+.cssBoxProp
+{color: #8ec07c;}
+.cssFontDescriptorProp
+{color: #8ec07c;}
+.cssFlexibleBoxProp
+{color: #8ec07c;}
+.cssBorderOutlineProp
+{color: #8ec07c;}
+.cssBackgroundProp
+{color: #8ec07c;}
+.cssMarginProp
+{color: #8ec07c;}
+.cssListProp
+{color: #8ec07c;}
+.cssTableProp
+{color: #8ec07c;}
+.cssFontProp
+{color: #8ec07c;}
+.cssPaddingProp
+{color: #8ec07c;}
+.cssDimensionProp
+{color: #8ec07c;}
+.cssRenderProp
+{color: #8ec07c;}
+.cssColorProp
+{color: #8ec07c;}
+.cssGeneratedContentProp
+{color: #8ec07c;}
+.javaScriptBraces
+{color: #ebdbb2;}
+.javaScriptFunction
+{color: #8ec07c;}
+.javaScriptIdentifier
+{color: #fe8019;}
+.javaScriptMember
+{color: #83a598;}
+.javaScriptNumber
+{color: #d3869b;}
+.javaScriptNull
+{color: #d3869b;}
+.javaScriptParens
+{color: #bdae93;}
+.javascriptImport
+{color: #8ec07c;}
+.javascriptExport
+{color: #8ec07c;}
+.javascriptClassKeyword
+{color: #8ec07c;}
+.javascriptClassExtends
+{color: #8ec07c;}
+.javascriptDefault
+{color: #8ec07c;}
+.javascriptClassName
+{color: #fabd2f;}
+.javascriptClassSuperName
+{color: #fabd2f;}
+.javascriptGlobal
+{color: #fabd2f;}
+.javascriptEndColons
+{color: #ebdbb2;}
+.javascriptFuncArg
+{color: #ebdbb2;}
+.javascriptGlobalMethod
+{color: #ebdbb2;}
+.javascriptNodeGlobal
+{color: #ebdbb2;}
+.javascriptBOMWindowProp
+{color: #ebdbb2;}
+.javascriptArrayMethod
+{color: #ebdbb2;}
+.javascriptArrayStaticMethod
+{color: #ebdbb2;}
+.javascriptCacheMethod
+{color: #ebdbb2;}
+.javascriptDateMethod
+{color: #ebdbb2;}
+.javascriptMathStaticMethod
+{color: #ebdbb2;}
+.javascriptURLUtilsProp
+{color: #ebdbb2;}
+.javascriptBOMNavigatorProp
+{color: #ebdbb2;}
+.javascriptDOMDocMethod
+{color: #ebdbb2;}
+.javascriptDOMDocProp
+{color: #ebdbb2;}
+.javascriptBOMLocationMethod
+{color: #ebdbb2;}
+.javascriptBOMWindowMethod
+{color: #ebdbb2;}
+.javascriptStringMethod
+{color: #ebdbb2;}
+.javascriptVariable
+{color: #fe8019;}
+.javascriptClassSuper
+{color: #fe8019;}
+.javascriptFuncKeyword
+{color: #8ec07c;}
+.javascriptAsyncFunc
+{color: #8ec07c;}
+.javascriptClassStatic
+{color: #fe8019;}
+.javascriptOperator
+{color: #fb4934;}
+.javascriptForOperator
+{color: #fb4934;}
+.javascriptYield
+{color: #fb4934;}
+.javascriptExceptions
+{color: #fb4934;}
+.javascriptMessage
+{color: #fb4934;}
+.javascriptTemplateSB
+{color: #8ec07c;}
+.javascriptTemplateSubstitution
+{color: #ebdbb2;}
+.javascriptLabel
+{color: #ebdbb2;}
+.javascriptObjectLabel
+{color: #ebdbb2;}
+.javascriptPropertyName
+{color: #ebdbb2;}
+.javascriptLogicSymbols
+{color: #ebdbb2;}
+.javascriptArrowFunc
+{color: #fabd2f;}
+.javascriptDocParamName
+{color: #a89984;}
+.javascriptDocTags
+{color: #a89984;}
+.javascriptDocNotation
+{color: #a89984;}
+.javascriptDocParamType
+{color: #a89984;}
+.javascriptDocNamedParamType
+{color: #a89984;}
+.javascriptBrackets
+{color: #ebdbb2;}
+.javascriptDOMElemAttrs
+{color: #ebdbb2;}
+.javascriptDOMEventMethod
+{color: #ebdbb2;}
+.javascriptDOMNodeMethod
+{color: #ebdbb2;}
+.javascriptDOMStorageMethod
+{color: #ebdbb2;}
+.javascriptHeadersMethod
+{color: #ebdbb2;}
+.javascriptAsyncFuncKeyword
+{color: #fb4934;}
+.javascriptAwaitFuncKeyword
+{color: #fb4934;}
+.jsImport
+{color: #fb4934;}
+.jsExport
+{color: #fb4934;}
+.jsFrom
+{color: #fb4934;}
+.jsThis
+{color: #d3869b;}
+.jsParen
+{color: #83a598;}
+.jsOperator
+{color: #8ec07c;}
+.jsSpreadOperator
+{color: #b8bb26;}
+.jsSpreadExpression
+{color: #83a598;}
+.jsClassKeyword
+{color: #fb4934;}
+.jsClassProperty
+{color: #b8bb26;}
+.jsExtendsKeyword
+{color: #fb4934;}
+.jsExportDefault
+{font-weight: bold;
+color: #fe8019;}
+.jsTemplateBraces
+{color: #8ec07c;}
+.jsGlobalNodeObjects
+{color: #ebdbb2;}
+.jsGlobalObjects
+{color: #ebdbb2;}
+.jsFunction
+{color: #b8bb26;}
+.jsFuncParens
+{color: #d3869b;}
+.jsFuncBlock
+{color: #83a598;}
+.jsParens
+{color: #bdae93;}
+.jsNull
+{color: #d3869b;}
+.jsUndefined
+{color: #d3869b;}
+.jsClassDefinition
+{color: #fabd2f;}
+.jsFunctionKey
+{color: #b8bb26;}
+.jsBracket
+{color: #fb4934;}
+.jsObjectColon
+{color: #fb4934;}
+.jsObjectProp
+{color: #83a598;}
+.jsFuncBraces
+{color: #b8bb26;}
+.jsVariableDef
+{color: #fabd2f;}
+.jsObjectValue
+{color: #83a598;}
+.jsDestructuringBlock
+{color: #fabd2f;}
+.jsParenIfElse
+{color: #83a598;}
+.jsClassBlock
+{color: #83a598;}
+.jsFutureKeys
+{font-weight: bold;
+color: #fe8019;}
+.jsStorageClass
+{color: #fe8019;}
+.jsModuleKeyword
+{color: #83a598;}
+.jsObjectShorthandProp
+{color: #83a598;}
+.jsxRegion
+{color: #83a598;}
+.jsxTagName
+{color: #83a598;}
+.jsxComponentName
+{color: #fabd2f;}
+.jsxEscapeJsAttributes
+{color: #83a598;}
+.jsxEscapeJsContent
+{color: #83a598;}
+.jsxAttrib
+{color: #fabd2f;}
+.jsxAttributeBraces
+{color: #ebdbb2;}
+.jsxEqual
+{color: #8ec07c;}
+.jsxString
+{color: #b8bb26;}
+.jsxCloseTag
+{color: #83a598;}
+.jsxEndTag
+{color: #83a598;}
+.jsxEndString
+{color: #83a598;}
+.jsxCloseString
+{color: #83a598;}
+.jsxIfOperator
+{color: #8ec07c;}
+.jsxElseOperator
+{color: #8ec07c;}
+.jsxDot
+{color: #ebdbb2;}
+.jsxNamespace
+{color: #83a598;}
+.jsxPunct
+{color: #8ec07c;}
+.typeScriptReserved
+{color: #8ec07c;}
+.typeScriptLabel
+{color: #8ec07c;}
+.typeScriptFuncKeyword
+{color: #8ec07c;}
+.typeScriptIdentifier
+{color: #fe8019;}
+.typeScriptBraces
+{color: #ebdbb2;}
+.typeScriptEndColons
+{color: #ebdbb2;}
+.typeScriptDOMObjects
+{color: #ebdbb2;}
+.typeScriptAjaxMethods
+{color: #ebdbb2;}
+.typeScriptLogicSymbols
+{color: #ebdbb2;}
+.typeScriptGlobalObjects
+{color: #ebdbb2;}
+.typeScriptParens
+{color: #bdae93;}
+.typeScriptOpSymbols
+{color: #bdae93;}
+.typeScriptHtmlElemProperties
+{color: #ebdbb2;}
+.typeScriptNull
+{color: #d3869b;}
+.typeScriptInterpolationDelimiter
+{color: #8ec07c;}
+.purescriptModuleKeyword
+{color: #8ec07c;}
+.purescriptModuleName
+{color: #ebdbb2;}
+.purescriptWhere
+{color: #8ec07c;}
+.purescriptDelimiter
+{color: #a89984;}
+.purescriptType
+{color: #ebdbb2;}
+.purescriptImportKeyword
+{color: #8ec07c;}
+.purescriptHidingKeyword
+{color: #8ec07c;}
+.purescriptAsKeyword
+{color: #8ec07c;}
+.purescriptStructure
+{color: #8ec07c;}
+.purescriptOperator
+{color: #83a598;}
+.purescriptTypeVar
+{color: #ebdbb2;}
+.purescriptConstructor
+{color: #ebdbb2;}
+.purescriptFunction
+{color: #ebdbb2;}
+.purescriptConditional
+{color: #fe8019;}
+.purescriptBacktick
+{color: #fe8019;}
+.coffeeExtendedOp
+{color: #bdae93;}
+.coffeeSpecialOp
+{color: #bdae93;}
+.coffeeCurly
+{color: #fe8019;}
+.coffeeParen
+{color: #bdae93;}
+.coffeeBracket
+{color: #fe8019;}
+.rubyStringDelimiter
+{color: #b8bb26;}
+.rubyInterpolationDelimiter
+{color: #8ec07c;}
+.objcTypeModifier
+{color: #fb4934;}
+.objcDirective
+{color: #83a598;}
+.goDirective
+{color: #8ec07c;}
+.goConstants
+{color: #d3869b;}
+.goDeclaration
+{color: #fb4934;}
+.goDeclType
+{color: #83a598;}
+.goBuiltins
+{color: #fe8019;}
+.luaIn
+{color: #fb4934;}
+.luaFunction
+{color: #8ec07c;}
+.luaTable
+{color: #fe8019;}
+.moonSpecialOp
+{color: #bdae93;}
+.moonExtendedOp
+{color: #bdae93;}
+.moonFunction
+{color: #bdae93;}
+.moonObject
+{color: #fabd2f;}
+.javaAnnotation
+{color: #83a598;}
+.javaDocTags
+{color: #8ec07c;}
+.javaParen
+{color: #bdae93;}
+.javaParen1
+{color: #bdae93;}
+.javaParen2
+{color: #bdae93;}
+.javaParen3
+{color: #bdae93;}
+.javaParen4
+{color: #bdae93;}
+.javaParen5
+{color: #bdae93;}
+.javaOperator
+{color: #fe8019;}
+.javaVarArg
+{color: #b8bb26;}
+.elixirStringDelimiter
+{color: #b8bb26;}
+.elixirInterpolationDelimiter
+{color: #8ec07c;}
+.elixirModuleDeclaration
+{color: #fabd2f;}
+.scalaNameDefinition
+{color: #ebdbb2;}
+.scalaCaseFollowing
+{color: #ebdbb2;}
+.scalaCapitalWord
+{color: #ebdbb2;}
+.scalaTypeExtension
+{color: #ebdbb2;}
+.scalaKeyword
+{color: #fb4934;}
+.scalaKeywordModifier
+{color: #fb4934;}
+.scalaSpecial
+{color: #8ec07c;}
+.scalaOperator
+{color: #ebdbb2;}
+.scalaTypeDeclaration
+{color: #fabd2f;}
+.scalaTypeTypePostDeclaration
+{color: #fabd2f;}
+.scalaInstanceDeclaration
+{color: #ebdbb2;}
+.scalaInterpolation
+{color: #8ec07c;}
+.markdownItalic
+{color: #bdae93;}
+.markdownH1
+{font-weight: bold;
+color: #b8bb26;}
+.markdownH2
+{font-weight: bold;
+color: #b8bb26;}
+.markdownH3
+{font-weight: bold;
+color: #fabd2f;}
+.markdownH4
+{font-weight: bold;
+color: #fabd2f;}
+.markdownH5
+{color: #fabd2f;}
+.markdownH6
+{color: #fabd2f;}
+.markdownCode
+{color: #8ec07c;}
+.markdownCodeBlock
+{color: #8ec07c;}
+.markdownCodeDelimiter
+{color: #8ec07c;}
+.markdownBlockquote
+{color: #928374;}
+.markdownListMarker
+{color: #928374;}
+.markdownOrderedListMarker
+{color: #928374;}
+.markdownRule
+{color: #928374;}
+.markdownHeadingRule
+{color: #928374;}
+.markdownUrlDelimiter
+{color: #bdae93;}
+.markdownLinkDelimiter
+{color: #bdae93;}
+.markdownLinkTextDelimiter
+{color: #bdae93;}
+.markdownHeadingDelimiter
+{color: #fe8019;}
+.markdownUrl
+{color: #d3869b;}
+.markdownUrlTitleDelimiter
+{color: #b8bb26;}
+.markdownLinkText, .markdownIdDeclaration
+{color: #928374;
+text-decoration: underline;}
+.haskellType
+{color: #ebdbb2;}
+.haskellIdentifier
+{color: #ebdbb2;}
+.haskellSeparator
+{color: #ebdbb2;}
+.haskellDelimiter
+{color: #a89984;}
+.haskellOperators
+{color: #83a598;}
+.haskellBacktick
+{color: #fe8019;}
+.haskellStatement
+{color: #fe8019;}
+.haskellConditional
+{color: #fe8019;}
+.haskellLet
+{color: #8ec07c;}
+.haskellDefault
+{color: #8ec07c;}
+.haskellWhere
+{color: #8ec07c;}
+.haskellBottom
+{color: #8ec07c;}
+.haskellBlockKeywords
+{color: #8ec07c;}
+.haskellImportKeywords
+{color: #8ec07c;}
+.haskellDeclKeyword
+{color: #8ec07c;}
+.haskellDeriving
+{color: #8ec07c;}
+.haskellAssocType
+{color: #8ec07c;}
+.haskellNumber
+{color: #d3869b;}
+.haskellPragma
+{color: #d3869b;}
+.haskellString
+{color: #b8bb26;}
+.haskellChar
+{color: #b8bb26;}
+.jsonKeyword
+{color: #b8bb26;}
+.jsonQuote
+{color: #b8bb26;}
+.jsonBraces
+{color: #ebdbb2;}
+.jsonString
+{color: #ebdbb2;}
