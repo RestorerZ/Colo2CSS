@@ -1,7 +1,7 @@
 " colo2css.vim
 " Maintainer:	Restorer
-" Last change:	06 Nov 21
-" Version:	0.9.17
+" Last change:	08 Nov 21
+" Version:	0.9.19
 " Description:	преобразование файла цветовой схемы в CSS-файл
 "		converting colorscheme file to CSS file
 
@@ -15,18 +15,6 @@
 "endif
 "
 
-let s:head = []
-call add(
-	\ s:head, '/* Этот CSS-файл создан в версии программы Vim '
-	\ .. v:version/100 .. '.' .. v:version%100 .. '.'
-	\ .. substitute(v:versionlong, v:version, '', '') ..' */')
-	"\ .. v:versionlong % float2nr(pow(10, (len(v:versionlong)-len(v:version)))) .. ' */')
-call add(
-	\ s:head, '/* из файла цветовой схемы «'
-	\ .. trim(execute('colorscheme')) .. '» */')
-call add(
-	\ s:head, '/* Для этого был использован подключаемый модуль «colo2css.vim» */')
-call add(s:head, ' ')
 
 " Цвета, которые отсутствуют в файле rgb.txt. Взято из файла src\term.c 
 let s:not_rgb =
@@ -99,11 +87,16 @@ let s:init_grp = ['Normal', 'ColorColumn', 'Conceal', 'Cursor', 'CursorColumn',
 "let s:init_grp = ['Normal', 'EndOfBuffer', 'NonText', 'QuickFixLine', 'Search']
 
 " Общие переменные
-let s:nmtmpbuf = 'Tmp_Colo2CSS'
+let s:nm_tmp_buf = 'Tmp_Colo2CSS'
 let s:is_norm = ''
 let s:bg_norm = ''
 let s:fg_norm = ''
-let s:cmmngrp = ''
+let s:cmmn_grp = ''
+let s:css_head = []
+
+
+
+
 
 " Честно подсмотрено в hitest.vim
 function s:HiGroups2Buf()
@@ -124,7 +117,7 @@ function s:HiGroups2Buf()
 "    endif
 
 " Создаём временный буфер
-    execute 'edit ' .. s:nmtmpbuf
+    execute 'edit ' .. s:nm_tmp_buf
 
 " И устанавливаем для него необходимые локальные параметры textwidth=0 
     setlocal noautoindent noexpandtab formatoptions=""
@@ -188,7 +181,7 @@ function s:GetLnkGrp(grpname)
 		    endif
 		    execute l:fndlnr'delete'
 " Могут быть группы, которые ссылаются на эту группу, которая ссылается на
-" на начальную группу
+" начальную группу
 		    call s:GetLnkGrp(l:lnkgrpnm)
 		endif
 	    let l:lnr = l:fndlnr
@@ -441,16 +434,12 @@ function s:ParseHiArgs(grpname)
 " Если присутствует в строке, копируем значение как СЛОВО до пробельного символа
 			let @s = s:GetEntry(0, l:fndlnr, l:pos+1, 0, 'E')
 			if !empty(@s)
-" Если в строке будут символы запятой, заменим их на пробел
-"			    let @s = tr(@s, ',', ' ')
 			    for attr in s:spec_attr
 				if 0 <= (stridx(@s, attr[0])) 
 " При наличии наименования атрибута из массива, присваиваем значение
 " соответствующему наименованию ключа словаря
 				    let l:hiattr[attr[1]] = 1
 " и удаляем из строки наименование атрибута
-"				    let @s =
-"					\ substitute(@s, '\c'..attr[0]..'\s\=', '', '')
 				    let @s =
 					\ substitute(@s, '\c'..attr[0]..'\%( \|,\)\=', '', '')
 				    if empty(@s)
@@ -508,7 +497,7 @@ function s:ParseHiArgs(grpname)
 	endif
 " Всё одно удаляем строку с этой группой, даже если мы не смогли получить её
 " свойства, но только если она не ссылается на другие группы
-	call deletebufline(s:nmtmpbuf, l:fndlnr)
+	call deletebufline(s:nm_tmp_buf, l:fndlnr)
 	return l:hiattr
     endif
     return -1
@@ -525,13 +514,15 @@ function s:HiAttr2CssDecl(hiattr)
 	if !empty(l:fnt)
 " Формируем объявление (декларацию) для шрифта
 	    if has_key(l:fnt, 'fntname')
-		call add(l:cssdecl, 'font-family: "' .. l:fnt['fntname']
+		call add(l:cssdecl,
+		    \ 'font-family: "' .. l:fnt['fntname']
 		    \ .. '", monospace;')
 	    endif
 	    if has_key(l:fnt, 'fnthght')
 " Для X11 делим на десять. Единицы измерения устанавливаем в пункты (points),
 " как указано для шрифта в справке Vim
-		call add(l:cssdecl, 'font-size: ' .. (has('X11') ?
+		call add(l:cssdecl,
+		    \ 'font-size: ' .. (has('X11') ?
 		    \ l:fnt['fnthght']/10 : l:fnt['fnthght']) .. 'pt;')
 	    endif
 	    if has_key(l:fnt, 'fntwdt')
@@ -540,7 +531,8 @@ function s:HiAttr2CssDecl(hiattr)
 " НАДО: посмотреть, как Windows высчитывает ширину символов и как это
 " соотносится с CSS
 		if has('X11')
-		    call add(l:cssdecl, 'font-stretch: '
+		    call add(l:cssdecl,
+			\ 'font-stretch: '
 			\ .. (tr(l:fnt['fntwdt'], ' ', '-')) .. ';')
 		endif
 	    endif
@@ -710,7 +702,7 @@ function s:HiAttr2CssDecl(hiattr)
 
 	if has_key(a:hiattr, 'spco') && !s:is_norm
 	    let l:tdc = get(a:hiattr, 'spco')
-" Тоже и с этим объявлением и поддержкой ранними обозревателями страниц Интернета
+" Тоже и с этим объявлением и поддержкой ранними обозревателями страниц Интернет
 	    if 'NONE' ==? l:tdc
 		call add(l:cssdecl,
 		    \ '-moz-text-decoration-color: currentColor;'
@@ -871,7 +863,7 @@ function s:HiGrpNm2CssSel(grpname)
 " разбор групп, которые ссылаются на несуществующие группы (встретилось в
 " Jellibeans и NeoSolarized)
 " Но, по‐хорошему, надо менять логику (и так неважную) работы программы
-		let s:cmmngrp =
+		let s:cmmn_grp =
 		    \ (matchlist(getline(l:fndlnr), '\(links to \)\(\w\+\)'))[2]
 	    endif
 " Обрабатываем ситуацию, когда в цветовой схеме не задана группа «Normal».
@@ -910,7 +902,7 @@ endfunction
 
 function s:MainColo2Css()
     call s:HiGroups2Buf()
-    if bufexists(s:nmtmpbuf)
+    if bufexists(s:nm_tmp_buf)
 " При первом проходе цикла должны быть определены глобальные переменные
 " значениями из группы «Normal». Также эта группа имеет некоторые отличия от
 " других групп, которые надо учитывать
@@ -918,8 +910,8 @@ function s:MainColo2Css()
 	let s:is_norm = 1
 	for l:grpname in s:init_grp
 " Ещё одна лишняя проверка. Когда есть ссылка на группу, которая ниже. См. далее
-	    if l:grpname ==? s:cmmngrp
-		let s:cmmngrp = ''
+	    if l:grpname ==? s:cmmn_grp
+		let s:cmmn_grp = ''
 	    endif
 	    let l:cssrule = s:Hi2Css(l:grpname)
 	    if !empty(l:cssrule) && type(0) != type(l:cssrule)
@@ -934,9 +926,9 @@ function s:MainColo2Css()
 " на другую группу, которая ещё не обработана. Или если группа ссылается на
 " несуществующую группу. См. функцию s:HiGrpNm2CssSel. А вообще
 " НАДО: сделать нормальную обработку кодов ошибок.
-	    if '' != s:cmmngrp
-		let l:cssrule = s:Hi2Css(s:cmmngrp)
-		let s:cmmngrp = ''
+	    if '' != s:cmmn_grp
+		let l:cssrule = s:Hi2Css(s:cmmn_grp)
+		let s:cmmn_grp = ''
 	    else
 		let l:grpname = s:GetEntry(0, line('.'), 1, 0, 'iw')
 		if !empty(l:grpname)
@@ -948,6 +940,20 @@ function s:MainColo2Css()
 	    endif
 	endwhile
 	if !empty(l:cssentries)
+
+	    call add(s:css_head,
+		\ '/* Этот CSS-файл создан в версии программы Vim '
+		\ .. v:version/100 .. '.' .. v:version%100 .. '.'
+		\ .. substitute(v:versionlong, v:version, '', '') ..' */')
+		"\ .. v:versionlong % float2nr(pow(10, (len(v:versionlong)-len(v:version)))) .. ' */')
+	    call add(s:css_head,
+		\ '/* из файла цветовой схемы «'
+		\ .. trim(execute('colorscheme')) .. '» */')
+	    call add(s:css_head,
+		\ '/* Для этого был использован подключаемый модуль «colo2css.vim» */')
+	    call add(s:css_head, ' ')
+
+
 " Нужен католог, куда разрешено писать пользователю
 	    let l:wrtdir = getenv('HOME')
 	    if v:null == l:wrtdir
@@ -962,7 +968,7 @@ function s:MainColo2Css()
 
 
 	    let l:flnm = trim(execute('colorscheme') .. '.css')
-	    call writefile(map(s:head, 'v:val .. ""'), l:flnm)
+	    call writefile(map(s:css_head, 'v:val .. ""'), l:flnm)
 	    for l:cssln in l:cssentries
 		call writefile(map(l:cssln, 'v:val .. ""'), l:flnm, 'a')
 "		call append('$', l:cssln)
@@ -978,7 +984,7 @@ endfunction
 call s:MainColo2Css()
 
 unlet s:not_rgb s:winsys_colo s:fnt_size s:spec_attr s:hi_args s:init_grp
-unlet s:nmtmpbuf s:is_norm s:bg_norm s:fg_norm s:cmmngrp
+unlet s:nm_tmp_buf s:is_norm s:bg_norm s:fg_norm s:cmmn_grp s:css_head
 delfunction s:HiGroups2Buf
 delfunction s:GetEntry
 delfunction s:GetLnkGrp
