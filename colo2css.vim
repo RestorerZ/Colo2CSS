@@ -13,11 +13,19 @@
 "if !exists(":IScss") && has("user_commands")
 "  command -nargs=0 IScss :call s:MainColoCss()
 "endif
+"
 
 let s:head = []
-call add(s:head, '/* Этот CSS файл создан в версии программы Vim ' .. v:version/100 .. '.' .. v:version%100 .. ' */')
-call add(s:head, '/* из цветовой схемы «' .. trim(execute('colorscheme')) .. '» */')
-call add(s:head, '/* Для этого был использован подключаемый модуль «colo2css.vim» */')
+call add(
+	\ s:head, '/* Этот CSS-файл создан в версии программы Vim '
+	\ .. v:version/100 .. '.' .. v:version%100 .. '.'
+	\ .. substitute(v:versionlong, v:version, '', '') ..' */')
+	"\ .. v:versionlong % float2nr(pow(10, (len(v:versionlong)-len(v:version)))) .. ' */')
+call add(
+	\ s:head, '/* из файла цветовой схемы «'
+	\ .. trim(execute('colorscheme')) .. '» */')
+call add(
+	\ s:head, '/* Для этого был использован подключаемый модуль «colo2css.vim» */')
 call add(s:head, ' ')
 
 " Цвета, которые отсутствуют в файле rgb.txt. Взято из файла src\term.c 
@@ -946,7 +954,9 @@ function s:MainColo2Css()
 		let l:wrtdir = (getenv('MYVIMRC')->fnamemodify(':p:h'))
 	    endif
 	    if exists('*mkdir')
-		call mkdir(l:wrtdir .. '/Colo2CSS', '', '')
+		if !isdirectory(l:wrtdir .. '/Colo2CSS')
+		    call mkdir(l:wrtdir .. '/Colo2CSS', '', '')
+		endif
 		call chdir(l:wrtdir .. '/Colo2CSS')
 	    endif
 
