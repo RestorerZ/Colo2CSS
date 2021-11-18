@@ -7,9 +7,9 @@
 
 
 
-"if has('user_commands') && !exists(':TOcss')
-"    command -nargs=0 TOcss :call s:MainColoCss()
-"endif
+if has('user_commands') && !exists(':TOcss')
+    command! -nargs=0 TOcss call s:MainColo2Css()
+endif
 "if !exists(":IScss") && has("user_commands")
 "  command -nargs=0 IScss :call s:MainColoCss()
 "endif
@@ -899,6 +899,9 @@ function s:Hi2Css(grpname)
 endfunction
 
 
+if has('user_commands') && !exists(':TOcss')
+    command! -nargs=0 TOcss call s:Colo2Css()
+endif
 
 function s:MainColo2Css()
     call s:HiGroups2Buf()
@@ -979,24 +982,51 @@ function s:MainColo2Css()
     else
 	return -1
     endif
+    call s:CleanUp()
 endfunction
 
-call s:MainColo2Css()
 
-unlet s:not_rgb s:winsys_colo s:fnt_size s:spec_attr s:hi_args s:init_grp
-unlet s:nm_tmp_buf s:is_norm s:bg_norm s:fg_norm s:cmmn_grp s:css_head
-delfunction s:HiGroups2Buf
-delfunction s:GetEntry
-delfunction s:GetLnkGrp
-delfunction s:Dec2Hex
-delfunction s:ColoStr2ColoNum
-delfunction s:GetColor
-delfunction s:GetInitFont
-delfunction s:ParseFont
-delfunction s:ParseHiArgs
-delfunction s:HiAttr2CssDecl
-delfunction s:HiGrpNm2CssSel
-delfunction s:Hi2Css
-delfunction s:MainColo2Css
+
+function s:CleanUp()
+    unlet s:not_rgb s:winsys_colo s:fnt_size s:spec_attr s:hi_args s:init_grp
+    unlet s:nm_tmp_buf s:is_norm s:bg_norm s:fg_norm s:cmmn_grp s:css_head
+    delfunction s:HiGroups2Buf
+    delfunction s:GetEntry
+    delfunction s:GetLnkGrp
+    delfunction s:Dec2Hex
+    delfunction s:ColoStr2ColoNum
+    delfunction s:GetColor
+    delfunction s:GetInitFont
+    delfunction s:ParseFont
+    delfunction s:ParseHiArgs
+    delfunction s:HiAttr2CssDecl
+    delfunction s:HiGrpNm2CssSel
+    delfunction s:Hi2Css
+"    delfunction s:MainColo2Css
+"    delfunction s:CleanUp
+"return | delfunction s:CleanUp
+endfunction
+
+"if has('user_commands') && !exists(':TOcss')
+"    command! -nargs=0 TOcss call g:MainColo2Css()
+"endif
+
+"call s:MainColo2Css()
+
+"unlet s:not_rgb s:winsys_colo s:fnt_size s:spec_attr s:hi_args s:init_grp
+"unlet s:nm_tmp_buf s:is_norm s:bg_norm s:fg_norm s:cmmn_grp s:css_head
+"delfunction s:HiGroups2Buf
+"delfunction s:GetEntry
+"delfunction s:GetLnkGrp
+"delfunction s:Dec2Hex
+"delfunction s:ColoStr2ColoNum
+"delfunction s:GetColor
+"delfunction s:GetInitFont
+"delfunction s:ParseFont
+"delfunction s:ParseHiArgs
+"delfunction s:HiAttr2CssDecl
+"delfunction s:HiGrpNm2CssSel
+"delfunction s:Hi2Css
+"delfunction g:MainColo2Css
 
 " vim: ff=dos:fenc=utf-8:tw=80:sw=4:ft=vim
