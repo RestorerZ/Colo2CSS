@@ -1,7 +1,7 @@
 " GetArgs.vim	vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:	Restorer, <restorer@mail2k.ru>
-" Last change:	05 Jan 2022
-" Version:	1.7.19
+" Last change:	08 Jan 2022
+" Version:	1.7.20
 " Description:	
 "		
 " URL:		https://github.com/RestorerZ/Colo2CSS
@@ -88,8 +88,7 @@ function <SID>GetArgs(...)
       if exists('*mkdir') && (mkdir(l:wrtdir .. '/Colo2CSS', '', '0o755'))
 	let l:outargs[2] = l:wrtdir .. '/Colo2CSS'
       else
-	let l:wrtdir = getenv('TEMP')
-	let l:outargs[2] = l:wrtdir
+	let l:outargs[2] = getenv('TEMP')
       endif
     else
       let l:outargs[2] = l:wrtdir .. '/Colo2CSS'
