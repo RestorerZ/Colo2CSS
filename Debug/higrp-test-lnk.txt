@@ -1,8 +1,0 @@
-EndOfBuffer    links to NonText
-NonText        gui=bold guifg=Blue
-Search         guifg=Black guibg=Yellow
-QuickFixLine   links to Search
-Normal         guifg=cyan guibg=black
-Function       guifg=White
-Conditional    links to Repeat
-Repeat         guifg=white

@@ -1,2 +1,0 @@
-javaScriptTemplateVar links to StringDelim
-xmlProcessingDelim links to xmlAttrib
