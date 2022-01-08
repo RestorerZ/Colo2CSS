@@ -1,5 +1,5 @@
 " MainColo2Css.vim	vim:ts=8:sts=2:sw=2:noet:sta
-" Maintainer:	Restorer, <restorers@users.sf.net>
+" Maintainer:	Restorer, <restorer@mail2k.ru>
 " Last change:	05 Jan 2022
 " Version:	1.7.9
 " Description:	основная функция преобразования цветовой схемы в файл CSS
