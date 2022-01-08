@@ -1,45 +1,48 @@
+" GetLnkGrp.vim		vim:ts=8:sts=2:sw=2:noet:sta
+" Maintainer:   Restorer, <restorers@users.sf.net>
+" Last change:	05 Jan 2022
+" Version:	1.1.4
+" Description:	возвращает перечень наименований групп подсветки, которые
+"		ссылаются на указанную группу
+"		returns a list of the names of the highlight groups that link to
+"		the specified group
+" URL:		https://github.com/RestorerZ/Colo2CSS
+" Copyright:	© Restorer, 2022
+" License:	MPL 2.0, http://mozilla.org/MPL/2.0/
 
 
 
-function s:GetEntry(bnr, lnr, colnr, offset, motion)
-    let @e = ''
-    if !setpos('.', [a:bnr, a:lnr, a:colnr, a:offset])
-	execute 'normal "ey' .. a:motion
-    endif
-    return getreg('e')
-endfunction
-
-
-
-
-function GetLnkGrp(grpname)
-    if !empty(a:grpname)
-"	let @l = ""
-	if !cursor(1,1)
-	    let l:srchpat = 'links to\s\+' .. a:grpname .. '$'
-	    let l:srchflgs = 'W'
-	    let l:lnkgrpnm = ""
-	    let l:lnr = 1
-	    while l:lnr
-		let l:fndlnr = search(l:srchpat, l:srchflgs, line('$'))
-		if l:fndlnr
-		    let l:lnkgrpnm = s:GetEntry(0, l:fndlnr, 1, 0, 'iw')
-		    if !empty(l:lnkgrpnm)
-			let @L = ' ' .. l:lnkgrpnm 
-		    endif
-		    execute l:fndlnr'delete'
+function s:GetLnkGrp(grpname)
+  if !empty(a:grpname)
+    if !cursor(1,1)
+      let l:srchpat = 'links to\s\+' .. a:grpname .. '$'
+      let l:srchflgs = 'cnW'
+      let l:lnkgrpnm = ''
+      let l:lnr = 1
+      while l:lnr
+	let l:fndlnr = search(l:srchpat, l:srchflgs, line('$'))
+	if l:fndlnr
+	  let l:lnkgrpnm = s:GetEntry(0, l:fndlnr, 1, 0, 'iw')
+	  if !empty(l:lnkgrpnm)
+	    let @L = ' '..l:lnkgrpnm
+	  endif
+	  execute l:fndlnr'delete'
 " Могут быть группы, которые ссылаются на эту группу, которая ссылается на
 " на начальную группу
-		    call GetLnkGrp(l:lnkgrpnm)
-		endif
-	    let l:lnr = l:fndlnr
-	    endwhile
-"	return split(getreg('L'))
-"	let @l = ''
-	return @L
+	  call s:GetLnkGrp(l:lnkgrpnm)
 	endif
+	let l:lnr = l:fndlnr
+      endwhile
+      return @L
     endif
-    return -1
+  endif
+  return -1
 endfunction
 
 
+" This Source Code Form is subject to the terms of the Mozilla
+" Public License, v. 2.0. If a copy of the MPL was not distributed
+" with this file, You can obtain one at http://mozilla.org/MPL/2.0/
+" The Original Code is file GetLnkGrp.vim, https://github.com/RestorerZ/Colo2CSS
+" The Initial Developer of the Original Code is Pavel Vitalievich Z. (also Restorer)
+" All Rights Reserved.
