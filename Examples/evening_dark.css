@@ -1,0 +1,1121 @@
+/* Этот файл CSS создан в программе Vim версии 8.2.3988 */
+/* из файла цветовой схемы «evening» */
+/* Для этого был использован подключаемый модуль «colo2css.vim» */
+ 
+*, .Normal
+{font-family: "Courier New", monospace;
+font-size: 10pt;
+background-color: #000000;
+color: #BBBBBB;}
+.ColorColumn
+{background-color: #252525;}
+.Conceal
+{background-color: #A9A9A9;
+color: #D3D3D3;}
+.Cursor
+{background-color: #555555;}
+.CursorColumn
+{background-color: #252525;}
+.CursorLine
+{background-color: #353535;}
+.CursorLineNr
+{font-weight: bold;
+color: #FFFF00;}
+.DiffAdd
+{background-color: #494E56;
+color: #95BF68;}
+.DiffChange
+{background-color: #494E56;
+color: #F0C674;}
+.DiffDelete
+{font-weight: bold;
+background-color: #494E56;
+color: #CC6666;}
+.DiffText
+{font-weight: bold;
+background-color: #DE935F;
+color: #494E56;}
+.Directory
+{color: #65AACA;}
+.NonText, .EndOfBuffer
+{font-weight: bold;
+color: #252525;}
+.ErrorMsg
+{background-color: #FF0000;
+color: #FFFFFF;}
+.FoldColumn, .CursorLineFold
+{background-color: #000000;
+color: #00FFFF;}
+.Folded
+{background-color: #000000;
+color: #757575;}
+.IncSearch
+{color: #000000;
+background-color: #BBBBBB;}
+.LineNr
+{background-color: #252525;
+color: #656565;}
+.MatchParen
+{background-color: #404040;}
+.ModeMsg
+{font-weight: bold;
+color: #95BF68;}
+.MoreMsg
+{font-weight: bold;
+color: #95BF68;}
+.Pmenu
+{background-color: #404040;
+color: #BBBBBB;}
+.PmenuSbar
+{background-color: #BEBEBE;}
+.PmenuSel
+{background-color: #404040;
+color: #BBBBBB;}
+.PmenuThumb
+{background-color: #FFFFFF;}
+.Question
+{font-weight: bold;
+color: #95BF68;}
+.Search, .QuickFixLine
+{background-color: #65AACA;
+color: #000000;}
+.SignColumn, .CursorLineSign
+{background-color: #000000;
+color: #00FFFF;}
+.SpecialKey
+{color: #404040;}
+.SpellBad
+{text-decoration: underline; -moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #FF0000; -webkit-text-decoration-color: #FF0000; text-decoration-color: #FF0000;}
+.SpellCap
+{text-decoration: underline; -moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #0000FF; -webkit-text-decoration-color: #0000FF; text-decoration-color: #0000FF;}
+.SpellLocal
+{text-decoration: underline; -moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #00FFFF; -webkit-text-decoration-color: #00FFFF; text-decoration-color: #00FFFF;}
+.SpellRare
+{text-decoration: underline; -moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #FF00FF; -webkit-text-decoration-color: #FF00FF; text-decoration-color: #FF00FF;}
+.StatusLine
+{background-color: #65AACA;
+color: #303030;}
+.StatusLineNC
+{background-color: #757575;
+color: #303030;}
+.StatusLineTerm
+{font-weight: bold;
+background-color: #90EE90;
+color: #000000;}
+.StatusLineTermNC
+{background-color: #90EE90;
+color: #000000;}
+.TabLine
+{background-color: #353535;
+color: #BBBBBB;}
+.TabLineFill
+{background-color: #BBBBBB;
+color: #353535;}
+.TabLineSel
+{background-color: #000000;
+color: #757575;}
+.Title
+{font-weight: bold;
+color: #757575;}
+.VertSplit
+{background-color: #252525;
+color: #252525;}
+.Visual
+{background-color: #404040;}
+.VisualNOS
+{font-weight: bold;
+text-decoration: underline;}
+.WarningMsg
+{color: #AFDF00;}
+.WildMenu
+{background-color: #FFFF00;
+color: #000000;}
+.lCursor
+{background-color: #BBBBBB;
+color: #000000;}
+.ToolbarLine
+{background-color: #7F7F7F;}
+.ToolbarButton
+{font-weight: bold;
+background-color: #D3D3D3;
+color: #000000;}
+.Comment
+{color: #757575;}
+.Constant
+{color: #DE935F;}
+.Special, .Tag
+{color: #20AF75;}
+.Identifier
+{color: #CCA68E;}
+.Statement
+{font-weight: bold;
+color: #AFDF00;}
+.PreProc
+{color: #B14CC2;}
+.Type
+{color: #AFDF00;}
+.Underlined
+{color: #80A0FF;
+text-decoration: underline;}
+.Ignore
+{color: #000000;}
+.Error
+{background-color: #FF0000;
+color: #FFFFFF;}
+.Todo
+{background-color: #000000;
+color: #757575;}
+.String
+{color: #95BF68;}
+.Character
+{color: #AFAF4F;}
+.Number
+{color: #DE935F;}
+.Boolean
+{font-weight: bold;
+color: #95BF68;}
+.Float
+{color: #DE935F;}
+.Function
+{color: #BBBBBB;}
+.Conditional
+{color: #BBBBBB;}
+.Repeat
+{color: #BBBBBB;}
+.Label
+{color: #6AD6E5;}
+.Operator
+{color: #20AF75;}
+.Keyword
+{color: #6AD6E5;}
+.Exception
+{color: #CC6666;}
+.Include
+{color: #CC6666;}
+.Define
+{color: #6AD6E5;}
+.Macro
+{color: #6AD6E5;}
+.PreCondit
+{color: #20AF75;}
+.StorageClass
+{font-weight: bold;
+color: #CCA68E;}
+.Structure
+{font-weight: bold;
+color: #6AD6E5;}
+.Typedef
+{font-weight: bold;
+color: #AFDF00;}
+.SpecialChar
+{color: #BBBBBB;}
+.Delimiter
+{color: #20AF75;}
+.SpecialComment
+{font-weight: bold;
+color: #757575;}
+.Debug
+{color: #DE935F;}
+.Global
+{color: #6AD6E5;}
+.vimCommand
+{color: #CC6666;}
+.vimVar
+{color: #CCA68E;}
+.vimFuncKey
+{color: #AFDF00;}
+.vimFunction
+{font-weight: bold;
+color: #6AD6E5;}
+.vimNotFunc
+{color: #AFDF00;}
+.vimMap
+{color: #CC6666;}
+.vimAutoEvent
+{font-weight: bold;
+color: #20AF75;}
+.vimMapModKey
+{color: #20AF75;}
+.vimFuncName
+{color: #B14CC2;}
+.vimIsCommand
+{color: #BBBBBB;}
+.vimFuncVar
+{color: #20AF75;}
+.vimLet
+{color: #CC6666;}
+.vimMapRhsExtend
+{color: #BBBBBB;}
+.vimCommentTitle
+{font-weight: bold;
+color: #757575;}
+.vimBracket
+{color: #20AF75;}
+.vimParenSep
+{color: #20AF75;}
+.vimSynType
+{font-weight: bold;
+color: #AFAF4F;}
+.vimNotation
+{color: #20AF75;}
+.vimOper
+{color: #BBBBBB;}
+.makeIdent
+{color: #6AD6E5;}
+.makeSpecTarget
+{color: #AFAF4F;}
+.makeTarget
+{color: #CC6666;}
+.makeStatement
+{font-weight: bold;
+color: #20AF75;}
+.makeCommands
+{color: #BBBBBB;}
+.makeSpecial
+{font-weight: bold;
+color: #DE935F;}
+.cmakeStatement
+{color: #AFDF00;}
+.cmakeArguments
+{color: #BBBBBB;}
+.cmakeVariableValue
+{color: #6AD6E5;}
+.cmakeOperators
+{color: #CC6666;}
+.cType
+{font-weight: bold;
+color: #AFDF00;}
+.cFormat
+{color: #AFAF4F;}
+.cBoolean
+{color: #95BF68;}
+.cCharacter
+{color: #AFAF4F;}
+.cConstant
+{font-weight: bold;
+color: #95BF68;}
+.cStorageClass
+{color: #B14CC2;}
+.cConditional
+{color: #6AD6E5;}
+.cSpecial
+{font-weight: bold;
+color: #AFAF4F;}
+.cNumber
+{color: #DE935F;}
+.cPreCondit
+{color: #B14CC2;}
+.cRepeat
+{color: #F0C674;}
+.cLabel
+{color: #20AF75;}
+.cDefine
+{color: #CC6666;}
+.cInclude
+{color: #CC6666;}
+.cDelimiter
+{color: #6AD6E5;}
+.cOperator
+{color: #20AF75;}
+.cFunction
+{color: #BBBBBB;}
+.cCustomParen
+{color: #BBBBBB;}
+.cOctalZero
+{font-weight: bold;
+color: #B14CC2;}
+.cppBoolean
+{color: #CCA68E;}
+.cppSTLnamespace
+{color: #B14CC2;}
+.cppSTLconstant
+{color: #BBBBBB;}
+.cppSTLtype
+{color: #BBBBBB;}
+.cppSTLexception
+{color: #AFDF00;}
+.cppSTLfunctional
+{font-weight: bold;
+color: #BBBBBB;}
+.cppSTLiterator
+{font-weight: bold;
+color: #BBBBBB;}
+.cppExceptions
+{color: #CC6666;}
+.cppStatement
+{color: #6AD6E5;}
+.cppStorageClass
+{font-weight: bold;
+color: #CCA68E;}
+.cppAccess
+{color: #6AD6E5;}
+.lexCFunctions
+{color: #BBBBBB;}
+.lexAbbrv
+{color: #B14CC2;}
+.lexAbbrvRegExp
+{color: #20AF75;}
+.lexAbbrvComment
+{color: #757575;}
+.lexBrace
+{color: #CCA68E;}
+.lexPat
+{color: #20AF75;}
+.lexPatComment
+{color: #757575;}
+.lexPatTag
+{color: #DE935F;}
+.lexSlashQuote
+{color: #BBBBBB;}
+.lexSep
+{color: #BBBBBB;}
+.lexStartState
+{color: #DE935F;}
+.lexPatTagZone
+{font-weight: bold;
+color: #AFAF4F;}
+.lexMorePat
+{font-weight: bold;
+color: #AFAF4F;}
+.lexOptions
+{font-weight: bold;
+color: #AFAF4F;}
+.lexPatString
+{color: #AFAF4F;}
+.yaccNonterminal
+{color: #CCA68E;}
+.yaccDelim
+{color: #DE935F;}
+.yaccInitKey
+{color: #20AF75;}
+.yaccInit
+{color: #CCA68E;}
+.yaccKey
+{color: #B14CC2;}
+.yaccVar
+{color: #20AF75;}
+.nasmStdInstruction
+{color: #CCA68E;}
+.nasmGen08Register
+{color: #20AF75;}
+.nasmGen16Register
+{color: #20AF75;}
+.nasmGen32Register
+{color: #20AF75;}
+.nasmGen64Register
+{color: #20AF75;}
+.nasmHexNumber
+{color: #B14CC2;}
+.nasmStorage
+{font-weight: bold;
+color: #20AF75;}
+.nasmLabel
+{color: #AFDF00;}
+.nasmDirective
+{font-weight: bold;
+color: #6AD6E5;}
+.nasmLocalLabel
+{color: #DE935F;}
+.gasSymbol
+{color: #AFDF00;}
+.gasDirective
+{font-weight: bold;
+color: #6AD6E5;}
+.gasOpcode_386_Base
+{color: #CCA68E;}
+.gasDecimalNumber
+{color: #B14CC2;}
+.gasSymbolRef
+{color: #AFDF00;}
+.gasRegisterX86
+{color: #6AD6E5;}
+.gasOpcode_P6_Base
+{color: #CCA68E;}
+.gasDirectiveStore
+{font-weight: bold;
+color: #BBBBBB;}
+.mipsInstruction
+{color: #AFDF00;}
+.mipsRegister
+{color: #CCA68E;}
+.mipsLabel
+{font-weight: bold;
+color: #20AF75;}
+.mipsDirective
+{font-weight: bold;
+color: #B14CC2;}
+.bashStatement
+{font-weight: bold;
+color: #BBBBBB;}
+.shDerefVar
+{font-weight: bold;
+color: #20AF75;}
+.shDerefSimple
+{color: #20AF75;}
+.shFunction
+{font-weight: bold;
+color: #DE935F;}
+.shStatement
+{color: #BBBBBB;}
+.shOperator
+{color: #B14CC2;}
+.shConditional
+{color: #DE935F;}
+.shLoop
+{font-weight: bold;
+color: #B14CC2;}
+.shQuote
+{color: #AFAF4F;}
+.shCaseEsac
+{font-weight: bold;
+color: #20AF75;}
+.shSnglCase
+{color: #B14CC2;}
+.shFunctionOne
+{color: #CCA68E;}
+.shCase
+{color: #CCA68E;}
+.shSetList
+{color: #CCA68E;}
+.phpVarSelector
+{color: #CC6666;}
+.phpKeyword
+{color: #B14CC2;}
+.phpIdentifier
+{color: #6AD6E5;}
+.phpType
+{color: #20AF75;}
+.phpOperator
+{color: #F0C674;}
+.phpRepeat
+{color: #B14CC2;}
+.phpConditional
+{color: #B14CC2;}
+.phpStatement
+{color: #B14CC2;}
+.phpMemberSelector
+{color: #BBBBBB;}
+.phpStringSingle
+{color: #DE935F;}
+.phpStringDelimiter
+{color: #BBBBBB;}
+.phpDefine
+{color: #CC6666;}
+.phpStorageClass
+{color: #6AD6E5;}
+.phpStructure
+{color: #6AD6E5;}
+.phpParent
+{color: #BBBBBB;}
+.phpInclude
+{color: #CC6666;}
+.phpMagicConstants
+{color: #20AF75;}
+.phpFCKeyword
+{color: #CC6666;}
+.phpSCKeyword
+{color: #CC6666;}
+.phpConstant
+{color: #20AF75;}
+.phpEnvVar
+{color: #20AF75;}
+.phpIntVar
+{color: #20AF75;}
+.rubySymbol
+{color: #95BF68;}
+.rubyConstant
+{color: #F0C674;}
+.rubyAttribute
+{color: #6AD6E5;}
+.rubyInclude
+{color: #6AD6E5;}
+.rubyLocalVariableOrMethod
+{color: #DE935F;}
+.rubyCurlyBlock
+{color: #DE935F;}
+.rubyStringDelimiter
+{color: #95BF68;}
+.rubyInterpolationDelimiter
+{color: #DE935F;}
+.rubyConditional
+{color: #B14CC2;}
+.rubyRepeat
+{color: #B14CC2;}
+.pythonImport
+{font-weight: bold;
+color: #AFDF00;}
+.pythonInclude
+{color: #B14CC2;}
+.pythonStatement
+{color: #AFDF00;}
+.pythonConditional
+{color: #B14CC2;}
+.pythonRepeat
+{color: #B14CC2;}
+.pythonExceptions
+{color: #CC6666;}
+.pythonException
+{color: #B14CC2;}
+.pythonFunction
+{color: #6AD6E5;}
+.pythonPreCondit
+{color: #B14CC2;}
+.pythonExClass
+{color: #CC6666;}
+.pythonOperator
+{font-weight: bold;
+color: #B14CC2;}
+.pythonBuiltin
+{color: #BBBBBB;}
+.pythonDecorator
+{color: #DE935F;}
+.pythonString
+{color: #AFAF4F;}
+.pythonEscape
+{font-weight: bold;
+color: #AFAF4F;}
+.pythonStrFormatting
+{font-weight: bold;
+color: #AFAF4F;}
+.pythonBoolean
+{font-weight: bold;
+color: #95BF68;}
+.pythonBytesEscape
+{font-weight: bold;
+color: #AFAF4F;}
+.pythonDottedName
+{color: #B14CC2;}
+.pythonStrFormat
+{color: #BBBBBB;}
+.pythonBuiltinFunc
+{color: #BBBBBB;}
+.pythonBuiltinObj
+{color: #BBBBBB;}
+.goStatement
+{color: #AFDF00;}
+.goConditional
+{color: #B14CC2;}
+.goRepeat
+{color: #B14CC2;}
+.goException
+{color: #B14CC2;}
+.goDeclaration
+{color: #6AD6E5;}
+.goConstants
+{color: #F0C674;}
+.goBuiltins
+{color: #DE935F;}
+.coffeeKeyword
+{color: #B14CC2;}
+.coffeeConditional
+{color: #B14CC2;}
+.javaExternal
+{color: #AFDF00;}
+.javaAnnotation
+{color: #DE935F;}
+.javaTypedef
+{color: #20AF75;}
+.javaClassDecl
+{font-weight: bold;
+color: #20AF75;}
+.javaScopeDecl
+{font-weight: bold;
+color: #6AD6E5;}
+.javaStorageClass
+{font-weight: bold;
+color: #CCA68E;}
+.javaBoolean
+{color: #CCA68E;}
+.javaScriptBraces
+{color: #BBBBBB;}
+.javaScriptParens
+{color: #6AD6E5;}
+.javaScriptIdentifier
+{font-weight: bold;
+color: #CCA68E;}
+.javaScriptFunction
+{font-weight: bold;
+color: #AFDF00;}
+.javaScriptConditional
+{color: #B14CC2;}
+.javaScriptRepeat
+{color: #B14CC2;}
+.javaScriptBoolean
+{color: #DE935F;}
+.javaScriptNumber
+{color: #DE935F;}
+.javaScriptMember
+{color: #DE935F;}
+.javaScriptGlobal
+{color: #F0C674;}
+.jsModules
+{color: #CC6666;}
+.jsModuleWords
+{color: #CC6666;}
+.jsFunction
+{color: #CC6666;}
+.jsClass
+{color: #F0C674;}
+.jsOperator
+{color: #BBBBBB;}
+.jsOperatorWords
+{color: #6AD6E5;}
+.jsKeyword
+{color: #6AD6E5;}
+.htmlTitle
+{font-weight: bold;
+color: #95BF68;}
+.htmlH1
+{font-weight: bold;
+color: #95BF68;}
+.htmlH2
+{font-weight: bold;
+color: #20AF75;}
+.htmlH3
+{font-weight: bold;
+color: #B14CC2;}
+.htmlH4
+{font-weight: bold;
+color: #DE935F;}
+.htmlTag
+{color: #CC6666;}
+.htmlTagName
+{color: #AFDF00;}
+.htmlArg
+{color: #CC6666;}
+.htmlString
+{color: #AFAF4F;}
+.htmlScriptTag
+{color: #AFDF00;}
+.htmlBold
+{font-weight: bold;
+color: #BBBBBB;}
+.htmlItalic
+{font-weight: bold;
+color: #757575;}
+.htmlBoldItalic
+{font-weight: bold;
+color: #CCA68E;}
+.htmlTagN
+{font-weight: bold;
+color: #AFDF00;}
+.htmlSpecialTagName
+{font-weight: bold;
+color: #DE935F;}
+.htmlComment
+{font-weight: bold;
+color: #757575;}
+.htmlCommentPart
+{color: #757575;}
+.markdownH1
+{font-weight: bold;
+color: #AFDF00;}
+.markdownBlockquote
+{color: #AFDF00;}
+.markdownCodeBlock
+{font-weight: bold;
+color: #B14CC2;}
+.markdownLink
+{font-weight: bold;
+color: #6AD6E5;}
+.mkdCode
+{color: #AFAF4F;}
+.mkdLink
+{font-weight: bold;
+color: #6AD6E5;}
+.mkdURL
+{color: #757575;}
+.mkdString
+{color: #BBBBBB;}
+.mkdBlockQuote
+{background-color: #252525;
+color: #BBBBBB;}
+.mkdLinkTitle
+{color: #AFDF00;}
+.mkdDelimiter
+{color: #20AF75;}
+.mkdRule
+{color: #AFDF00;}
+.stapComment
+{color: #757575;}
+.stapProbe
+{font-weight: bold;
+color: #20AF75;}
+.stapStat
+{font-weight: bold;
+color: #CCA68E;}
+.stapFunc
+{color: #BBBBBB;}
+.stapString
+{color: #AFAF4F;}
+.stapTarget
+{color: #CCA68E;}
+.stapStatement
+{color: #AFDF00;}
+.stapType
+{font-weight: bold;
+color: #AFDF00;}
+.stapSharpBang
+{color: #757575;}
+.stapDeclaration
+{color: #AFDF00;}
+.stapCMacro
+{color: #6AD6E5;}
+.dtraceProbe
+{color: #6AD6E5;}
+.dtracePredicate
+{font-weight: bold;
+color: #B14CC2;}
+.dtraceComment
+{color: #757575;}
+.dtraceFunction
+{color: #BBBBBB;}
+.dtraceAggregatingFunction
+{font-weight: bold;
+color: #6AD6E5;}
+.dtraceStatement
+{font-weight: bold;
+color: #CCA68E;}
+.dtraceIdentifier
+{color: #AFDF00;}
+.dtraceOption
+{color: #AFDF00;}
+.dtraceConstant
+{color: #DE935F;}
+.dtraceType
+{font-weight: bold;
+color: #AFDF00;}
+.plantumlPreProc
+{font-weight: bold;
+color: #DE935F;}
+.plantumlDirectedOrVerticalArrowRL
+{color: #AFDF00;}
+.plantumlDirectedOrVerticalArrowLR
+{color: #AFDF00;}
+.plantumlString
+{color: #AFAF4F;}
+.plantumlActivityThing
+{color: #B14CC2;}
+.plantumlText
+{color: #CCA68E;}
+.plantumlClassPublic
+{font-weight: bold;
+color: #AFAF4F;}
+.plantumlClassPrivate
+{color: #CC6666;}
+.plantumlColonLine
+{color: #DE935F;}
+.plantumlClass
+{color: #CCA68E;}
+.plantumlHorizontalArrow
+{color: #AFDF00;}
+.plantumlTypeKeyword
+{font-weight: bold;
+color: #6AD6E5;}
+.plantumlKeyword
+{font-weight: bold;
+color: #AFDF00;}
+.plantumlType
+{font-weight: bold;
+color: #6AD6E5;}
+.plantumlBlock
+{font-weight: bold;
+color: #B14CC2;}
+.plantumlPreposition
+{color: #DE935F;}
+.plantumlLayout
+{font-weight: bold;
+color: #6AD6E5;}
+.plantumlNote
+{color: #DE935F;}
+.plantumlLifecycle
+{color: #20AF75;}
+.plantumlParticipant
+{font-weight: bold;
+color: #BBBBBB;}
+.haskellType
+{font-weight: bold;
+color: #20AF75;}
+.haskellIdentifier
+{font-weight: bold;
+color: #DE935F;}
+.haskellOperators
+{color: #AFDF00;}
+.haskellWhere
+{font-weight: bold;
+color: #BBBBBB;}
+.haskellDelimiter
+{color: #20AF75;}
+.haskellImportKeywords
+{color: #AFDF00;}
+.haskellStatement
+{font-weight: bold;
+color: #B14CC2;}
+.sqlStatement
+{font-weight: bold;
+color: #AFDF00;}
+.sqlType
+{font-weight: bold;
+color: #6AD6E5;}
+.sqlKeyword
+{color: #AFDF00;}
+.sqlOperator
+{color: #20AF75;}
+.sqlSpecial
+{font-weight: bold;
+color: #95BF68;}
+.mysqlVariable
+{font-weight: bold;
+color: #AFAF4F;}
+.mysqlType
+{font-weight: bold;
+color: #6AD6E5;}
+.mysqlKeyword
+{color: #AFDF00;}
+.mysqlOperator
+{color: #20AF75;}
+.mysqlSpecial
+{font-weight: bold;
+color: #95BF68;}
+.octaveVariable
+{color: #BBBBBB;}
+.octaveDelimiter
+{color: #AFDF00;}
+.octaveQueryVar
+{color: #BBBBBB;}
+.octaveSemicolon
+{color: #B14CC2;}
+.octaveFunction
+{color: #CCA68E;}
+.octaveSetVar
+{color: #6AD6E5;}
+.octaveUserVar
+{color: #BBBBBB;}
+.octaveArithmeticOperator
+{color: #20AF75;}
+.octaveBeginKeyword
+{font-weight: bold;
+color: #B14CC2;}
+.octaveElseKeyword
+{font-weight: bold;
+color: #B14CC2;}
+.octaveEndKeyword
+{font-weight: bold;
+color: #B14CC2;}
+.octaveStatement
+{color: #AFDF00;}
+.fortranUnitHeader
+{font-weight: bold;
+color: #BBBBBB;}
+.fortranType
+{font-weight: bold;
+color: #AFDF00;}
+.fortranStructure
+{font-weight: bold;
+color: #6AD6E5;}
+.fortranStorageClass
+{font-weight: bold;
+color: #CCA68E;}
+.fortranStorageClassR
+{font-weight: bold;
+color: #CCA68E;}
+.fortranKeyword
+{color: #AFDF00;}
+.fortranReadWrite
+{color: #6AD6E5;}
+.fortranIO
+{color: #CCA68E;}
+.rType
+{color: #6AD6E5;}
+.rArrow
+{color: #AFDF00;}
+.rDollar
+{color: #6AD6E5;}
+.xxdAddress
+{color: #CCA68E;}
+.xxdSep
+{color: #AFDF00;}
+.xxdAscii
+{color: #AFDF00;}
+.xxdDot
+{color: #20AF75;}
+.perlFiledescRead
+{color: #95BF68;}
+.perlMatchStartEnd
+{color: #AFDF00;}
+.perlStatementFlow
+{color: #AFDF00;}
+.perlStatementStorage
+{color: #AFDF00;}
+.perlFunction
+{font-weight: bold;
+color: #AFDF00;}
+.perlMethod
+{color: #BBBBBB;}
+.perlStatementFiledesc
+{color: #DE935F;}
+.perlVarPlain
+{color: #CCA68E;}
+.perlSharpBang
+{color: #757575;}
+.perlStatementInclude
+{font-weight: bold;
+color: #20AF75;}
+.perlStatementScalar
+{color: #B14CC2;}
+.perlSubName
+{font-weight: bold;
+color: #20AF75;}
+.perlSpecialString
+{font-weight: bold;
+color: #AFAF4F;}
+.luaFunc
+{color: #BBBBBB;}
+.luaIn
+{font-weight: bold;
+color: #6AD6E5;}
+.luaFunction
+{color: #AFDF00;}
+.luaStatement
+{color: #6AD6E5;}
+.luaRepeat
+{font-weight: bold;
+color: #6AD6E5;}
+.luaCondStart
+{font-weight: bold;
+color: #B14CC2;}
+.luaTable
+{font-weight: bold;
+color: #20AF75;}
+.luaConstant
+{font-weight: bold;
+color: #95BF68;}
+.luaElse
+{font-weight: bold;
+color: #B14CC2;}
+.luaCondElseif
+{font-weight: bold;
+color: #B14CC2;}
+.luaCond
+{font-weight: bold;
+color: #B14CC2;}
+.clojureConstant
+{color: #6AD6E5;}
+.clojureBoolean
+{color: #DE935F;}
+.clojureCharacter
+{color: #AFAF4F;}
+.clojureKeyword
+{color: #AFDF00;}
+.clojureNumber
+{color: #DE935F;}
+.clojureString
+{color: #AFAF4F;}
+.clojureRegexp
+{color: #B14CC2;}
+.clojureRegexpEscape
+{color: #AFDF00;}
+.clojureParen
+{color: #20AF75;}
+.clojureVariable
+{color: #AFAF4F;}
+.clojureCond
+{color: #6AD6E5;}
+.clojureDefine
+{font-weight: bold;
+color: #6AD6E5;}
+.clojureException
+{color: #CC6666;}
+.clojureFunc
+{color: #CCA68E;}
+.clojureMacro
+{color: #6AD6E5;}
+.clojureRepeat
+{color: #6AD6E5;}
+.clojureSpecial
+{font-weight: bold;
+color: #6AD6E5;}
+.clojureQuote
+{color: #6AD6E5;}
+.clojureUnquote
+{color: #6AD6E5;}
+.clojureMeta
+{color: #6AD6E5;}
+.clojureDeref
+{color: #6AD6E5;}
+.clojureAnonArg
+{color: #6AD6E5;}
+.clojureDispatch
+{color: #20AF75;}
+.yamlBlockMappingKey
+{color: #6AD6E5;}
+.yamlKeyValueDelimiter
+{color: #AFDF00;}
+.yamlBlockCollectionItemStart
+{color: #AFDF00;}
+.qmlObjectLiteralType
+{color: #AFDF00;}
+.qmlReserved
+{color: #B14CC2;}
+.qmlBindingProperty
+{color: #CCA68E;}
+.qmlType
+{color: #CCA68E;}
+.dosiniHeader
+{color: #AFDF00;}
+.dosiniLabel
+{color: #6AD6E5;}
+.mailHeaderKey
+{color: #6AD6E5;}
+.mailHeaderEmail
+{color: #B14CC2;}
+.mailSubject
+{color: #AFDF00;}
+.mailHeader
+{color: #757575;}
+.mailURL
+{color: #20AF75;}
+.mailEmail
+{color: #B14CC2;}
+.mailQuoted1
+{color: #AFAF4F;}
+.mailQuoted2
+{color: #CCA68E;}
+.xmlProcessingDelim
+{color: #AFDF00;}
+.xmlString
+{color: #AFAF4F;}
+.xmlEqual
+{color: #DE935F;}
+.xmlAttrib
+{color: #CCA68E;}
+.xmlAttribPunct
+{color: #AFDF00;}
+.xmlTag
+{color: #AF8787;}
+.xmlTagName
+{color: #AF8787;}
+.xmlEndTag
+{color: #AF8787;}
+.xmlNamespace
+{color: #6AD6E5;}
+.diffAdded
+{color: #95BF68;}
+.diffRemoved
+{color: #CC6666;}
+.ShowMarksHLl
+{background-color: #000000;
+color: #DE935F;}
+.ShowMarksHLo
+{background-color: #000000;
+color: #B14CC2;}
+.ShowMarksHLu
+{background-color: #000000;
+color: #F0C674;}
+.ShowMarksHLm
+{background-color: #000000;
+color: #20AF75;}

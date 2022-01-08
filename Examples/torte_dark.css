@@ -1,0 +1,149 @@
+/* Этот файл CSS создан в программе Vim версии 8.2.3988 */
+/* из файла цветовой схемы «torte» */
+/* Для этого был использован подключаемый модуль «colo2css.vim» */
+ 
+*, .Normal
+{font-family: "Courier New", monospace;
+font-size: 10pt;
+background-color: #000000;
+color: #CCCCCC;}
+.ColorColumn
+{background-color: #8B0000;}
+.Conceal
+{background-color: #A9A9A9;
+color: #D3D3D3;}
+.Cursor
+{font-weight: bold;
+background-color: #00FF00;
+color: #000000;}
+.CursorColumn
+{background-color: #666666;}
+.CursorLine
+{background-color: #666666;}
+.CursorLineNr
+{font-weight: bold;
+color: #FFFF00;}
+.DiffAdd
+{background-color: #00008B;}
+.DiffChange
+{background-color: #8B008B;}
+.DiffDelete
+{font-weight: bold;
+background-color: #008B8B;
+color: #0000FF;}
+.DiffText
+{font-weight: bold;
+background-color: #FF0000;}
+.Directory
+{color: #00FFFF;}
+.NonText, .EndOfBuffer
+{font-weight: bold;
+color: #0000FF;}
+.ErrorMsg
+{background-color: #FF0000;
+color: #FFFFFF;}
+.FoldColumn, .CursorLineFold
+{background-color: #BEBEBE;
+color: #00FFFF;}
+.Folded
+{background-color: #A9A9A9;
+color: #00FFFF;}
+.IncSearch
+{color: #000000;
+background-color: #CCCCCC;}
+.LineNr
+{color: #FFFF00;}
+.MatchParen
+{background-color: #008B8B;}
+.ModeMsg
+{font-weight: bold;}
+.MoreMsg
+{font-weight: bold;
+color: #2E8B57;}
+.Pmenu
+{background-color: #FF00FF;}
+.PmenuSbar
+{background-color: #BEBEBE;}
+.PmenuSel
+{background-color: #A9A9A9;}
+.PmenuThumb
+{background-color: #FFFFFF;}
+.Question
+{font-weight: bold;
+color: #00FF00;}
+.Search, .QuickFixLine
+{font-weight: bold;
+background-color: #FF0000;
+color: #000000;}
+.SignColumn, .CursorLineSign
+{background-color: #BEBEBE;
+color: #00FFFF;}
+.SpecialKey
+{color: #00FFFF;}
+.SpellBad
+{text-decoration: underline; -moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #FF0000; -webkit-text-decoration-color: #FF0000; text-decoration-color: #FF0000;}
+.SpellCap
+{text-decoration: underline; -moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #0000FF; -webkit-text-decoration-color: #0000FF; text-decoration-color: #0000FF;}
+.SpellLocal
+{text-decoration: underline; -moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #00FFFF; -webkit-text-decoration-color: #00FFFF; text-decoration-color: #00FFFF;}
+.SpellRare
+{text-decoration: underline; -moz-text-decoration-line: underline; -moz-text-decoration-style: wavy; -webkit-text-decoration-line: underline; -webkit-text-decoration-style: wavy; text-decoration-line: underline; text-decoration-style: wavy;
+-moz-text-decoration-color: #FF00FF; -webkit-text-decoration-color: #FF00FF; text-decoration-color: #FF00FF;}
+.StatusLine
+{font-weight: bold;
+background-color: #FFFFFF;
+color: #0000FF;}
+.StatusLineNC
+{color: #000000;
+background-color: #CCCCCC;}
+.StatusLineTerm
+{font-weight: bold;
+background-color: #90EE90;
+color: #000000;}
+.StatusLineTermNC
+{background-color: #90EE90;
+color: #000000;}
+.TabLine
+{background-color: #A9A9A9;
+text-decoration: underline;}
+.TabLineFill
+{color: #000000;
+background-color: #CCCCCC;}
+.TabLineSel
+{font-weight: bold;}
+.Title
+{font-weight: bold;
+color: #FF00FF;}
+.VertSplit
+{color: #000000;
+background-color: #CCCCCC;}
+.Visual
+{font-weight: bold;
+background-color: #A9A9A9;
+color: #404040;}
+.VisualNOS
+{font-weight: bold;
+text-decoration: underline;}
+.WarningMsg
+{color: #FF0000;}
+.WildMenu
+{background-color: #FFFF00;
+color: #000000;}
+.lCursor
+{background-color: #CCCCCC;
+color: #000000;}
+.ToolbarLine
+{background-color: #7F7F7F;}
+.ToolbarButton
+{font-weight: bold;
+background-color: #D3D3D3;
+color: #000000;}
+.Comment
+{color: #80A0FF;}
+.Special
+{color: #FFA500;}
+.Statement
+{color: #FFFF00;}
