@@ -136,6 +136,7 @@ symbol.
 
 
 Disclaimer on the text:
+
 The English text is located above the text
 
 
