@@ -4,7 +4,7 @@ finish
 autoload\colo2css.vim	[[[1
 1027
 " colo2css.vim	vim:ts=8:sts=2:sw=2:noet:sta
-" Maintainer:	Restorer, <restorers@users.sf.net>
+" Maintainer:	Restorer, <restorer@mail2k.ru>
 " Last change:	05 Jan 2022
 " Version:	1.8.12
 " Description:	преобразование цветовой схемы Vim в файл CSS
@@ -1033,7 +1033,7 @@ unlet s:old_set
 plugin\LnchC2C.vim	[[[1
 134
 " LnchC2C.vim	vim:ts=8:sts=2:sw=2:noet:sta
-" Maintainer:	Restorer, <restorers@users.sf.net>
+" Maintainer:	Restorer, <restorer@mail2k.ru>
 " Last change:	06 Jan 2022
 " Version:	1.4.2
 " Description:	вызов функций командного файла Colo2Css.vim с требуемыми параметрами
@@ -1307,7 +1307,7 @@ colo2css.rux — файл документации на русском язык�
 
 Если есть пожелания, дополнения или замечания по работе этого подключаемого
 модуля, связаться с автором можно по электронной почте:
-mailto:restorers@users.sourceforge.net
+<restorer@mail2k.ru>
 Также можно оставить свои пожелания на веб‐странице этого подключаемого модуля:
 https://github.com/RestorerZ/Colo2CSS
 В этом же хранилище можно получить новые версии подключаемого модуля и
@@ -1469,7 +1469,7 @@ comma symbol.
 
 If you have any suggestions, additions or comments on the work of this
 plugin, you can contact the author by e-mail:
-mailto:restorers@users.sourceforge.net
+<restorer@mail2k.ru>
 You can also leave your wishes on the web page of this plugin:
 https://github.com/RestorerZ/Colo2CSS
 In the same repository, you can get new versions of the plugin and get
