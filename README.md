@@ -4,7 +4,9 @@
 
 
 Оговорка по тексту:
+
 This is a machine translation of the Яandex service. I apologize for possible mistakes.
+
 Для тех, кто думает по‐русски (говорит и пишет) ниже по тексту есть описание.
 
 
@@ -134,6 +136,7 @@ symbol.
 
 
 Disclaimer on the text:
+
 The English text is located above the text
 
 
