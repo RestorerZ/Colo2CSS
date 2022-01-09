@@ -1,7 +1,7 @@
 " colo2css.vim	vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:	Restorer, <restorer@mail2k.ru>
 " Last change:	09 Jan 2022
-" Version:	1.8.15
+" Version:	1.8.25
 " Description:	преобразование цветовой схемы Vim в файл CSS
 "		converting a Vim color scheme to a CSS file
 " URL:		https://github.com/RestorerZ/Colo2CSS
@@ -354,10 +354,10 @@ function <SID>ParseFont(fntval)
     if has('gui_win32')
       let l:hifnt = substitute(l:hifnt, '\', '', 'g')
       let l:cln = stridx(l:hifnt, ':')
-      if 0 < l:cln
+      if 0 > l:cln
+	return l:fnt['fntname'] = tr(l:hifnt, '_', ' ')
+      elseif 0 < l:cln
 	let l:fnt['fntname'] = tr(l:hifnt[0:l:cln-1], '_', ' ')
-      elseif 0 > l:cln
-	let l:fnt['fntname'] = tr(l:hifnt, '_', ' ')
       endif
       for l:fntsze in s:FNT_SIZE
 	let l:sze =
@@ -391,7 +391,10 @@ function <SID>ParseFont(fntval)
     elseif has('gui_gtk2') || has('gui_gtk3')
       let l:hifnt = substitute(l:hifnt, '\', '', 'g')
       let l:fnt['fntname'] = substitute(l:hifnt, '\s\+\d\+$', '', '')
-      let l:fnt['fnthght'] = trim(matchstr(l:hifnt, '\s\d\+$'), ' ', 1)
+      let l:sze = trim(matchstr(l:hifnt, '\s\d\+$'), ' ', 1)
+      if !empty(l:sze)
+	let l:fnt['fnthght'] = l:sze
+      endif
       return l:fnt
     elseif has('X11')
       let l:hifnt = split(l:hifnt, '-')
@@ -415,10 +418,10 @@ function <SID>ParseFont(fntval)
       let l:hifnt = tr(l:hifnt, '_', ' ')
       let l:hifnt = substitute(l:hifnt, '\', '', 'g')
       let l:cln = stridx(l:hifnt, ':')
-      if 0 < l:cln
+      if 0 > l:cln
+	return l:fnt['fntname'] = l:hifnt
+      elseif 0 < l:cln
 	let l:fnt['fntname'] = l:hifnt[0:l:cln-1]
-      elseif 0 > l:cln
-	let l:fnt['fntname'] = l:hifnt
       endif
       let l:sze = matchlist(l:fnt, '\C\(:' ..s:FNT_SIZE[0]..'\)\(\d\{1,}\)')
       if !empty(l:sze)
