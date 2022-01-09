@@ -1,7 +1,7 @@
 " LnchC2C.vim	vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:	Restorer, <restorer@mail2k.ru>
-" Last change:	06 Jan 2022
-" Version:	1.4.2
+" Last change:	09 Jan 2022
+" Version:	1.4.9
 " Description:	вызов функций командного файла Colo2Css.vim с требуемыми параметрами
 "		calling the functions of the Colo2Css.vim command file with the
 "		required parameters	
@@ -69,8 +69,7 @@ function <SID>GetArgs(c2cfl, ...)
       if exists('*mkdir') && (mkdir(l:wrtdir .. '/Colo2CSS', '', '0o755'))
 	let l:outargs[2] = l:wrtdir .. '/Colo2CSS'
       else
-	let l:wrtdir = getenv('TEMP')
-	let l:outargs[2] = l:wrtdir
+	let l:outargs[2] = getenv('TEMP')
       endif
     else
       let l:outargs[2] = l:wrtdir .. '/Colo2CSS'
