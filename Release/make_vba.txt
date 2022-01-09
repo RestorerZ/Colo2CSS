@@ -2,3 +2,4 @@ autoload\colo2css.vim
 plugin\LnchC2C.vim
 doc\colo2css.rux
 doc\colo2css.txt
+'<,'>MkVimball colo2css_v1815 
