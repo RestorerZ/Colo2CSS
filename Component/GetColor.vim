@@ -1,7 +1,7 @@
 " GetColor.vim	vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:   Restorer, <restorer@mail2k.ru>
-" Last change:	05 Jan 2022
-" Version:	1.0.1
+" Last change:	09 Jan 2022
+" Version:	1.1.0
 " Description:	возвращает шестнадцатеричный код или свециальное обозначение
 "		цвета, полученное из значения аргумента команды `highlight`
 "		returns the hexadecimal color code or its special name derived
@@ -16,13 +16,11 @@ function s:GetColor(coloval)
   if !empty(a:coloval)
     if '#' == a:coloval[0:0]
       return toupper(a:coloval)
-    elseif 0 <= stridx(tolower(a:coloval), 'bg') ||
-		\ 0 <= stridx(tolower(a:coloval), 'background')
+    elseif 'bg' == tolower(a:coloval) || 'backgound' == tolower(a:coloval)
       return 'bg'
-    elseif 0 <= stridx(tolower(a:coloval), 'fg') ||
-		\ 0 <= stridx(tolower(a:coloval), 'foreground')
+    elseif 'fg' == tolower(a:coloval) || 'foreground' == tolower(a:coloval)
       return 'fg'
-    elseif 0 <= stridx(toupper(a:coloval), 'NONE')
+    elseif 'NONE' == toupper(a:coloval)
       return 'NONE'
     elseif 0 <= match(a:coloval, '\w\+')
       let @c = ''
