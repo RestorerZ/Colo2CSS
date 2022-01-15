@@ -1,7 +1,7 @@
 " LnchC2C.vim	vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:	Restorer, <restorer@mail2k.ru>
-" Last change:	06 Jan 2022
-" Version:	1.4.2
+" Last change:	15 Jan 2022
+" Version:	1.4.3
 " Description:	вызов функций командного файла Colo2Css.vim с требуемыми параметрами
 "		calling the functions of the Colo2Css.vim command file with the
 "		required parameters	
@@ -51,7 +51,7 @@ function! <SID>Launch(...)
       if has('win32')
 	let s:jb = job_start('gvim.exe' .. l:cmdlns .. l:cmdlnm .. l:cmdlne)
       elseif has('unix')
-	let s:jb = job_start('vim -g' .. l:cmdlns .. l:cmdlnm .. l:cmdlne])
+	let s:jb = job_start('vim -g' .. l:cmdlns .. l:cmdlnm .. l:cmdlne)
       endif
     else
       let l:cmdlns = l:cmdlns .. ' -c "call colo2css\#MainColo2Css('
