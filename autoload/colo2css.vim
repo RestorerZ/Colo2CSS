@@ -1,7 +1,7 @@
 " colo2css.vim	vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:	Restorer, <restorer@mail2k.ru>
-" Last change:	09 Jan 2022
-" Version:	1.8.25
+" Last change:	15 Jan 2022
+" Version:	1.8.29
 " Description:	преобразование цветовой схемы Vim в файл CSS
 "		converting a Vim color scheme to a CSS file
 " URL:		https://github.com/RestorerZ/Colo2CSS
@@ -328,10 +328,10 @@ function! colo2css#GetInitFont()
   let @u = ''
   let @u = getfontname()
   if empty(@u)
-    if !has('X11')
-      let @u = &guifont
-    else
+    if has('X11')
       let @u = &guifontset
+    else
+      let @u = &guifont
     endif
     if !empty(@u)
       let l:cmm = match(@u, '\w,')
@@ -888,9 +888,9 @@ function! colo2css#MainColo2Css(colofls, bgr, outdir, fnt)
   endif
   for l:clch in a:colofls
     if empty(l:clch)
-      if !has('gui')
+      if !has('gui_running')
 	exe "normal \<Esc>"
-	echoerr "Работа подключаемого модуля возможна только в графической оболочке (ГИП, GUI)"
+	echoerr "Работа подключаемого модуля возможна только в графической оболочке (GUI)"
 	return -1
       endif
       call extend(s:old_val, {
@@ -935,7 +935,7 @@ function! colo2css#MainColo2Css(colofls, bgr, outdir, fnt)
       for l:grpname in s:INIT_GRP
 	call setpos('.', [0, 1, 1, 0])
 	let l:fndlnr = search('^\<' ..l:grpname.. '\>', 'cW', line('$'))
-	if (!l:fndlnr && s:is_norm) || l:fndlnr
+	if l:fndlnr || (!l:fndlnr && s:is_norm)
 	  let l:cssrule = <SID>HiGrpLn2CssRule(l:grpname, l:fndlnr)
 	  if !empty(l:cssrule) && type(0) != type(l:cssrule)
 	    call add(l:cssentries, l:cssrule)
@@ -947,7 +947,7 @@ function! colo2css#MainColo2Css(colofls, bgr, outdir, fnt)
 	let l:fndlnr = line('.')
 	let l:grpname = <SID>GetEntry(0, l:fndlnr, 1, 0, 'iw')
 	if empty(l:grpname)
-	  execute l:fndlnr'delete'
+	  execute l:fndlnr 'delete'
 	  continue
 	else
 	  let l:cssrule = <SID>HiGrpLn2CssRule(l:grpname, l:fndlnr)
@@ -960,7 +960,7 @@ function! colo2css#MainColo2Css(colofls, bgr, outdir, fnt)
 	let l:css_head = []
 	if empty(l:clch)
 	  let l:coloschm = (trim(execute('colorscheme')))
-	  if 0<=match(l:coloschm, '\cE121:')
+	  if 0 <= stridx(l:coloschm, 'E121:')
 	    let l:coloschm = 'unknown'
 	  endif
 	else
