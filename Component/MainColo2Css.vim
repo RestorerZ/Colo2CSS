@@ -1,7 +1,7 @@
 " MainColo2Css.vim	vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:	Restorer, <restorer@mail2k.ru>
-" Last change:	05 Jan 2022
-" Version:	1.7.9
+" Last change:	15 Jan 2022
+" Version:	1.7.12
 " Description:	основная функция преобразования цветовой схемы в файл CSS
 "		the main function of converting a color scheme to a CSS file
 " URL:		https://github.com/RestorerZ/Colo2CSS
@@ -47,9 +47,9 @@ function MainColo2Css(colofls, bgr, outdir, fnt)
   endif
   for l:clch in a:colofls
     if empty(l:clch)
-      if !has('gui')
+      if !has('gui_running')
 	exe "normal \<Esc>"
-	echoerr "Работа подключаемого модуля возможна только в графической оболочке (ГИП, GUI)"
+	echoerr "Работа подключаемого модуля возможна только в графической оболочке (GUI)"
 	return -1
       endif
 " Сохраняем глобальные данные, которые будем изменять
@@ -66,7 +66,7 @@ function MainColo2Css(colofls, bgr, outdir, fnt)
 		\ '&whichwrap':&whichwrap,
 		\ '&textwidth':&textwidth,
 		\ '&verbose':&verbose,
-		\ '@k':@k,
+		\ '@e':@e,
 		\ '@u':@u,
 		\ '@i':@i,
 		\ '@x':@x,
@@ -78,10 +78,11 @@ function MainColo2Css(colofls, bgr, outdir, fnt)
 	new
       endif
       augroup colo2css
-" НАДО: подумай наименование буфера как переменная
-"	exe 'autocmd BufWipeout ' s:NME_TMP_BUF ' call <SID>CleanUp(' string(s:old_val) ') | delfunction <SID>CleanUp'
-	autocmd BufWipeout Tmp_Colo2CSS call<SID>CleanUp(s:old_val)
-	      \ | delfunction <SID>CleanUp
+" НАДО: наименование буфера как переменная
+	exe 'autocmd BufWipeout ' s:NME_TMP_BUF ' call <SID>CleanUp(' s:old_val
+	      \ ..') | delfunction <SID>CleanUp'
+"	autocmd BufWipeout Tmp_Colo2CSS call<SID>CleanUp(s:old_val)
+	      "\ | delfunction <SID>CleanUp
       augroup END
     else
       highlight clear Normal
@@ -100,7 +101,7 @@ function MainColo2Css(colofls, bgr, outdir, fnt)
       for l:grpname in s:INIT_GRP
 	call setpos('.', [0, 1, 1, 0])
 	let l:fndlnr = search('^\<' ..l:grpname.. '\>', 'cW', line('$'))
-	if (!l:fndlnr && s:is_norm) || l:fndlnr
+	if l:fndlnr || (!l:fndlnr && s:is_norm)
 	  let l:cssrule = s:HiGrpLn2CssRule(l:grpname, l:fndlnr)
 	  if !empty(l:cssrule) && type(0) != type(l:cssrule)
 	    call add(l:cssentries, l:cssrule)
@@ -114,7 +115,7 @@ function MainColo2Css(colofls, bgr, outdir, fnt)
 	let l:fndlnr = line('.')
 	let l:grpname = s:GetEntry(0, l:fndlnr, 1, 0, 'iw')
 	if empty(l:grpname)
-	  execute l:fndlnr'delete'
+	  execute l:fndlnr 'delete'
 	  continue
 	else
 	  let l:cssrule = s:HiGrpLn2CssRule(l:grpname, l:fndlnr)
@@ -128,7 +129,7 @@ function MainColo2Css(colofls, bgr, outdir, fnt)
 	if empty(l:clch)
 	  let l:coloschm = (trim(execute('colorscheme')))
 " Бывает, что наименование цветовой схемы не задано.
-	  if 0<=match(l:coloschm, '\cE121:')
+	  if 0 <= stridx(l:coloschm, 'E121:')
 	    let l:coloschm = 'unknown'
 	  endif
 	else
@@ -144,7 +145,7 @@ function MainColo2Css(colofls, bgr, outdir, fnt)
 	call add(l:css_head,
 	  \ '/* Для этого был использован подключаемый модуль «colo2css.vim» */')
 	call add(l:css_head, ' ')
-	call chdir(a:3)
+	call chdir(a:outdir)
 
 	let l:flnm =
 	  \ l:coloschm
