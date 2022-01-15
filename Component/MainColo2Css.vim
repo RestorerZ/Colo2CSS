@@ -79,10 +79,9 @@ function MainColo2Css(colofls, bgr, outdir, fnt)
       endif
       augroup colo2css
 " НАДО: наименование буфера как переменная
-	exe 'autocmd BufWipeout ' s:NME_TMP_BUF ' call <SID>CleanUp(' s:old_val
-	      \ ..') | delfunction <SID>CleanUp'
-"	autocmd BufWipeout Tmp_Colo2CSS call<SID>CleanUp(s:old_val)
-	      "\ | delfunction <SID>CleanUp
+	autocmd BufWipeout Tmp_Colo2CSS call<SID>CleanUp(s:old_val)
+	      \ | delfunction <SID>CleanUp
+"	exe 'autocmd BufWipeout ' s:NME_TMP_BUF ' call <SID>CleanUp('string(s:old_val)') | delfunction <SID>CleanUp'
       augroup END
     else
       highlight clear Normal
