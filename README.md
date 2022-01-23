@@ -49,12 +49,15 @@ package of this module:
 
 colo2css.vim — is the main file of the plugin. Must be placed in the "autoload"
 	       subdirectory of one of the directories specified in the value of
-	       the 'runtimepath' parameter.
+	       the 'runtimepath' parameter.  
+	       
 LnchC2C.vim  — file designed to run the main module file. Must be placed in the
 	       "plugin" subdirectory of one of the directories specified in
-	       the value of the 'runtimepath' parameter.
+	       the value of the 'runtimepath' parameter.  
+	       
 colo2css.txt - documentation file in English for this module. It should be
-	       placed in the "doc" subdirectory.
+	       placed in the "doc" subdirectory.  
+	       
 colo2css.rux - the documentation file in Russian for this module. Must be
 	       placed in the "doc" subdirectory.
 
@@ -73,8 +76,9 @@ After installing this plugin as described in the previous paragraph, the module
 is ready for use. To run it, you need to type the command in the command line of
 the Vim editor
 
->
-	TOcss
+```
+TOcss
+```
 
 After pressing the <ENTER> key, a CSS file for the current color scheme will be
 created in the "Colo2CSS" subdirectory of the user's home directory.
@@ -89,13 +93,16 @@ Command arguments:
 where
  ALL		    Convert all color scheme files located in the "color"
 		    subdirectory and located in the directories specified in the
-		    'runtimepath' and 'packpath' parameter.
+		    'runtimepath' and 'packpath' parameter.  
+	
  list_files	    Is a list of color scheme files that you want to convert
 		    to CSS files. If more than one file is specified, the files
 		    are separated by a comma without spaces. Commas and spaces
-		    are not allowed in the file names.
+		    are not allowed in the file names.  
+	
  dark or light	    Background used for color schemes when they are loaded into
-		    the Vim editor and then converted.
+		    the Vim editor and then converted.  
+	
  outdir		    Directory for ready-made CSS files. Set as an absolute
 		    route. The directory must exist and be writable. By default,
 		    the automatically created "Colo2CSS" subdirectory in the
@@ -103,25 +110,28 @@ where
 
 Examples:
 
->
-	TOcss light
+```
+	:TOcss light
+```
 
 The current color scheme will be converted using a light background. The result
 will be saved to the ~/Colo2CSS directory (if this directory is missing, it will
 be created automatically in the user's home directory).
 
->
-	TOcss ALL d:\project\myhomepage\css
-
+```
+	:TOcss ALL d:\project\myhomepage\css
+```
+	
 All color scheme files will be converted, and the finished CSS files will be
-saved to the "css" directory located along route d:\project\myhomepage. The ALL
+saved to the "css" directory located along route d:\project\myhomepage. The `ALL`
 argument is specified only in uppercase letters. The directory must already
 exist and be writable. If this directory does not exist, the result will be
-saved in the directory C:\Users\<username>\Colo2CSS.
+saved in the directory C:\Users\\<username>\Colo2CSS.
 
->
-	TOcss darkblue.vim,mustang,PaperColor.vim,desert dark e:\colorscheme
-
+```
+	:TOcss darkblue.vim,mustang,PaperColor.vim,desert dark e:\colorscheme
+```
+	
 The conversion of the specified files with the dark background enabled will be
 performed, and the result will be saved in "e:\colorscheme". The names of the
 color scheme files can be specified with or without the ".vim" extension. Files
@@ -182,12 +192,15 @@ GUI).
 
 colo2css.vim — основной файл подключаемого модуля. Должен быть размещён в
 	       подкаталоге «autoload» одного из каталогов, указанных в значении
-	       параметра 'runtimepath';
+	       параметра 'runtimepath';  
+	
 LnchC2C.vim  — файл, предназначенный для запуска основного файла модуля. Должен
 	       быть размещён в подкаталоге «plugin» одного из каталогов,
-	       указанных в значении параметра 'runtimepath';
+	       указанных в значении параметра 'runtimepath';  
+	
 colo2css.txt — файл документации на английском языке к этому модулю. Должен быть
-	       размещён в подкаталоге «doc».
+	       размещён в подкаталоге «doc».  
+	
 colo2css.rux — файл документации на русском языке к этому модулю. Должен быть
 	       размещён в подкаталоге «doc».
 
@@ -206,8 +219,9 @@ colo2css.rux — файл документации на русском язык�
 модуль готов к использованию. Для его запуска необходимо в командной строке
 редактора Vim набрать команду
 
->
+```
 	TOcss
+```
 
 После нажатия клавиши <ENTER> будет создан файл CSS для текущей цветовой схемы в
 подкаталоге «Colo2CSS» домашнего каталога пользователя.
@@ -219,41 +233,48 @@ colo2css.rux — файл документации на русском язык�
 Аргументы команды:
 
 	:TOcss [[ALL | list_files] [dark | light] [outdir]] ~
-где
+где  
+	
  ALL		    Преобразовать все файлы цветовых схем, находящиеся в
 		    подкаталоге «color» и расположенном в каталогах, указанных
-		    в параметре 'runtimepath' и 'packpath'.
+		    в параметре 'runtimepath' и 'packpath'.  
+	
  list_files	    Перечень файлов цветовых схем, которые требуется
 		    преобразовать в файлы CSS. Если указано более одного файла,
 		    то файлы разделяются символом запятой без пробелов. В
-		    наименовании файлов не допускаются запятые и пробелы.
+		    наименовании файлов не допускаются запятые и пробелы.  
+	
  dark или light	    Фон, применяемый для цветовых схем при их загрузке в
-		    редактор Vim и последующей конвертации.
- outdir		    Каталог для готовых файлов CSS. Задаётся как абсолютный
-		    маршрут. Каталог должен существовать и быть доступен для
-		    записи. По умолчанию используется автоматически создаваемый
-		    подкаталог «Colo2CSS» в каталоге пользователя.
+		    редактор Vim и последующей конвертации.  
+	
+ outdir             Каталог для готовых файлов CSS. Задаётся как абсолютный
+                    маршрут. Каталог должен существовать и быть доступен для
+                    записи. По умолчанию используется автоматически создаваемый
+                    подкаталог «Colo2CSS» в каталоге пользователя.
 
 Примеры:
 
->
-	TOcss light
+```viml
+	:TOcss light
+```
 
 Будет выполнено преобразование текущей цветовой схемы с использованием светлого
 фона. Результат будет сохранён в каталог ~/Colo2CSS (если этот каталог
 отсутствует, то он будет создан автоматически в домашнем каталоге пользователя).
 
->
-	TOcss ALL d:\project\myhomepage\css
+```
+	:TOcss ALL d:\project\myhomepage\css
+```
 
 Будет выполнено преобразование всех файлов цветовых схем, а готовые файлы CSS
 сохранены в каталог «css», расположенный по маршруту d:\project\myhomepage.
-Аргумент ALL указывается только прописными буквами. Каталог должен уже
+Аргумент `ALL` указывается только прописными буквами. Каталог должен уже
 существовать и быть доступен для записи. Если этого каталога нет, то результат
-будет сохранён в каталоге C:\Users\<username>\Colo2CSS.
+будет сохранён в каталоге C:\Users\\\<username>\Colo2CSS.
 
->
-	TOcss darkblue.vim,mustang,PaperColor.vim,desert dark e:\colorscheme
+```
+	:TOcss darkblue.vim,mustang,PaperColor.vim,desert dark e:\colorscheme
+```
 
 Будет выполнено преобразование указанных файлов с включённым тёмным фоном, и
 результат сохранён в «e:\colorscheme». Наименования файлов цветовых схем можно
