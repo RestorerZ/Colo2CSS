@@ -1,7 +1,7 @@
 " LnchC2C.vim	vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:	Restorer, <restorer@mail2k.ru>
-" Last change:	15 Jan 2022
-" Version:	1.4.3
+" Last change:	26 Jan 2022
+" Version:	1.5.2
 " Description:	вызов функций командного файла Colo2Css.vim с требуемыми параметрами
 "		calling the functions of the Colo2Css.vim command file with the
 "		required parameters	
@@ -15,10 +15,10 @@
 let s:old_set = &cpoptions
 set cpo&vim
 if has('user_commands') && !has(':TOcss')
-  command! -nargs=* TOcss call <SID>Launch(<f-args>)
+  command -nargs=* TOcss call <SID>Launch(<f-args>)
 endif
 
-function! <SID>Launch(...)
+function <SID>Launch(...)
   let l:c2cfl = ''
   let l:pths = split(&runtimepath, ',')
   for l:pth in l:pths
@@ -41,24 +41,28 @@ function! <SID>Launch(...)
     call colo2css#MainColo2Css(l:args[0], l:args[1], l:args[2], l:args[3])
   else
     let l:cmdlns = ' -u NONE -U NONE -i NONE -N -n -S ' .. l:c2cfl 
-    let l:cmdlnm = string(l:args[0])..', '..string(l:args[1])
-	  \ ..', '..string(l:args[2])..', '..string(l:args[3])
+    let l:cmdlnm = string(l:args[0]) ..", '"..
+	  \ l:args[1] .."', '".. l:args[2] .."', '".. l:args[3] .."'"
     let l:cmdlne = ')"'
     if has('channel') && has('job')
-" НАДО: Разобраться с работой заданий и каналов в Vim. Разобраться по запуску в
-" фоне в *NIX, вариант с & (амперсандом) что‐то не прокатывает...
+" НАДО: Разобраться с работой заданий и каналов в Vim.
       let l:cmdlns = l:cmdlns .. ' -c "call colo2css#MainColo2Css('
       if has('win32')
-	let s:jb = job_start('gvim.exe' .. l:cmdlns .. l:cmdlnm .. l:cmdlne)
+	let s:jb =
+	      \ job_start(glob(v:progpath) .. l:cmdlns .. l:cmdlnm .. l:cmdlne)
       elseif has('unix')
-	let s:jb = job_start('vim -g' .. l:cmdlns .. l:cmdlnm .. l:cmdlne)
+	let s:jb =
+	      \ job_start(glob(v:progpath) .. ' -g -iconic '
+	      \ .. l:cmdlns .. l:cmdlnm .. l:cmdlne)
       endif
     else
       let l:cmdlns = l:cmdlns .. ' -c "call colo2css\#MainColo2Css('
       if has('win32')
-	silent execute('!start /min gvim.exe' .. l:cmdlns .. l:cmdlnm .. l:cmdlne)
+	silent execute('!start /min '.. glob(v:progpath)
+	      \ .. l:cmdlns .. l:cmdlnm .. l:cmdlne)
       elseif has('unix')
-	silent execute('!vim -g ' .. l:cmdlns .. l:cmdlnm .. l:cmdlne)
+	silent execute('!' .. glob(v:progpath) .. ' -g -iconic '
+	      \ .. l:cmdlns .. l:cmdlnm .. l:cmdlne)
       endif
     endif
   endif
