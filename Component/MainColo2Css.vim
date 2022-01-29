@@ -1,7 +1,7 @@
 " MainColo2Css.vim	vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:	Restorer, <restorer@mail2k.ru>
-" Last change:	15 Jan 2022
-" Version:	1.7.12
+" Last change:	23 Jan 2022
+" Version:	1.7.13
 " Description:	основная функция преобразования цветовой схемы в файл CSS
 "		the main function of converting a color scheme to a CSS file
 " URL:		https://github.com/RestorerZ/Colo2CSS
@@ -75,6 +75,8 @@ function MainColo2Css(colofls, bgr, outdir, fnt)
 		\ '@/':@/,
 		\ })
       if line("$") != 1 || getline(1) != ""
+	call extend(s:old_val, {'&eventignore':&eventignore,})
+	set ei=WinLeave,WinEnter,BufLeave,BufEnter
 	new
       endif
       augroup colo2css
@@ -100,7 +102,8 @@ function MainColo2Css(colofls, bgr, outdir, fnt)
       for l:grpname in s:INIT_GRP
 	call setpos('.', [0, 1, 1, 0])
 	let l:fndlnr = search('^\<' ..l:grpname.. '\>', 'cW', line('$'))
-	if l:fndlnr || (!l:fndlnr && s:is_norm)
+"	if l:fndlnr || (!l:fndlnr && s:is_norm)
+	if l:fndlnr || s:is_norm
 	  let l:cssrule = s:HiGrpLn2CssRule(l:grpname, l:fndlnr)
 	  if !empty(l:cssrule) && type(0) != type(l:cssrule)
 	    call add(l:cssentries, l:cssrule)
@@ -148,9 +151,9 @@ function MainColo2Css(colofls, bgr, outdir, fnt)
 
 	let l:flnm =
 	  \ l:coloschm
-	  \ .. '_' .. &bg .. '-' ..
+	  \ .. '_' .. &bg
 "\ ПРАВЬ: Убери эту строку в финале.
-	  \ strftime("%d%m%Y%H%M%S", localtime())
+	  \ .. '-' .. strftime("%d%m%Y%H%M%S", localtime())
 	  \ .. '.css'
 	call writefile(map(l:css_head, 'v:val .. "\r"'), l:flnm)
 	for l:cssln in l:cssentries
