@@ -12,7 +12,7 @@ Table of contents
 1. Overview of the plugin			|overview-colo2css|
 2. Installing the plugin			|installing-colo2css|
 3. Using the plugin				|using-colo2css|
-4. Feedback					|feddback|
+4. Feedback					|feedback|
 5. License and Copyright			|license|
 
 
@@ -87,7 +87,7 @@ Command arguments:
 	:TOcss [[ALL | list_files] [dark | light] [outdir]] ~
 
 where
- ALL		    Convert all color scheme files located in the "color"
+ ALL		    Convert all color scheme files located in the "colors"
 		    subdirectory and located in the directories specified in
 		    the 'runtimepath' and 'packpath' parameter.
  list_files	    Is a list of color scheme files that you want to convert
@@ -133,7 +133,7 @@ names are not allowed. There should be no space between the file name and the
 comma symbol.
 
 ==============================================================================
-4. Feedback					*feddback*
+4. Feedback					*feedback*
 
 If you have any suggestions, additions or comments on the work of this
 plugin, you can contact the author by e-mail:
