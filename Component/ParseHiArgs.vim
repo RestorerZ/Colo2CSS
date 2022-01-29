@@ -1,7 +1,7 @@
 " ParseHiArgs.vim		vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:	Restorer, <restorer@mail2k.ru>
-" Last change:	05 Jan 2022
-" Version:	1.8.3
+" Last change:	24 Jan 2022
+" Version:	1.9.0
 " Description:	разбор значений аргументов и атрибутов групп подсветки
 "		parsing the values of arguments and attributes of highlighting
 "		groups
@@ -34,7 +34,7 @@ function s:ParseHiArgs(grplnr)
 	if 'gui' == l:hiarg
 	  let @s = s:GetEntry(0, a:grplnr, l:pos+1, 0, 'E')
 	  let l:idx = 0
-	  while !empty(@s) || l:idx < len(s:SPEC_ATTR)
+	  while !empty(@s) && l:idx < len(s:SPEC_ATTR)
 	    if 0 <= (stridx(@s, s:SPEC_ATTR[l:idx][0]))
 	      let l:hiattr[s:SPEC_ATTR[l:idx][1]] = 1
 	      let @s =
