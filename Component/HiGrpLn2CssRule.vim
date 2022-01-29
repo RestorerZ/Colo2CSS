@@ -1,7 +1,7 @@
 " HiGrpLn2CssRule.vim		vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:   Restorer, <restorer@mail2k.ru>
-" Last change:	05 Jan 2022
-" Version:	1.5.21
+" Last change:	23 Jan 2022
+" Version:	1.6.0
 " Description:	преобразует заданную группу подсветки в указанной строке в
 "		правило CSS
 "		converting a given highlight group in a specified line to a CSS
@@ -17,36 +17,40 @@ function s:HiGrpLn2CssRule(grpname, grplnr)
     let l:cssrule = []
     let l:comgrp = a:grpname
     let l:fndlnr = a:grplnr
-    call setpos('.', [0, l:fndlnr, 1, 0])
+" На тот случай, если не определена группа "Normal", а в первой строке группа,
+" которая ссылается на что‐то. Это вряд ли может быть, но лучше подстраховаться.
+    if a:grplnr
+      call setpos('.', [0, l:fndlnr, 1, 0])
 " Для ситуаций, когда группа ссылается на ещё не обработанную группу, а также
 " когда группа ссылается на не существующую группу.
-    while (search('links to ', 'cnW', l:fndlnr) == l:fndlnr)
+      while (search('links to ', 'cW', l:fndlnr) == l:fndlnr)
 " Переменная «l:n» и последующая проверка добавлены для обработки ошибок в
 " цветовых схемах, когда группа ссылается сама на себя (встретилось в цветовй
 " схеме «kellys»).
-      let l:n = (matchlist(getline(l:fndlnr), '\(links to \)\(\w\+\)'))[2]
-      if l:comgrp ==? l:n
-	let l:pos = match(getline('.'), 'links to ')
-	call setpos('.', [0, l:fndlnr, l:pos, 0])
-	normal d$
-	break
-      endif
-      call setpos('.', [0, 1, 1, 0])
-      let l:nfndlnr = search('^\<' ..l:n.. '\>', 'cW', line('$'))
-      if !l:nfndlnr
-	execute l:fndlnr'delete'
-	return -1
-      endif
-      let l:comgrp = l:n
-      let l:fndlnr = l:nfndlnr
-      call setpos('.', [0, l:fndlnr, 1, 0])
-    endwhile
+	let l:n = (matchlist(getline(l:fndlnr), '\%(links to \)\(\w\+\)'))[1]
+	if l:comgrp ==? l:n
+	  normal h
+	  normal d$
+	  break
+	endif
+	call setpos('.', [0, 1, 1, 0])
+	let l:nfndlnr = search('^\<' ..l:n.. '\>', 'cW', line('$'))
+	if !l:nfndlnr
+	  execute l:fndlnr 'delete'
+	  return -1
+	endif
+	let l:comgrp = l:n
+	let l:fndlnr = l:nfndlnr
+      endwhile
+    endif
     let l:csssel = s:HiGrpNm2CssSel(l:comgrp)
     if !empty(l:csssel) && type(0) != type(l:csssel)
-" Номер строки, где расположена группа, мог изменится при удалении связаных
+      if a:grplnr
+" Номер строки, в которой находится группа, мог изменится при удалении связаных
 " групп
-      call setpos('.', [0, 1, 1, 0])
-      let l:fndlnr = search('^\<' ..l:comgrp.. '\>', 'cW', line('$'))
+	call setpos('.', [0, 1, 1, 0])
+	let l:fndlnr = search('^\<' ..l:comgrp.. '\>', 'cW', line('$'))
+      endif
       let l:hiattr = s:ParseHiArgs(l:fndlnr)
       if !empty(l:hiattr) && type(0) != type(l:hiattr)
 	let l:cssdecl = s:HiAttr2CssDecl(l:hiattr)
@@ -57,7 +61,7 @@ function s:HiGrpLn2CssRule(grpname, grplnr)
       endif
     endif
 " Всё одно удаляем строку с этой группой, даже если не смогли распознать атрибуты
-    call deletebufline(s:nme_tmp_buf, l:fndlnr)
+    call deletebufline(s:NME_TMP_BUF, l:fndlnr)
     return l:cssrule
   endif
   return -1
