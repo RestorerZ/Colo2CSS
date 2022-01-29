@@ -1,7 +1,7 @@
 " colo2css.vim	vim:ts=8:sts=2:sw=2:noet:sta
 " Maintainer:	Restorer, <restorer@mail2k.ru>
-" Last change:	15 Jan 2022
-" Version:	1.8.29
+" Last change:	29 Jan 2022
+" Version:	1.9.3
 " Description:	преобразование цветовой схемы Vim в файл CSS
 "		converting a Vim color scheme to a CSS file
 " URL:		https://github.com/RestorerZ/Colo2CSS
@@ -444,7 +444,7 @@ function <SID>ParseHiArgs(grplnr)
 	if 'gui' == l:hiarg
 	  let @u = <SID>GetEntry(0, a:grplnr, l:pos+1, 0, 'E')
 	  let l:idx = 0
-	  while !empty(@u) || l:idx < len(s:SPEC_ATTR)
+	  while !empty(@u) && l:idx < len(s:SPEC_ATTR)
 	    if 0 <= (stridx(@u, s:SPEC_ATTR[l:idx][0]))
 	      let l:hiattr[s:SPEC_ATTR[l:idx][1]] = 1
 	      let @u =
@@ -787,18 +787,17 @@ endfunction
 function <SID>GetLnkGrp(grpname)
   if !empty(a:grpname)
     if !cursor(1,1)
-      let l:srchpat = 'links to\s\+' .. a:grpname .. '$'
-      let l:srchflgs = 'cnW'
       let l:lnkgrpnm = ''
       let l:lnr = 1
       while l:lnr
-	let l:fndlnr = search(l:srchpat, l:srchflgs, line('$'))
+	let l:fndlnr =
+	      \ search('links to\s\+' .. a:grpname .. '$', 'cnW', line('$'))
 	if l:fndlnr
 	  let l:lnkgrpnm = <SID>GetEntry(0, l:fndlnr, 1, 0, 'iw')
 	  if !empty(l:lnkgrpnm)
 	    let @U = ' '..l:lnkgrpnm
 	  endif
-	  execute l:fndlnr'delete'
+	  execute l:fndlnr 'delete'
 	  call <SID>GetLnkGrp(l:lnkgrpnm)
 	endif
 	let l:lnr = l:fndlnr
@@ -834,29 +833,31 @@ function <SID>HiGrpLn2CssRule(grpname, grplnr)
     let l:cssrule = []
     let l:comgrp = a:grpname
     let l:fndlnr = a:grplnr
-    call setpos('.', [0, l:fndlnr, 1, 0])
-    while (search('links to ', 'cnW', l:fndlnr) == l:fndlnr)
-      let l:n = (matchlist(getline(l:fndlnr), '\(links to \)\(\w\+\)'))[2]
-      if l:comgrp ==? l:n
-	let l:pos = match(getline('.'), 'links to ')
-	call setpos('.', [0, l:fndlnr, l:pos, 0])
-	normal d$
-	break
-      endif
-      call setpos('.', [0, 1, 1, 0])
-      let l:nfndlnr = search('^\<' ..l:n.. '\>', 'cW', line('$'))
-      if !l:nfndlnr
-	execute l:fndlnr'delete'
-	return -1
-      endif
-      let l:comgrp = l:n
-      let l:fndlnr = l:nfndlnr
+    if a:grplnr
       call setpos('.', [0, l:fndlnr, 1, 0])
-    endwhile
+      while (search('links to ', 'cW', l:fndlnr) == l:fndlnr)
+	let l:n = (matchlist(getline(l:fndlnr), '\%(links to \)\(\w\+\)'))[1]
+	if l:comgrp ==? l:n
+	  normal h
+	  normal d$
+	  break
+	endif
+	call setpos('.', [0, 1, 1, 0])
+	let l:nfndlnr = search('^\<' ..l:n.. '\>', 'cW', line('$'))
+	if !l:nfndlnr
+	  execute l:fndlnr 'delete'
+	  return -1
+	endif
+	let l:comgrp = l:n
+	let l:fndlnr = l:nfndlnr
+      endwhile
+    endif
     let l:csssel = <SID>HiGrpNme2CssSel(l:comgrp)
     if !empty(l:csssel) && type(0) != type(l:csssel)
-      call setpos('.', [0, 1, 1, 0])
-      let l:fndlnr = search('^\<' ..l:comgrp.. '\>', 'cW', line('$'))
+      if a:grplnr
+	call setpos('.', [0, 1, 1, 0])
+	let l:fndlnr = search('^\<' ..l:comgrp.. '\>', 'cW', line('$'))
+      endif
       let l:hiattr = <SID>ParseHiArgs(l:fndlnr)
       if !empty(l:hiattr) && type(0) != type(l:hiattr)
 	let l:cssdecl = <SID>HiAttr2CssDecl(l:hiattr)
@@ -915,10 +916,12 @@ function! colo2css#MainColo2Css(colofls, bgr, outdir, fnt)
 	    \ '@/':@/,
 	    \ })
       if line("$") != 1 || getline(1) != ""
+	call extend(s:old_val, {'&eventignore':&eventignore,})
+	set ei=WinLeave,WinEnter,BufLeave,BufEnter
 	new
       endif
       augroup colo2css
-	autocmd BufWipeout Tmp_Colo2CSS call<SID>CleanUp(s:old_val)
+	autocmd BufWipeout Tmp_Colo2CSS  call<SID>CleanUp(s:old_val)
 	      \ | delfunction <SID>CleanUp
       augroup END
     else
